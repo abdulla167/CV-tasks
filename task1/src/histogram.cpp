@@ -2,13 +2,11 @@
 #include <iostream>
 using namespace std;
 #include <cmath>
-#include "Image.h"
-#include "histogram.h"
+#include "../includes/Image.h"
+#include "../includes/histogram.h"
 
 void im_hist(Image& image, int histogram[], int channel)
 {
-      unsigned char  *** image_pixels = image.data;
-
     // initialize all intensity values to 0
     for(int i = 0; i < 256; i++)
     {
@@ -18,7 +16,7 @@ void im_hist(Image& image, int histogram[], int channel)
     // calculate the no of pixels for each intensity values
     for(int y = 0; y < image.height; y++){
         for(int x = 0; x < image.width; x++){
-                histogram[ (int)image_pixels[y][x][channel - 1]]++;
+                histogram[ (int)image.data[y][x][channel - 1]]++;
     }
     }
 }
@@ -79,15 +77,11 @@ void equalized_hist(Image& image, int histogram[], int equalized_histogram[], in
     }
 }
 void equalized_image(Image& image, int histogram_equalization_formula[]){
-     unsigned char  *** image_pixels = image.data;
-
-    cout << image_pixels[0][0][0];
     for(int y = 0; y < image.height; y++){
         for(int x = 0; x < image.width; x++){
 
-                image_pixels[y][x][0] = (unsigned char) histogram_equalization_formula[image_pixels[y][x][0]];
+                image.data[y][x][0] = (unsigned char) histogram_equalization_formula[image.data[y][x][0]];
         }
     }
-    image.copyData(image_pixels);
-    image.saveJPG("D:/cv_task1/hello");
+//    image.saveJPG("D:/cv_task1/hello");
 }

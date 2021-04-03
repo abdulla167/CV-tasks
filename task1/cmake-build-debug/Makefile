@@ -59,19 +59,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /home/abdulla167/Downloads/CLion-2020.3.3/clion-2020.3.3/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /snap/clion/145/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /home/abdulla167/Downloads/CLion-2020.3.3/clion-2020.3.3/bin/cmake/linux/bin/cmake -E rm -f
+RM = /snap/clion/145/bin/cmake/linux/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/home/abdulla167/CV tasks/task1"
+CMAKE_SOURCE_DIR = /home/mohamedkamal/CLionProjects/CV-tasks/task1
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/home/abdulla167/CV tasks/task1/cmake-build-debug"
+CMAKE_BINARY_DIR = /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -79,7 +79,7 @@ CMAKE_BINARY_DIR = "/home/abdulla167/CV tasks/task1/cmake-build-debug"
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/home/abdulla167/Downloads/CLion-2020.3.3/clion-2020.3.3/bin/cmake/linux/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/snap/clion/145/bin/cmake/linux/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -90,7 +90,7 @@ rebuild_cache/fast: rebuild_cache
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/home/abdulla167/Downloads/CLion-2020.3.3/clion-2020.3.3/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+	/snap/clion/145/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -100,9 +100,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/abdulla167/CV tasks/task1/cmake-build-debug/CMakeFiles" "/home/abdulla167/CV tasks/task1/cmake-build-debug/CMakeFiles/progress.marks"
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/CMakeFiles /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/abdulla167/CV tasks/task1/cmake-build-debug/CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -210,6 +210,33 @@ src/filters.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/task1.dir/build.make CMakeFiles/task1.dir/src/filters.cpp.s
 .PHONY : src/filters.cpp.s
 
+src/histogram.o: src/histogram.cpp.o
+
+.PHONY : src/histogram.o
+
+# target to build an object file
+src/histogram.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/task1.dir/build.make CMakeFiles/task1.dir/src/histogram.cpp.o
+.PHONY : src/histogram.cpp.o
+
+src/histogram.i: src/histogram.cpp.i
+
+.PHONY : src/histogram.i
+
+# target to preprocess a source file
+src/histogram.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/task1.dir/build.make CMakeFiles/task1.dir/src/histogram.cpp.i
+.PHONY : src/histogram.cpp.i
+
+src/histogram.s: src/histogram.cpp.s
+
+.PHONY : src/histogram.s
+
+# target to generate assembly for a file
+src/histogram.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/task1.dir/build.make CMakeFiles/task1.dir/src/histogram.cpp.s
+.PHONY : src/histogram.cpp.s
+
 src/main.o: src/main.cpp.o
 
 .PHONY : src/main.o
@@ -307,6 +334,9 @@ help:
 	@echo "... src/filters.o"
 	@echo "... src/filters.i"
 	@echo "... src/filters.s"
+	@echo "... src/histogram.o"
+	@echo "... src/histogram.i"
+	@echo "... src/histogram.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

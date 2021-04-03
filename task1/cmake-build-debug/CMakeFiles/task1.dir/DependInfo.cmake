@@ -4,11 +4,12 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/abdulla167/CV tasks/task1/src/Image.cpp" "/home/abdulla167/CV tasks/task1/cmake-build-debug/CMakeFiles/task1.dir/src/Image.cpp.o"
-  "/home/abdulla167/CV tasks/task1/src/filters.cpp" "/home/abdulla167/CV tasks/task1/cmake-build-debug/CMakeFiles/task1.dir/src/filters.cpp.o"
-  "/home/abdulla167/CV tasks/task1/src/main.cpp" "/home/abdulla167/CV tasks/task1/cmake-build-debug/CMakeFiles/task1.dir/src/main.cpp.o"
-  "/home/abdulla167/CV tasks/task1/src/utilities.cpp" "/home/abdulla167/CV tasks/task1/cmake-build-debug/CMakeFiles/task1.dir/src/utilities.cpp.o"
-  "/home/abdulla167/CV tasks/task1/cmake-build-debug/task1_autogen/mocs_compilation.cpp" "/home/abdulla167/CV tasks/task1/cmake-build-debug/CMakeFiles/task1.dir/task1_autogen/mocs_compilation.cpp.o"
+  "/home/mohamedkamal/CLionProjects/CV-tasks/task1/src/Image.cpp" "/home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/CMakeFiles/task1.dir/src/Image.cpp.o"
+  "/home/mohamedkamal/CLionProjects/CV-tasks/task1/src/filters.cpp" "/home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/CMakeFiles/task1.dir/src/filters.cpp.o"
+  "/home/mohamedkamal/CLionProjects/CV-tasks/task1/src/histogram.cpp" "/home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/CMakeFiles/task1.dir/src/histogram.cpp.o"
+  "/home/mohamedkamal/CLionProjects/CV-tasks/task1/src/main.cpp" "/home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/CMakeFiles/task1.dir/src/main.cpp.o"
+  "/home/mohamedkamal/CLionProjects/CV-tasks/task1/src/utilities.cpp" "/home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/CMakeFiles/task1.dir/src/utilities.cpp.o"
+  "/home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/task1_autogen/mocs_compilation.cpp" "/home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/CMakeFiles/task1.dir/task1_autogen/mocs_compilation.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

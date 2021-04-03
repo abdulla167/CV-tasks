@@ -10,6 +10,10 @@ CMakeFiles/task1.dir/src/filters.cpp.o: ../includes/Image.h
 CMakeFiles/task1.dir/src/filters.cpp.o: ../includes/utilities.h
 CMakeFiles/task1.dir/src/filters.cpp.o: ../src/filters.cpp
 
+CMakeFiles/task1.dir/src/histogram.cpp.o: ../includes/Image.h
+CMakeFiles/task1.dir/src/histogram.cpp.o: ../includes/histogram.h
+CMakeFiles/task1.dir/src/histogram.cpp.o: ../src/histogram.cpp
+
 CMakeFiles/task1.dir/src/main.cpp.o: ../includes/Image.h
 CMakeFiles/task1.dir/src/main.cpp.o: ../includes/filters.h
 CMakeFiles/task1.dir/src/main.cpp.o: ../src/main.cpp

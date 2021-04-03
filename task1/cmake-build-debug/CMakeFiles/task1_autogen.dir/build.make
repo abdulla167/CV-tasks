@@ -54,19 +54,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /home/abdulla167/Downloads/CLion-2020.3.3/clion-2020.3.3/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /snap/clion/145/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /home/abdulla167/Downloads/CLion-2020.3.3/clion-2020.3.3/bin/cmake/linux/bin/cmake -E rm -f
+RM = /snap/clion/145/bin/cmake/linux/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/home/abdulla167/CV tasks/task1"
+CMAKE_SOURCE_DIR = /home/mohamedkamal/CLionProjects/CV-tasks/task1
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/home/abdulla167/CV tasks/task1/cmake-build-debug"
+CMAKE_BINARY_DIR = /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug
 
 # Utility rule file for task1_autogen.
 
@@ -74,8 +74,8 @@ CMAKE_BINARY_DIR = "/home/abdulla167/CV tasks/task1/cmake-build-debug"
 include CMakeFiles/task1_autogen.dir/progress.make
 
 CMakeFiles/task1_autogen:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir="/home/abdulla167/CV tasks/task1/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC and UIC for target task1"
-	/home/abdulla167/Downloads/CLion-2020.3.3/clion-2020.3.3/bin/cmake/linux/bin/cmake -E cmake_autogen "/home/abdulla167/CV tasks/task1/cmake-build-debug/CMakeFiles/task1_autogen.dir/AutogenInfo.json" Debug
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC and UIC for target task1"
+	/snap/clion/145/bin/cmake/linux/bin/cmake -E cmake_autogen /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/CMakeFiles/task1_autogen.dir/AutogenInfo.json Debug
 
 task1_autogen: CMakeFiles/task1_autogen
 task1_autogen: CMakeFiles/task1_autogen.dir/build.make
@@ -92,6 +92,6 @@ CMakeFiles/task1_autogen.dir/clean:
 .PHONY : CMakeFiles/task1_autogen.dir/clean
 
 CMakeFiles/task1_autogen.dir/depend:
-	cd "/home/abdulla167/CV tasks/task1/cmake-build-debug" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/home/abdulla167/CV tasks/task1" "/home/abdulla167/CV tasks/task1" "/home/abdulla167/CV tasks/task1/cmake-build-debug" "/home/abdulla167/CV tasks/task1/cmake-build-debug" "/home/abdulla167/CV tasks/task1/cmake-build-debug/CMakeFiles/task1_autogen.dir/DependInfo.cmake" --color=$(COLOR)
+	cd /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/mohamedkamal/CLionProjects/CV-tasks/task1 /home/mohamedkamal/CLionProjects/CV-tasks/task1 /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/CMakeFiles/task1_autogen.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/task1_autogen.dir/depend
 

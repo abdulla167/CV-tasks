@@ -1,4 +1,4 @@
-# Install script for directory: /home/abdulla167/CV tasks/task1
+# Install script for directory: /home/mohamedkamal/CLionProjects/CV-tasks/task1
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/abdulla167/CV tasks/task1/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

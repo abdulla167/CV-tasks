@@ -4,6 +4,7 @@ file(REMOVE_RECURSE
   "task1_autogen"
   "CMakeFiles/task1.dir/src/Image.cpp.o"
   "CMakeFiles/task1.dir/src/filters.cpp.o"
+  "CMakeFiles/task1.dir/src/histogram.cpp.o"
   "CMakeFiles/task1.dir/src/main.cpp.o"
   "CMakeFiles/task1.dir/src/utilities.cpp.o"
   "CMakeFiles/task1.dir/task1_autogen/mocs_compilation.cpp.o"

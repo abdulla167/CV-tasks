@@ -1,4 +1,4 @@
-/home/abdulla167/CV tasks/task1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/abdulla167/CV tasks/task1/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/abdulla167/CV tasks/task1/cmake-build-debug/CMakeFiles/task1.dir
-/home/abdulla167/CV tasks/task1/cmake-build-debug/CMakeFiles/task1_autogen.dir
+/home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/CMakeFiles/task1.dir
+/home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/CMakeFiles/task1_autogen.dir

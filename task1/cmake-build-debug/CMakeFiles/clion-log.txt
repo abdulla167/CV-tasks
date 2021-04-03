@@ -1,4 +1,4 @@
-/home/abdulla167/Downloads/CLion-2020.3.3/clion-2020.3.3/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" "/home/abdulla167/CV tasks/task1"
+/snap/clion/145/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/mohamedkamal/CLionProjects/CV-tasks/task1
 -- Configuring done
 -- Generating done
--- Build files have been written to: /home/abdulla167/CV tasks/task1/cmake-build-debug
+-- Build files have been written to: /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug

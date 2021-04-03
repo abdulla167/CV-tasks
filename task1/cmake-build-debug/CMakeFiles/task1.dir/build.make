@@ -54,19 +54,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /home/abdulla167/Downloads/CLion-2020.3.3/clion-2020.3.3/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /snap/clion/145/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /home/abdulla167/Downloads/CLion-2020.3.3/clion-2020.3.3/bin/cmake/linux/bin/cmake -E rm -f
+RM = /snap/clion/145/bin/cmake/linux/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/home/abdulla167/CV tasks/task1"
+CMAKE_SOURCE_DIR = /home/mohamedkamal/CLionProjects/CV-tasks/task1
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/home/abdulla167/CV tasks/task1/cmake-build-debug"
+CMAKE_BINARY_DIR = /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/task1.dir/depend.make
@@ -79,68 +79,81 @@ include CMakeFiles/task1.dir/flags.make
 
 CMakeFiles/task1.dir/task1_autogen/mocs_compilation.cpp.o: CMakeFiles/task1.dir/flags.make
 CMakeFiles/task1.dir/task1_autogen/mocs_compilation.cpp.o: task1_autogen/mocs_compilation.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/abdulla167/CV tasks/task1/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/task1.dir/task1_autogen/mocs_compilation.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/task1.dir/task1_autogen/mocs_compilation.cpp.o -c "/home/abdulla167/CV tasks/task1/cmake-build-debug/task1_autogen/mocs_compilation.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/task1.dir/task1_autogen/mocs_compilation.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/task1.dir/task1_autogen/mocs_compilation.cpp.o -c /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/task1_autogen/mocs_compilation.cpp
 
 CMakeFiles/task1.dir/task1_autogen/mocs_compilation.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/task1.dir/task1_autogen/mocs_compilation.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/abdulla167/CV tasks/task1/cmake-build-debug/task1_autogen/mocs_compilation.cpp" > CMakeFiles/task1.dir/task1_autogen/mocs_compilation.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/task1_autogen/mocs_compilation.cpp > CMakeFiles/task1.dir/task1_autogen/mocs_compilation.cpp.i
 
 CMakeFiles/task1.dir/task1_autogen/mocs_compilation.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/task1.dir/task1_autogen/mocs_compilation.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/abdulla167/CV tasks/task1/cmake-build-debug/task1_autogen/mocs_compilation.cpp" -o CMakeFiles/task1.dir/task1_autogen/mocs_compilation.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/task1_autogen/mocs_compilation.cpp -o CMakeFiles/task1.dir/task1_autogen/mocs_compilation.cpp.s
 
 CMakeFiles/task1.dir/src/main.cpp.o: CMakeFiles/task1.dir/flags.make
 CMakeFiles/task1.dir/src/main.cpp.o: ../src/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/abdulla167/CV tasks/task1/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/task1.dir/src/main.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/task1.dir/src/main.cpp.o -c "/home/abdulla167/CV tasks/task1/src/main.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/task1.dir/src/main.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/task1.dir/src/main.cpp.o -c /home/mohamedkamal/CLionProjects/CV-tasks/task1/src/main.cpp
 
 CMakeFiles/task1.dir/src/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/task1.dir/src/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/abdulla167/CV tasks/task1/src/main.cpp" > CMakeFiles/task1.dir/src/main.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mohamedkamal/CLionProjects/CV-tasks/task1/src/main.cpp > CMakeFiles/task1.dir/src/main.cpp.i
 
 CMakeFiles/task1.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/task1.dir/src/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/abdulla167/CV tasks/task1/src/main.cpp" -o CMakeFiles/task1.dir/src/main.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mohamedkamal/CLionProjects/CV-tasks/task1/src/main.cpp -o CMakeFiles/task1.dir/src/main.cpp.s
 
 CMakeFiles/task1.dir/src/filters.cpp.o: CMakeFiles/task1.dir/flags.make
 CMakeFiles/task1.dir/src/filters.cpp.o: ../src/filters.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/abdulla167/CV tasks/task1/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/task1.dir/src/filters.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/task1.dir/src/filters.cpp.o -c "/home/abdulla167/CV tasks/task1/src/filters.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/task1.dir/src/filters.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/task1.dir/src/filters.cpp.o -c /home/mohamedkamal/CLionProjects/CV-tasks/task1/src/filters.cpp
 
 CMakeFiles/task1.dir/src/filters.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/task1.dir/src/filters.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/abdulla167/CV tasks/task1/src/filters.cpp" > CMakeFiles/task1.dir/src/filters.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mohamedkamal/CLionProjects/CV-tasks/task1/src/filters.cpp > CMakeFiles/task1.dir/src/filters.cpp.i
 
 CMakeFiles/task1.dir/src/filters.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/task1.dir/src/filters.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/abdulla167/CV tasks/task1/src/filters.cpp" -o CMakeFiles/task1.dir/src/filters.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mohamedkamal/CLionProjects/CV-tasks/task1/src/filters.cpp -o CMakeFiles/task1.dir/src/filters.cpp.s
 
 CMakeFiles/task1.dir/src/utilities.cpp.o: CMakeFiles/task1.dir/flags.make
 CMakeFiles/task1.dir/src/utilities.cpp.o: ../src/utilities.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/abdulla167/CV tasks/task1/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/task1.dir/src/utilities.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/task1.dir/src/utilities.cpp.o -c "/home/abdulla167/CV tasks/task1/src/utilities.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/task1.dir/src/utilities.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/task1.dir/src/utilities.cpp.o -c /home/mohamedkamal/CLionProjects/CV-tasks/task1/src/utilities.cpp
 
 CMakeFiles/task1.dir/src/utilities.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/task1.dir/src/utilities.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/abdulla167/CV tasks/task1/src/utilities.cpp" > CMakeFiles/task1.dir/src/utilities.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mohamedkamal/CLionProjects/CV-tasks/task1/src/utilities.cpp > CMakeFiles/task1.dir/src/utilities.cpp.i
 
 CMakeFiles/task1.dir/src/utilities.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/task1.dir/src/utilities.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/abdulla167/CV tasks/task1/src/utilities.cpp" -o CMakeFiles/task1.dir/src/utilities.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mohamedkamal/CLionProjects/CV-tasks/task1/src/utilities.cpp -o CMakeFiles/task1.dir/src/utilities.cpp.s
 
 CMakeFiles/task1.dir/src/Image.cpp.o: CMakeFiles/task1.dir/flags.make
 CMakeFiles/task1.dir/src/Image.cpp.o: ../src/Image.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/abdulla167/CV tasks/task1/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/task1.dir/src/Image.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/task1.dir/src/Image.cpp.o -c "/home/abdulla167/CV tasks/task1/src/Image.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/task1.dir/src/Image.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/task1.dir/src/Image.cpp.o -c /home/mohamedkamal/CLionProjects/CV-tasks/task1/src/Image.cpp
 
 CMakeFiles/task1.dir/src/Image.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/task1.dir/src/Image.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/abdulla167/CV tasks/task1/src/Image.cpp" > CMakeFiles/task1.dir/src/Image.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mohamedkamal/CLionProjects/CV-tasks/task1/src/Image.cpp > CMakeFiles/task1.dir/src/Image.cpp.i
 
 CMakeFiles/task1.dir/src/Image.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/task1.dir/src/Image.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/abdulla167/CV tasks/task1/src/Image.cpp" -o CMakeFiles/task1.dir/src/Image.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mohamedkamal/CLionProjects/CV-tasks/task1/src/Image.cpp -o CMakeFiles/task1.dir/src/Image.cpp.s
+
+CMakeFiles/task1.dir/src/histogram.cpp.o: CMakeFiles/task1.dir/flags.make
+CMakeFiles/task1.dir/src/histogram.cpp.o: ../src/histogram.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/task1.dir/src/histogram.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/task1.dir/src/histogram.cpp.o -c /home/mohamedkamal/CLionProjects/CV-tasks/task1/src/histogram.cpp
+
+CMakeFiles/task1.dir/src/histogram.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/task1.dir/src/histogram.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mohamedkamal/CLionProjects/CV-tasks/task1/src/histogram.cpp > CMakeFiles/task1.dir/src/histogram.cpp.i
+
+CMakeFiles/task1.dir/src/histogram.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/task1.dir/src/histogram.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mohamedkamal/CLionProjects/CV-tasks/task1/src/histogram.cpp -o CMakeFiles/task1.dir/src/histogram.cpp.s
 
 # Object files for target task1
 task1_OBJECTS = \
@@ -148,7 +161,8 @@ task1_OBJECTS = \
 "CMakeFiles/task1.dir/src/main.cpp.o" \
 "CMakeFiles/task1.dir/src/filters.cpp.o" \
 "CMakeFiles/task1.dir/src/utilities.cpp.o" \
-"CMakeFiles/task1.dir/src/Image.cpp.o"
+"CMakeFiles/task1.dir/src/Image.cpp.o" \
+"CMakeFiles/task1.dir/src/histogram.cpp.o"
 
 # External object files for target task1
 task1_EXTERNAL_OBJECTS =
@@ -158,12 +172,13 @@ task1: CMakeFiles/task1.dir/src/main.cpp.o
 task1: CMakeFiles/task1.dir/src/filters.cpp.o
 task1: CMakeFiles/task1.dir/src/utilities.cpp.o
 task1: CMakeFiles/task1.dir/src/Image.cpp.o
+task1: CMakeFiles/task1.dir/src/histogram.cpp.o
 task1: CMakeFiles/task1.dir/build.make
 task1: /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5.12.8
 task1: /usr/lib/x86_64-linux-gnu/libQt5Gui.so.5.12.8
 task1: /usr/lib/x86_64-linux-gnu/libQt5Core.so.5.12.8
 task1: CMakeFiles/task1.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/home/abdulla167/CV tasks/task1/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable task1"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable task1"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/task1.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -176,6 +191,6 @@ CMakeFiles/task1.dir/clean:
 .PHONY : CMakeFiles/task1.dir/clean
 
 CMakeFiles/task1.dir/depend:
-	cd "/home/abdulla167/CV tasks/task1/cmake-build-debug" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/home/abdulla167/CV tasks/task1" "/home/abdulla167/CV tasks/task1" "/home/abdulla167/CV tasks/task1/cmake-build-debug" "/home/abdulla167/CV tasks/task1/cmake-build-debug" "/home/abdulla167/CV tasks/task1/cmake-build-debug/CMakeFiles/task1.dir/DependInfo.cmake" --color=$(COLOR)
+	cd /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/mohamedkamal/CLionProjects/CV-tasks/task1 /home/mohamedkamal/CLionProjects/CV-tasks/task1 /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/CMakeFiles/task1.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/task1.dir/depend
 
