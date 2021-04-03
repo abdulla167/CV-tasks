@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.17)
-project(task1)
+project(cv)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_PREFIX_PATH "/usr/lib/x86_64-linux-gnu/cmake/Qt5")
@@ -11,7 +11,7 @@ set(QT_VERSION 5)
 set(REQUIRED_LIBS Core Gui Widgets)
 set(REQUIRED_LIBS_QUALIFIED Qt5::Core Qt5::Gui Qt5::Widgets)
 
-add_executable(${PROJECT_NAME} src/main.cpp includes/filters.h src/filters.cpp src/utilities.cpp includes/utilities.h src/Image.cpp includes/Image.h includes/histogram.h src/histogram.cpp)
+add_executable(${PROJECT_NAME} main.cpp MainWindow.cpp MainWindow.h MainWindow.ui)
 
 if (NOT CMAKE_PREFIX_PATH)
     message(WARNING "CMAKE_PREFIX_PATH is not defined, you may need to set it "
@@ -19,4 +19,6 @@ if (NOT CMAKE_PREFIX_PATH)
 endif ()
 
 find_package(Qt${QT_VERSION} COMPONENTS ${REQUIRED_LIBS} REQUIRED)
-target_link_libraries(${PROJECT_NAME} ${REQUIRED_LIBS_QUALIFIED})
+add_subdirectory(processing)
+target_link_libraries(${PROJECT_NAME} processing)
+target_link_libraries(${PROJECT_NAME}  ${REQUIRED_LIBS_QUALIFIED})
