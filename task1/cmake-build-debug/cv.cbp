@@ -5,7 +5,7 @@
 		<Option title="cv"/>
 		<Option makefile_is_custom="1"/>
 		<Option compiler="gcc"/>
-		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\..\usr\;CMake Files\..\..\..\..\..\..\..\usr\lib\;CMake Files\..\..\..\..\..\..\..\usr\lib\x86_64-linux-gnu\;CMake Files\..\..\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\;CMake Files\..\..\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5\;CMake Files\..\..\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Core\;CMake Files\..\..\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Gui\;CMake Files\..\..\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Widgets\;CMake Files\..\..\..\..\..\..\..\usr\local\;CMake Files\..\..\..\..\..\..\..\usr\local\lib\;CMake Files\..\..\..\..\..\..\..\usr\local\lib\cmake\;CMake Files\..\..\..\..\..\..\..\usr\local\lib\cmake\opencv4\;CMake Files\processing\;"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\..\usr\;CMake Files\..\..\..\..\..\..\..\usr\lib\;CMake Files\..\..\..\..\..\..\..\usr\lib\x86_64-linux-gnu\;CMake Files\..\..\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\;CMake Files\..\..\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5\;CMake Files\..\..\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Core\;CMake Files\..\..\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Gui\;CMake Files\..\..\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Widgets\;CMake Files\..\..\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Charts\;CMake Files\..\..\..\..\..\..\..\usr\local\;CMake Files\..\..\..\..\..\..\..\usr\local\lib\;CMake Files\..\..\..\..\..\..\..\usr\local\lib\cmake\;CMake Files\..\..\..\..\..\..\..\usr\local\lib\cmake\opencv4\;CMake Files\processing\;"/>
 		<Build>
 			<Target title="all">
 				<Option working_dir="/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug"/>
@@ -47,7 +47,9 @@
 					<Add option="-DQT_CORE_LIB"/>
 					<Add option="-DQT_GUI_LIB"/>
 					<Add option="-DQT_WIDGETS_LIB"/>
+					<Add option="-DQT_CHARTS_LIB"/>
 					<Add directory="/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/cv_autogen/include"/>
+					<Add directory="/home/abdallah/Documents/Study/CV/CV-tasks/task1/plotlib"/>
 					<Add directory="/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/processing/include"/>
 					<Add directory="/usr/local/include/opencv4"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/qt5"/>
@@ -55,6 +57,7 @@
 					<Add directory="/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/qt5/QtGui"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/qt5/QtWidgets"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/qt5/QtCharts"/>
 					<Add directory="/usr/include/c++/7"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
 					<Add directory="/usr/include/c++/7/backward"/>
@@ -81,7 +84,9 @@
 					<Add option="-DQT_CORE_LIB"/>
 					<Add option="-DQT_GUI_LIB"/>
 					<Add option="-DQT_WIDGETS_LIB"/>
+					<Add option="-DQT_CHARTS_LIB"/>
 					<Add directory="/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/cv_autogen/include"/>
+					<Add directory="/home/abdallah/Documents/Study/CV/CV-tasks/task1/plotlib"/>
 					<Add directory="/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/processing/include"/>
 					<Add directory="/usr/local/include/opencv4"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/qt5"/>
@@ -89,6 +94,7 @@
 					<Add directory="/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/qt5/QtGui"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/qt5/QtWidgets"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/qt5/QtCharts"/>
 					<Add directory="/usr/include/c++/7"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
 					<Add directory="/usr/include/c++/7/backward"/>
@@ -123,6 +129,7 @@
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/processing/processing_autogen/include"/>
+					<Add directory="/home/abdallah/Documents/Study/CV/CV-tasks/task1/plotlib"/>
 					<Add directory="/home/abdallah/Documents/Study/CV/CV-tasks/task1/processing/include"/>
 					<Add directory="/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/processing/include"/>
 					<Add directory="/usr/local/include/opencv4"/>
@@ -150,6 +157,7 @@
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/processing/processing_autogen/include"/>
+					<Add directory="/home/abdallah/Documents/Study/CV/CV-tasks/task1/plotlib"/>
 					<Add directory="/home/abdallah/Documents/Study/CV/CV-tasks/task1/processing/include"/>
 					<Add directory="/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/processing/include"/>
 					<Add directory="/usr/local/include/opencv4"/>
@@ -181,6 +189,9 @@
 			</Target>
 		</Build>
 		<Unit filename="/home/abdallah/Documents/Study/CV/CV-tasks/task1/FiltersPage.cpp">
+			<Option target="cv"/>
+		</Unit>
+		<Unit filename="/home/abdallah/Documents/Study/CV/CV-tasks/task1/FreqPage.cpp">
 			<Option target="cv"/>
 		</Unit>
 		<Unit filename="/home/abdallah/Documents/Study/CV/CV-tasks/task1/HistogramPage.cpp">
@@ -266,6 +277,12 @@
 		</Unit>
 		<Unit filename="/home/abdallah/Documents/Study/CV/CV-tasks/task1/../../../../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsMacros.cmake">
 			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Widgets\"/>
+		</Unit>
+		<Unit filename="/home/abdallah/Documents/Study/CV/CV-tasks/task1/../../../../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Charts/Qt5ChartsConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Charts\"/>
+		</Unit>
+		<Unit filename="/home/abdallah/Documents/Study/CV/CV-tasks/task1/../../../../../../../usr/lib/x86_64-linux-gnu/cmake/Qt5Charts/Qt5ChartsConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Qt5Charts\"/>
 		</Unit>
 		<Unit filename="/home/abdallah/Documents/Study/CV/CV-tasks/task1/../../../../../../../usr/local/lib/cmake/opencv4/OpenCVConfig-version.cmake">
 			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\usr\local\lib\cmake\opencv4\"/>

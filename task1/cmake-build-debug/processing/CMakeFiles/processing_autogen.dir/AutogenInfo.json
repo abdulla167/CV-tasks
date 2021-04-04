@@ -21,6 +21,7 @@
 	],
 	"MOC_INCLUDES" : 
 	[
+		"/home/abdallah/Documents/Study/CV/CV-tasks/task1/plotlib",
 		"/home/abdallah/Documents/Study/CV/CV-tasks/task1/processing/include",
 		"/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/processing/include",
 		"/usr/local/include/opencv4",

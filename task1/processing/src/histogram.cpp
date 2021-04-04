@@ -31,7 +31,6 @@ void cumulative_hist(int histogram[], int cumulative_histogram[]) {
 
     for (int i = 1; i < 256; i++) {
         cumulative_histogram[i] = histogram[i] + cumulative_histogram[i - 1];
-
     }
 }
 

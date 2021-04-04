@@ -6,5 +6,5 @@ CXX_FLAGS = -g   -std=gnu++14
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/processing/processing_autogen/include -I/home/abdallah/Documents/Study/CV/CV-tasks/task1/processing/include -I/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/processing/include -isystem /usr/local/include/opencv4 
+CXX_INCLUDES = -I/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/processing/processing_autogen/include -I/home/abdallah/Documents/Study/CV/CV-tasks/task1/plotlib -I/home/abdallah/Documents/Study/CV/CV-tasks/task1/processing/include -I/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/processing/include -isystem /usr/local/include/opencv4 
 

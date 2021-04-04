@@ -5,6 +5,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "/home/abdallah/Documents/Study/CV/CV-tasks/task1/FiltersPage.cpp" "/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/CMakeFiles/cv.dir/FiltersPage.cpp.o"
+  "/home/abdallah/Documents/Study/CV/CV-tasks/task1/FreqPage.cpp" "/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/CMakeFiles/cv.dir/FreqPage.cpp.o"
   "/home/abdallah/Documents/Study/CV/CV-tasks/task1/HistogramPage.cpp" "/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/CMakeFiles/cv.dir/HistogramPage.cpp.o"
   "/home/abdallah/Documents/Study/CV/CV-tasks/task1/HybridPage.cpp" "/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/CMakeFiles/cv.dir/HybridPage.cpp.o"
   "/home/abdallah/Documents/Study/CV/CV-tasks/task1/MainWindow.cpp" "/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/CMakeFiles/cv.dir/MainWindow.cpp.o"
@@ -15,6 +16,7 @@ set(CMAKE_CXX_COMPILER_ID "GNU")
 
 # Preprocessor definitions for this target.
 set(CMAKE_TARGET_DEFINITIONS_CXX
+  "QT_CHARTS_LIB"
   "QT_CORE_LIB"
   "QT_GUI_LIB"
   "QT_WIDGETS_LIB"
@@ -23,6 +25,7 @@ set(CMAKE_TARGET_DEFINITIONS_CXX
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "cv_autogen/include"
+  "../plotlib"
   "processing/include"
   "/usr/local/include/opencv4"
   "/usr/include/x86_64-linux-gnu/qt5"
@@ -30,6 +33,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++"
   "/usr/include/x86_64-linux-gnu/qt5/QtGui"
   "/usr/include/x86_64-linux-gnu/qt5/QtWidgets"
+  "/usr/include/x86_64-linux-gnu/qt5/QtCharts"
   )
 
 # Targets to which this target links.

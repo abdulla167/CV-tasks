@@ -83,6 +83,8 @@ public:
     QLabel *label_15;
     QLabel *outputImageLabel_3;
     QWidget *frequencyFilters;
+    QPushButton *plotBtn;
+    QFrame *customPlot;
     QWidget *hybrid;
     QFrame *frame_4;
     QLabel *label_71;
@@ -345,6 +347,14 @@ public:
         tabWidget->addTab(histograms, QString());
         frequencyFilters = new QWidget();
         frequencyFilters->setObjectName(QStringLiteral("frequencyFilters"));
+        plotBtn = new QPushButton(frequencyFilters);
+        plotBtn->setObjectName(QStringLiteral("plotBtn"));
+        plotBtn->setGeometry(QRect(40, 270, 89, 25));
+        customPlot = new QFrame(frequencyFilters);
+        customPlot->setObjectName(QStringLiteral("customPlot"));
+        customPlot->setGeometry(QRect(280, 60, 581, 531));
+        customPlot->setFrameShape(QFrame::StyledPanel);
+        customPlot->setFrameShadow(QFrame::Raised);
         tabWidget->addTab(frequencyFilters, QString());
         hybrid = new QWidget();
         hybrid->setObjectName(QStringLiteral("hybrid"));
@@ -429,7 +439,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(2);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -480,6 +490,7 @@ public:
         label_15->setText(QApplication::translate("MainWindow", "CDF", Q_NULLPTR));
         outputImageLabel_3->setText(QString());
         tabWidget->setTabText(tabWidget->indexOf(histograms), QApplication::translate("MainWindow", "Histograms", Q_NULLPTR));
+        plotBtn->setText(QApplication::translate("MainWindow", "plot", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(frequencyFilters), QApplication::translate("MainWindow", "Frequency Filters", Q_NULLPTR));
         label_71->setText(QApplication::translate("MainWindow", "Image A", Q_NULLPTR));
         imageALabel->setText(QString());

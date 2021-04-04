@@ -210,6 +210,33 @@ FiltersPage.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/cv.dir/build.make CMakeFiles/cv.dir/FiltersPage.cpp.s
 .PHONY : FiltersPage.cpp.s
 
+FreqPage.o: FreqPage.cpp.o
+
+.PHONY : FreqPage.o
+
+# target to build an object file
+FreqPage.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cv.dir/build.make CMakeFiles/cv.dir/FreqPage.cpp.o
+.PHONY : FreqPage.cpp.o
+
+FreqPage.i: FreqPage.cpp.i
+
+.PHONY : FreqPage.i
+
+# target to preprocess a source file
+FreqPage.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cv.dir/build.make CMakeFiles/cv.dir/FreqPage.cpp.i
+.PHONY : FreqPage.cpp.i
+
+FreqPage.s: FreqPage.cpp.s
+
+.PHONY : FreqPage.s
+
+# target to generate assembly for a file
+FreqPage.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cv.dir/build.make CMakeFiles/cv.dir/FreqPage.cpp.s
+.PHONY : FreqPage.cpp.s
+
 HistogramPage.o: HistogramPage.cpp.o
 
 .PHONY : HistogramPage.o
@@ -360,6 +387,9 @@ help:
 	@echo "... FiltersPage.o"
 	@echo "... FiltersPage.i"
 	@echo "... FiltersPage.s"
+	@echo "... FreqPage.o"
+	@echo "... FreqPage.i"
+	@echo "... FreqPage.s"
 	@echo "... HistogramPage.o"
 	@echo "... HistogramPage.i"
 	@echo "... HistogramPage.s"

@@ -34,6 +34,7 @@ void MainWindow::on_imageSelect_currentIndexChanged(QString filterName) {
         Image grayIm = inputImage_1->toGrayscale();
         im_hist(grayIm, histogram, 1);
         cumulative_hist(histogram, cumHist);
+
         Mat histImage = histDisplay(histogram, 0);
         int label2Width = ui->InputImagLabel_2->width();
         int label2Height = ui->InputImagLabel_2->height();

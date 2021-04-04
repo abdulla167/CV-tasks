@@ -18,7 +18,7 @@
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
 	"INCLUDE_DIR" : "/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/cv_autogen/include",
 	"MOC_COMPILATION_FILE" : "/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/cv_autogen/mocs_compilation.cpp",
-	"MOC_DEFINITIONS" : [ "QT_CORE_LIB", "QT_GUI_LIB", "QT_WIDGETS_LIB" ],
+	"MOC_DEFINITIONS" : [ "QT_CHARTS_LIB", "QT_CORE_LIB", "QT_GUI_LIB", "QT_WIDGETS_LIB" ],
 	"MOC_DEPEND_FILTERS" : 
 	[
 		[
@@ -28,6 +28,7 @@
 	],
 	"MOC_INCLUDES" : 
 	[
+		"/home/abdallah/Documents/Study/CV/CV-tasks/task1/plotlib",
 		"/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/processing/include",
 		"/usr/local/include/opencv4",
 		"/usr/include/x86_64-linux-gnu/qt5",
@@ -35,6 +36,7 @@
 		"/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++",
 		"/usr/include/x86_64-linux-gnu/qt5/QtGui",
 		"/usr/include/x86_64-linux-gnu/qt5/QtWidgets",
+		"/usr/include/x86_64-linux-gnu/qt5/QtCharts",
 		"/usr/include",
 		"/usr/include/c++/7",
 		"/usr/include/x86_64-linux-gnu/c++/7",
@@ -72,6 +74,7 @@
 			"/home/abdallah/Documents/Study/CV/CV-tasks/task1/FiltersPage.cpp",
 			"MU"
 		],
+		[ "/home/abdallah/Documents/Study/CV/CV-tasks/task1/FreqPage.cpp", "MU" ],
 		[
 			"/home/abdallah/Documents/Study/CV/CV-tasks/task1/HistogramPage.cpp",
 			"MU"

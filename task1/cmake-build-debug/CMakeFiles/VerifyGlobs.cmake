@@ -8,7 +8,6 @@ set(OLD_GLOB
   "include/Image.h"
   "include/filters.h"
   "include/histogram.h"
-  "include/qcustomplot.h"
   "include/stb_image.h"
   "include/stb_image_write.h"
   "include/utilities.h"

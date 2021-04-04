@@ -3,6 +3,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/cv_autogen.dir/ParseCache.txt"
   "cv_autogen"
   "CMakeFiles/cv.dir/FiltersPage.cpp.o"
+  "CMakeFiles/cv.dir/FreqPage.cpp.o"
   "CMakeFiles/cv.dir/HistogramPage.cpp.o"
   "CMakeFiles/cv.dir/HybridPage.cpp.o"
   "CMakeFiles/cv.dir/MainWindow.cpp.o"
