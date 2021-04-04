@@ -80,12 +80,12 @@ void equalized_hist(Image &image, int histogram[], int equalized_histogram[], in
 void equalized_image(Image &inImage, int histogram_equalization_formula[]) {
     unsigned char ***inImgPixels = inImage.data;
     Image outImage{inImage.width, inImage.height, inImage.channels};
-    auto outImgPixels = outImage.data;
+//    auto outImgPixels = outImage.data;
     cout << inImgPixels[0][0][0];
     for (int y = 0; y < inImage.height; y++) {
         for (int x = 0; x < inImage.width; x++) {
-            outImgPixels[y][x][0] = (unsigned char) histogram_equalization_formula[inImgPixels[y][x][0]];
+            inImgPixels[y][x][0] = (unsigned char) histogram_equalization_formula[inImgPixels[y][x][0]];
         }
     }
-    outImage.saveJPG("D:/cv_task1/hello");
+//    outImage.saveJPG("D:/cv_task1/hello");
 }
