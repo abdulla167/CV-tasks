@@ -116,11 +116,53 @@ CMakeFiles/cv.dir/MainWindow.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cv.dir/MainWindow.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/abdallah/Documents/Study/CV/CV-tasks/task1/MainWindow.cpp -o CMakeFiles/cv.dir/MainWindow.cpp.s
 
+CMakeFiles/cv.dir/FiltersPage.cpp.o: CMakeFiles/cv.dir/flags.make
+CMakeFiles/cv.dir/FiltersPage.cpp.o: ../FiltersPage.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/cv.dir/FiltersPage.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cv.dir/FiltersPage.cpp.o -c /home/abdallah/Documents/Study/CV/CV-tasks/task1/FiltersPage.cpp
+
+CMakeFiles/cv.dir/FiltersPage.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cv.dir/FiltersPage.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/abdallah/Documents/Study/CV/CV-tasks/task1/FiltersPage.cpp > CMakeFiles/cv.dir/FiltersPage.cpp.i
+
+CMakeFiles/cv.dir/FiltersPage.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cv.dir/FiltersPage.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/abdallah/Documents/Study/CV/CV-tasks/task1/FiltersPage.cpp -o CMakeFiles/cv.dir/FiltersPage.cpp.s
+
+CMakeFiles/cv.dir/HistogramPage.cpp.o: CMakeFiles/cv.dir/flags.make
+CMakeFiles/cv.dir/HistogramPage.cpp.o: ../HistogramPage.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/cv.dir/HistogramPage.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cv.dir/HistogramPage.cpp.o -c /home/abdallah/Documents/Study/CV/CV-tasks/task1/HistogramPage.cpp
+
+CMakeFiles/cv.dir/HistogramPage.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cv.dir/HistogramPage.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/abdallah/Documents/Study/CV/CV-tasks/task1/HistogramPage.cpp > CMakeFiles/cv.dir/HistogramPage.cpp.i
+
+CMakeFiles/cv.dir/HistogramPage.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cv.dir/HistogramPage.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/abdallah/Documents/Study/CV/CV-tasks/task1/HistogramPage.cpp -o CMakeFiles/cv.dir/HistogramPage.cpp.s
+
+CMakeFiles/cv.dir/HybridPage.cpp.o: CMakeFiles/cv.dir/flags.make
+CMakeFiles/cv.dir/HybridPage.cpp.o: ../HybridPage.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/cv.dir/HybridPage.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cv.dir/HybridPage.cpp.o -c /home/abdallah/Documents/Study/CV/CV-tasks/task1/HybridPage.cpp
+
+CMakeFiles/cv.dir/HybridPage.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cv.dir/HybridPage.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/abdallah/Documents/Study/CV/CV-tasks/task1/HybridPage.cpp > CMakeFiles/cv.dir/HybridPage.cpp.i
+
+CMakeFiles/cv.dir/HybridPage.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cv.dir/HybridPage.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/abdallah/Documents/Study/CV/CV-tasks/task1/HybridPage.cpp -o CMakeFiles/cv.dir/HybridPage.cpp.s
+
 # Object files for target cv
 cv_OBJECTS = \
 "CMakeFiles/cv.dir/cv_autogen/mocs_compilation.cpp.o" \
 "CMakeFiles/cv.dir/main.cpp.o" \
-"CMakeFiles/cv.dir/MainWindow.cpp.o"
+"CMakeFiles/cv.dir/MainWindow.cpp.o" \
+"CMakeFiles/cv.dir/FiltersPage.cpp.o" \
+"CMakeFiles/cv.dir/HistogramPage.cpp.o" \
+"CMakeFiles/cv.dir/HybridPage.cpp.o"
 
 # External object files for target cv
 cv_EXTERNAL_OBJECTS =
@@ -128,6 +170,9 @@ cv_EXTERNAL_OBJECTS =
 cv: CMakeFiles/cv.dir/cv_autogen/mocs_compilation.cpp.o
 cv: CMakeFiles/cv.dir/main.cpp.o
 cv: CMakeFiles/cv.dir/MainWindow.cpp.o
+cv: CMakeFiles/cv.dir/FiltersPage.cpp.o
+cv: CMakeFiles/cv.dir/HistogramPage.cpp.o
+cv: CMakeFiles/cv.dir/HybridPage.cpp.o
 cv: CMakeFiles/cv.dir/build.make
 cv: processing/libprocessing.a
 cv: /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5.9.5
@@ -187,7 +232,7 @@ cv: /usr/local/lib/libfftw3.a
 cv: /usr/lib/x86_64-linux-gnu/libQt5Gui.so.5.9.5
 cv: /usr/lib/x86_64-linux-gnu/libQt5Core.so.5.9.5
 cv: CMakeFiles/cv.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable cv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable cv"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/cv.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

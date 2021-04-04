@@ -183,6 +183,87 @@ processing_autogen/fast:
 	$(MAKE) $(MAKESILENT) -f processing/CMakeFiles/processing_autogen.dir/build.make processing/CMakeFiles/processing_autogen.dir/build
 .PHONY : processing_autogen/fast
 
+FiltersPage.o: FiltersPage.cpp.o
+
+.PHONY : FiltersPage.o
+
+# target to build an object file
+FiltersPage.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cv.dir/build.make CMakeFiles/cv.dir/FiltersPage.cpp.o
+.PHONY : FiltersPage.cpp.o
+
+FiltersPage.i: FiltersPage.cpp.i
+
+.PHONY : FiltersPage.i
+
+# target to preprocess a source file
+FiltersPage.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cv.dir/build.make CMakeFiles/cv.dir/FiltersPage.cpp.i
+.PHONY : FiltersPage.cpp.i
+
+FiltersPage.s: FiltersPage.cpp.s
+
+.PHONY : FiltersPage.s
+
+# target to generate assembly for a file
+FiltersPage.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cv.dir/build.make CMakeFiles/cv.dir/FiltersPage.cpp.s
+.PHONY : FiltersPage.cpp.s
+
+HistogramPage.o: HistogramPage.cpp.o
+
+.PHONY : HistogramPage.o
+
+# target to build an object file
+HistogramPage.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cv.dir/build.make CMakeFiles/cv.dir/HistogramPage.cpp.o
+.PHONY : HistogramPage.cpp.o
+
+HistogramPage.i: HistogramPage.cpp.i
+
+.PHONY : HistogramPage.i
+
+# target to preprocess a source file
+HistogramPage.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cv.dir/build.make CMakeFiles/cv.dir/HistogramPage.cpp.i
+.PHONY : HistogramPage.cpp.i
+
+HistogramPage.s: HistogramPage.cpp.s
+
+.PHONY : HistogramPage.s
+
+# target to generate assembly for a file
+HistogramPage.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cv.dir/build.make CMakeFiles/cv.dir/HistogramPage.cpp.s
+.PHONY : HistogramPage.cpp.s
+
+HybridPage.o: HybridPage.cpp.o
+
+.PHONY : HybridPage.o
+
+# target to build an object file
+HybridPage.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cv.dir/build.make CMakeFiles/cv.dir/HybridPage.cpp.o
+.PHONY : HybridPage.cpp.o
+
+HybridPage.i: HybridPage.cpp.i
+
+.PHONY : HybridPage.i
+
+# target to preprocess a source file
+HybridPage.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cv.dir/build.make CMakeFiles/cv.dir/HybridPage.cpp.i
+.PHONY : HybridPage.cpp.i
+
+HybridPage.s: HybridPage.cpp.s
+
+.PHONY : HybridPage.s
+
+# target to generate assembly for a file
+HybridPage.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/cv.dir/build.make CMakeFiles/cv.dir/HybridPage.cpp.s
+.PHONY : HybridPage.cpp.s
+
 MainWindow.o: MainWindow.cpp.o
 
 .PHONY : MainWindow.o
@@ -276,6 +357,15 @@ help:
 	@echo "... processing_autogen"
 	@echo "... cv"
 	@echo "... processing"
+	@echo "... FiltersPage.o"
+	@echo "... FiltersPage.i"
+	@echo "... FiltersPage.s"
+	@echo "... HistogramPage.o"
+	@echo "... HistogramPage.i"
+	@echo "... HistogramPage.s"
+	@echo "... HybridPage.o"
+	@echo "... HybridPage.i"
+	@echo "... HybridPage.s"
 	@echo "... MainWindow.o"
 	@echo "... MainWindow.i"
 	@echo "... MainWindow.s"

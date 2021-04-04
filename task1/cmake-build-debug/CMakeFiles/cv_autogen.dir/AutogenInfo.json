@@ -69,6 +69,18 @@
 	"SOURCES" : 
 	[
 		[
+			"/home/abdallah/Documents/Study/CV/CV-tasks/task1/FiltersPage.cpp",
+			"MU"
+		],
+		[
+			"/home/abdallah/Documents/Study/CV/CV-tasks/task1/HistogramPage.cpp",
+			"MU"
+		],
+		[
+			"/home/abdallah/Documents/Study/CV/CV-tasks/task1/HybridPage.cpp",
+			"MU"
+		],
+		[
 			"/home/abdallah/Documents/Study/CV/CV-tasks/task1/MainWindow.cpp",
 			"MU"
 		],

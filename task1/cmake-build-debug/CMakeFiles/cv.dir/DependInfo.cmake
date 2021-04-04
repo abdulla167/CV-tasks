@@ -4,6 +4,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/abdallah/Documents/Study/CV/CV-tasks/task1/FiltersPage.cpp" "/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/CMakeFiles/cv.dir/FiltersPage.cpp.o"
+  "/home/abdallah/Documents/Study/CV/CV-tasks/task1/HistogramPage.cpp" "/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/CMakeFiles/cv.dir/HistogramPage.cpp.o"
+  "/home/abdallah/Documents/Study/CV/CV-tasks/task1/HybridPage.cpp" "/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/CMakeFiles/cv.dir/HybridPage.cpp.o"
   "/home/abdallah/Documents/Study/CV/CV-tasks/task1/MainWindow.cpp" "/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/CMakeFiles/cv.dir/MainWindow.cpp.o"
   "/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/cv_autogen/mocs_compilation.cpp" "/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/CMakeFiles/cv.dir/cv_autogen/mocs_compilation.cpp.o"
   "/home/abdallah/Documents/Study/CV/CV-tasks/task1/main.cpp" "/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/CMakeFiles/cv.dir/main.cpp.o"

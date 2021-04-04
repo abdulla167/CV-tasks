@@ -180,6 +180,15 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/abdallah/Documents/Study/CV/CV-tasks/task1/FiltersPage.cpp">
+			<Option target="cv"/>
+		</Unit>
+		<Unit filename="/home/abdallah/Documents/Study/CV/CV-tasks/task1/HistogramPage.cpp">
+			<Option target="cv"/>
+		</Unit>
+		<Unit filename="/home/abdallah/Documents/Study/CV/CV-tasks/task1/HybridPage.cpp">
+			<Option target="cv"/>
+		</Unit>
 		<Unit filename="/home/abdallah/Documents/Study/CV/CV-tasks/task1/MainWindow.cpp">
 			<Option target="cv"/>
 		</Unit>

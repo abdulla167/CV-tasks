@@ -53,7 +53,6 @@ private:
 
     void displayGrayscaleImage(Image *image, QLabel *label);
 
-    void loadImage(std::string filepath, int tabNo);
     Mat histDisplay(int histogram[], int color);
     Mat CDFDisplay(int histogram[], int color);
 };
