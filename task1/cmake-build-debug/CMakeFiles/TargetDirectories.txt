@@ -1,0 +1,8 @@
+/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/CMakeFiles/cv.dir
+/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/CMakeFiles/cv_autogen.dir
+/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/processing/CMakeFiles/rebuild_cache.dir
+/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/processing/CMakeFiles/edit_cache.dir
+/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/processing/CMakeFiles/processing.dir
+/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/processing/CMakeFiles/processing_autogen.dir

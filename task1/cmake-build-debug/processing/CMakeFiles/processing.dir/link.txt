@@ -1,0 +1,2 @@
+/usr/bin/ar qc libprocessing.a  CMakeFiles/processing.dir/processing_autogen/mocs_compilation.cpp.o CMakeFiles/processing.dir/src/Image.cpp.o CMakeFiles/processing.dir/src/filters.cpp.o CMakeFiles/processing.dir/src/utilities.cpp.o CMakeFiles/processing.dir/src/histogram.cpp.o
+/usr/bin/ranlib libprocessing.a
