@@ -11,22 +11,7 @@ using namespace cv;
 
 
 void MainWindow::on_LoadImageBtn_1_clicked() {
-//    QVector<double> x(101), y(101); // initialize with entries 0..100
-//    for (int i=0; i<101; ++i)
-//    {
-//        x[i] = i/50.0 - 1; // x goes from -1 to 1
-//        y[i] = x[i]*x[i]; // let's plot a quadratic function
-//    }
-//// create graph and assign data to it:
-//    customPlot->addGraph();
-//    customPlot->graph(0)->setData(x, y);
-//// give the axes some labels:
-//    customPlot->xAxis->setLabel("x");
-//    customPlot->yAxis->setLabel("y");
-//// set axes ranges, so we see all data:
-//    customPlot->xAxis->setRange(-1, 1);
-//    customPlot->yAxis->setRange(0, 1);
-//    customPlot->replot();
+
     QString filePath = QFileDialog::getOpenFileName(this, "load image", "../");
     std::string filepathStd = filePath.toStdString();
     auto filename = filepathStd.substr(filepathStd.find_last_of("/") + 1);
@@ -111,22 +96,6 @@ void MainWindow::on_imageSelect_currentIndexChanged(QString filterName) {
         histDisplay(hist_3, 3, ui->histPLot);
         CDFDisplay(cumHist_3, 3, ui->CDFPlot);
 
-//        vconcat(histImage_1, histImage_2, histImage_2);
-//        vconcat(histImage_2, histImage_3, histImage_3);
-//        cv::resize(histImage_3, histImage_3, cv::Size(histImage_3.cols * 1, histImage_3.rows * 0.3), 0, 0,
-//                   INTER_LINEAR);
-//        vconcat(cumHistImage_1, cumHistImage_2, cumHistImage_2);
-//        vconcat(cumHistImage_2, cumHistImage_3, cumHistImage_3);
-//        cv::resize(cumHistImage_3, cumHistImage_3, cv::Size(cumHistImage_3.cols * 1, cumHistImage_3.rows * 0.3), 0, 0,
-//                   INTER_LINEAR);
-//        ui->InputImagLabel_2->clear();
-//        ui->InputImagLabel_3->clear();
-//        ui->InputImagLabel_2->setPixmap(QPixmap::fromImage(
-//                QImage((unsigned char *) histImage_3.data, histImage_3.cols, histImage_3.rows, QImage::Format_RGB888)));
-//        ui->InputImagLabel_3->setPixmap(QPixmap::fromImage(
-//                QImage((unsigned char *) cumHistImage_3.data, cumHistImage_3.cols, cumHistImage_3.rows,
-//                       QImage::Format_RGB888)));
-
     }
 }
 
@@ -156,16 +125,7 @@ void MainWindow::histDisplay(int histogram[], int color, QCustomPlot *plot) {
         hist[i] = ((double) hist[i] / max) * histImage.rows;
     }
 
-    Scalar scalarArray[4] = {Scalar(0, 0, 0), Scalar(255, 0, 0), Scalar(0, 255, 0), Scalar(0, 0, 255)};
-    // draw the intensity line for histogram
-    for (int i = 0; i < 256; i++) {
-        line(histImage, Point(bin_w * (i), hist_h), Point(bin_w * (i), hist_h - hist[i]), scalarArray[color], 2, 8, 0);
-    }
 
-    // display histogram
-//    namedWindow(name, WINDOW_AUTOSIZE);
-//    imshow(name, histImage);
-//    ui->InputImagLabel_2->setPixmap(QPixmap::fromImage(QImage((unsigned char*) histImage.data, histImage.cols, histImage.rows, QImage::Format_RGB888)));
     QColor colorArray[4] = {QColor(0, 0, 0), QColor(255, 0, 0), QColor(0, 255, 0), QColor(0, 0, 255)};
 
     plot->addGraph();
