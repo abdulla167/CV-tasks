@@ -1,1 +1,0 @@
-/home/abdallah/Documents/Study/CV/CV-tasks/task1/processing/include/stb_image.h
