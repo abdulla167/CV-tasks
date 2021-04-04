@@ -383,11 +383,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="InputImagLabel_2">
-                <property name="text">
-                 <string/>
-                </property>
-               </widget>
+               <widget class="QCustomPlot" name="histPLot" native="true"/>
               </item>
              </layout>
             </item>
@@ -401,11 +397,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="InputImagLabel_3">
-                <property name="text">
-                 <string/>
-                </property>
-               </widget>
+               <widget class="QCustomPlot" name="CDFPlot" native="true"/>
               </item>
              </layout>
             </item>
@@ -441,11 +433,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="outputImageLabel_2">
-                <property name="text">
-                 <string/>
-                </property>
-               </widget>
+               <widget class="QCustomPlot" name="eqHistPlot" native="true"/>
               </item>
              </layout>
             </item>
@@ -459,11 +447,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="outputImageLabel_3">
-                <property name="text">
-                 <string/>
-                </property>
-               </widget>
+               <widget class="QCustomPlot" name="eqCDFPLot" native="true"/>
               </item>
              </layout>
             </item>
@@ -768,6 +752,14 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QCustomPlot</class>
+   <extends>QWidget</extends>
+   <header location="global">qcustomplot.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

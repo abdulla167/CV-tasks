@@ -1,4 +1,4 @@
-# Install script for directory: /home/abdallah/Documents/Study/CV/CV-tasks/task1/processing
+# Install script for directory: /home/mohamedkamal/CLionProjects/CV-tasks/task1/processing
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

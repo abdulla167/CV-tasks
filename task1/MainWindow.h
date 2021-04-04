@@ -9,6 +9,7 @@
 #include <QLabel>
 #include "processing/Image.h"
 #include <opencv2/imgproc/imgproc.hpp>
+#include "qcustomplot.h"
 
 using namespace  cv;
 QT_BEGIN_NAMESPACE
@@ -53,8 +54,8 @@ private:
 
     void displayGrayscaleImage(Image *image, QLabel *label);
 
-    Mat histDisplay(int histogram[], int color);
-    Mat CDFDisplay(int histogram[], int color);
+    void histDisplay(int histogram[], int color, QCustomPlot *plot);
+    void CDFDisplay(int histogram[], int color, QCustomPlot *plot);
 };
 
 #endif //CV_MAINWINDOW_H

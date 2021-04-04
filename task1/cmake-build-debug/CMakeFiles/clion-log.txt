@@ -1,5 +1,5 @@
-/opt/clion-2020.3/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/abdallah/Documents/Study/CV/CV-tasks/task1
-include/Image.hinclude/filters.hinclude/histogram.hinclude/qcustomplot.hinclude/stb_image.hinclude/stb_image_write.hinclude/utilities.h
+/snap/clion/145/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/mohamedkamal/CLionProjects/CV-tasks/task1
+include/Image.hinclude/filters.hinclude/histogram.hinclude/stb_image.hinclude/stb_image_write.hinclude/utilities.h
 -- Configuring done
 -- Generating done
--- Build files have been written to: /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug
+-- Build files have been written to: /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug

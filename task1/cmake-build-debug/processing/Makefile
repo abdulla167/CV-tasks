@@ -59,19 +59,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /opt/clion-2020.3/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /snap/clion/145/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /opt/clion-2020.3/bin/cmake/linux/bin/cmake -E rm -f
+RM = /snap/clion/145/bin/cmake/linux/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/abdallah/Documents/Study/CV/CV-tasks/task1
+CMAKE_SOURCE_DIR = /home/mohamedkamal/CLionProjects/CV-tasks/task1
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug
+CMAKE_BINARY_DIR = /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -79,7 +79,7 @@ CMAKE_BINARY_DIR = /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/opt/clion-2020.3/bin/cmake/linux/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/snap/clion/145/bin/cmake/linux/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -90,7 +90,7 @@ rebuild_cache/fast: rebuild_cache
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/opt/clion-2020.3/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+	/snap/clion/145/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -100,14 +100,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_progress_start /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/CMakeFiles /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/processing/CMakeFiles/progress.marks
-	cd /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 processing/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/CMakeFiles 0
+	cd /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_progress_start /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/CMakeFiles /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/processing/CMakeFiles/progress.marks
+	cd /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 processing/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 processing/clean
+	cd /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 processing/clean
 .PHONY : clean
 
 # The main clean target
@@ -117,23 +117,23 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 processing/preinstall
+	cd /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 processing/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 processing/preinstall
+	cd /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 processing/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug && $(CMAKE_COMMAND) -P /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/CMakeFiles/VerifyGlobs.cmake
-	cd /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug && $(CMAKE_COMMAND) -P /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/CMakeFiles/VerifyGlobs.cmake
+	cd /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 processing/CMakeFiles/processing.dir/rule:
-	cd /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 processing/CMakeFiles/processing.dir/rule
+	cd /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 processing/CMakeFiles/processing.dir/rule
 .PHONY : processing/CMakeFiles/processing.dir/rule
 
 # Convenience name for target.
@@ -143,12 +143,12 @@ processing: processing/CMakeFiles/processing.dir/rule
 
 # fast build rule for target.
 processing/fast:
-	cd /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f processing/CMakeFiles/processing.dir/build.make processing/CMakeFiles/processing.dir/build
+	cd /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f processing/CMakeFiles/processing.dir/build.make processing/CMakeFiles/processing.dir/build
 .PHONY : processing/fast
 
 # Convenience name for target.
 processing/CMakeFiles/processing_autogen.dir/rule:
-	cd /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 processing/CMakeFiles/processing_autogen.dir/rule
+	cd /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 processing/CMakeFiles/processing_autogen.dir/rule
 .PHONY : processing/CMakeFiles/processing_autogen.dir/rule
 
 # Convenience name for target.
@@ -158,7 +158,7 @@ processing_autogen: processing/CMakeFiles/processing_autogen.dir/rule
 
 # fast build rule for target.
 processing_autogen/fast:
-	cd /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f processing/CMakeFiles/processing_autogen.dir/build.make processing/CMakeFiles/processing_autogen.dir/build
+	cd /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f processing/CMakeFiles/processing_autogen.dir/build.make processing/CMakeFiles/processing_autogen.dir/build
 .PHONY : processing_autogen/fast
 
 processing_autogen/mocs_compilation.o: processing_autogen/mocs_compilation.cpp.o
@@ -167,7 +167,7 @@ processing_autogen/mocs_compilation.o: processing_autogen/mocs_compilation.cpp.o
 
 # target to build an object file
 processing_autogen/mocs_compilation.cpp.o:
-	cd /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f processing/CMakeFiles/processing.dir/build.make processing/CMakeFiles/processing.dir/processing_autogen/mocs_compilation.cpp.o
+	cd /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f processing/CMakeFiles/processing.dir/build.make processing/CMakeFiles/processing.dir/processing_autogen/mocs_compilation.cpp.o
 .PHONY : processing_autogen/mocs_compilation.cpp.o
 
 processing_autogen/mocs_compilation.i: processing_autogen/mocs_compilation.cpp.i
@@ -176,7 +176,7 @@ processing_autogen/mocs_compilation.i: processing_autogen/mocs_compilation.cpp.i
 
 # target to preprocess a source file
 processing_autogen/mocs_compilation.cpp.i:
-	cd /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f processing/CMakeFiles/processing.dir/build.make processing/CMakeFiles/processing.dir/processing_autogen/mocs_compilation.cpp.i
+	cd /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f processing/CMakeFiles/processing.dir/build.make processing/CMakeFiles/processing.dir/processing_autogen/mocs_compilation.cpp.i
 .PHONY : processing_autogen/mocs_compilation.cpp.i
 
 processing_autogen/mocs_compilation.s: processing_autogen/mocs_compilation.cpp.s
@@ -185,7 +185,7 @@ processing_autogen/mocs_compilation.s: processing_autogen/mocs_compilation.cpp.s
 
 # target to generate assembly for a file
 processing_autogen/mocs_compilation.cpp.s:
-	cd /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f processing/CMakeFiles/processing.dir/build.make processing/CMakeFiles/processing.dir/processing_autogen/mocs_compilation.cpp.s
+	cd /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f processing/CMakeFiles/processing.dir/build.make processing/CMakeFiles/processing.dir/processing_autogen/mocs_compilation.cpp.s
 .PHONY : processing_autogen/mocs_compilation.cpp.s
 
 src/Image.o: src/Image.cpp.o
@@ -194,7 +194,7 @@ src/Image.o: src/Image.cpp.o
 
 # target to build an object file
 src/Image.cpp.o:
-	cd /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f processing/CMakeFiles/processing.dir/build.make processing/CMakeFiles/processing.dir/src/Image.cpp.o
+	cd /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f processing/CMakeFiles/processing.dir/build.make processing/CMakeFiles/processing.dir/src/Image.cpp.o
 .PHONY : src/Image.cpp.o
 
 src/Image.i: src/Image.cpp.i
@@ -203,7 +203,7 @@ src/Image.i: src/Image.cpp.i
 
 # target to preprocess a source file
 src/Image.cpp.i:
-	cd /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f processing/CMakeFiles/processing.dir/build.make processing/CMakeFiles/processing.dir/src/Image.cpp.i
+	cd /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f processing/CMakeFiles/processing.dir/build.make processing/CMakeFiles/processing.dir/src/Image.cpp.i
 .PHONY : src/Image.cpp.i
 
 src/Image.s: src/Image.cpp.s
@@ -212,7 +212,7 @@ src/Image.s: src/Image.cpp.s
 
 # target to generate assembly for a file
 src/Image.cpp.s:
-	cd /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f processing/CMakeFiles/processing.dir/build.make processing/CMakeFiles/processing.dir/src/Image.cpp.s
+	cd /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f processing/CMakeFiles/processing.dir/build.make processing/CMakeFiles/processing.dir/src/Image.cpp.s
 .PHONY : src/Image.cpp.s
 
 src/filters.o: src/filters.cpp.o
@@ -221,7 +221,7 @@ src/filters.o: src/filters.cpp.o
 
 # target to build an object file
 src/filters.cpp.o:
-	cd /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f processing/CMakeFiles/processing.dir/build.make processing/CMakeFiles/processing.dir/src/filters.cpp.o
+	cd /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f processing/CMakeFiles/processing.dir/build.make processing/CMakeFiles/processing.dir/src/filters.cpp.o
 .PHONY : src/filters.cpp.o
 
 src/filters.i: src/filters.cpp.i
@@ -230,7 +230,7 @@ src/filters.i: src/filters.cpp.i
 
 # target to preprocess a source file
 src/filters.cpp.i:
-	cd /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f processing/CMakeFiles/processing.dir/build.make processing/CMakeFiles/processing.dir/src/filters.cpp.i
+	cd /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f processing/CMakeFiles/processing.dir/build.make processing/CMakeFiles/processing.dir/src/filters.cpp.i
 .PHONY : src/filters.cpp.i
 
 src/filters.s: src/filters.cpp.s
@@ -239,7 +239,7 @@ src/filters.s: src/filters.cpp.s
 
 # target to generate assembly for a file
 src/filters.cpp.s:
-	cd /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f processing/CMakeFiles/processing.dir/build.make processing/CMakeFiles/processing.dir/src/filters.cpp.s
+	cd /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f processing/CMakeFiles/processing.dir/build.make processing/CMakeFiles/processing.dir/src/filters.cpp.s
 .PHONY : src/filters.cpp.s
 
 src/histogram.o: src/histogram.cpp.o
@@ -248,7 +248,7 @@ src/histogram.o: src/histogram.cpp.o
 
 # target to build an object file
 src/histogram.cpp.o:
-	cd /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f processing/CMakeFiles/processing.dir/build.make processing/CMakeFiles/processing.dir/src/histogram.cpp.o
+	cd /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f processing/CMakeFiles/processing.dir/build.make processing/CMakeFiles/processing.dir/src/histogram.cpp.o
 .PHONY : src/histogram.cpp.o
 
 src/histogram.i: src/histogram.cpp.i
@@ -257,7 +257,7 @@ src/histogram.i: src/histogram.cpp.i
 
 # target to preprocess a source file
 src/histogram.cpp.i:
-	cd /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f processing/CMakeFiles/processing.dir/build.make processing/CMakeFiles/processing.dir/src/histogram.cpp.i
+	cd /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f processing/CMakeFiles/processing.dir/build.make processing/CMakeFiles/processing.dir/src/histogram.cpp.i
 .PHONY : src/histogram.cpp.i
 
 src/histogram.s: src/histogram.cpp.s
@@ -266,7 +266,7 @@ src/histogram.s: src/histogram.cpp.s
 
 # target to generate assembly for a file
 src/histogram.cpp.s:
-	cd /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f processing/CMakeFiles/processing.dir/build.make processing/CMakeFiles/processing.dir/src/histogram.cpp.s
+	cd /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f processing/CMakeFiles/processing.dir/build.make processing/CMakeFiles/processing.dir/src/histogram.cpp.s
 .PHONY : src/histogram.cpp.s
 
 src/utilities.o: src/utilities.cpp.o
@@ -275,7 +275,7 @@ src/utilities.o: src/utilities.cpp.o
 
 # target to build an object file
 src/utilities.cpp.o:
-	cd /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f processing/CMakeFiles/processing.dir/build.make processing/CMakeFiles/processing.dir/src/utilities.cpp.o
+	cd /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f processing/CMakeFiles/processing.dir/build.make processing/CMakeFiles/processing.dir/src/utilities.cpp.o
 .PHONY : src/utilities.cpp.o
 
 src/utilities.i: src/utilities.cpp.i
@@ -284,7 +284,7 @@ src/utilities.i: src/utilities.cpp.i
 
 # target to preprocess a source file
 src/utilities.cpp.i:
-	cd /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f processing/CMakeFiles/processing.dir/build.make processing/CMakeFiles/processing.dir/src/utilities.cpp.i
+	cd /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f processing/CMakeFiles/processing.dir/build.make processing/CMakeFiles/processing.dir/src/utilities.cpp.i
 .PHONY : src/utilities.cpp.i
 
 src/utilities.s: src/utilities.cpp.s
@@ -293,7 +293,7 @@ src/utilities.s: src/utilities.cpp.s
 
 # target to generate assembly for a file
 src/utilities.cpp.s:
-	cd /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f processing/CMakeFiles/processing.dir/build.make processing/CMakeFiles/processing.dir/src/utilities.cpp.s
+	cd /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug && $(MAKE) $(MAKESILENT) -f processing/CMakeFiles/processing.dir/build.make processing/CMakeFiles/processing.dir/src/utilities.cpp.s
 .PHONY : src/utilities.cpp.s
 
 # Help Target
@@ -332,7 +332,7 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug && $(CMAKE_COMMAND) -P /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/CMakeFiles/VerifyGlobs.cmake
-	cd /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug && $(CMAKE_COMMAND) -P /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/CMakeFiles/VerifyGlobs.cmake
+	cd /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

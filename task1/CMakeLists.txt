@@ -8,10 +8,10 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 set(QT_VERSION 5)
-set(REQUIRED_LIBS Core Gui Widgets)
-set(REQUIRED_LIBS_QUALIFIED Qt5::Core Qt5::Gui Qt5::Widgets)
-
-add_executable(${PROJECT_NAME} main.cpp MainWindow.cpp MainWindow.h MainWindow.ui FiltersPage.cpp HistogramPage.cpp HybridPage.cpp)
+set(REQUIRED_LIBS Core Gui Widgets )
+set(REQUIRED_LIBS_QUALIFIED Qt5::Core Qt5::Gui Qt5::Widgets )
+include_directories(plotlib)
+add_executable(${PROJECT_NAME}  main.cpp MainWindow.cpp MainWindow.h MainWindow.ui FiltersPage.cpp HistogramPage.cpp HybridPage.cpp)
 
 if (NOT CMAKE_PREFIX_PATH)
     message(WARNING "CMAKE_PREFIX_PATH is not defined, you may need to set it "
@@ -20,5 +20,6 @@ endif ()
 
 find_package(Qt${QT_VERSION} COMPONENTS ${REQUIRED_LIBS} REQUIRED)
 add_subdirectory(processing)
-target_link_libraries(${PROJECT_NAME} processing)
+add_subdirectory(plotlib)
+target_link_libraries(${PROJECT_NAME} processing plot)
 target_link_libraries(${PROJECT_NAME}  ${REQUIRED_LIBS_QUALIFIED})

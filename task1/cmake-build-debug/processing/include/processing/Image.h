@@ -1,1 +1,1 @@
-/home/abdallah/Documents/Study/CV/CV-tasks/task1/processing/include/Image.h
+/home/mohamedkamal/CLionProjects/CV-tasks/task1/processing/include/Image.h

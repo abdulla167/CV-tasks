@@ -54,19 +54,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /opt/clion-2020.3/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /snap/clion/145/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /opt/clion-2020.3/bin/cmake/linux/bin/cmake -E rm -f
+RM = /snap/clion/145/bin/cmake/linux/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/abdallah/Documents/Study/CV/CV-tasks/task1
+CMAKE_SOURCE_DIR = /home/mohamedkamal/CLionProjects/CV-tasks/task1
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug
+CMAKE_BINARY_DIR = /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug
 
 # Utility rule file for processing_autogen.
 
@@ -74,8 +74,8 @@ CMAKE_BINARY_DIR = /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-
 include processing/CMakeFiles/processing_autogen.dir/progress.make
 
 processing/CMakeFiles/processing_autogen:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC and UIC for target processing"
-	cd /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/processing && /opt/clion-2020.3/bin/cmake/linux/bin/cmake -E cmake_autogen /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/processing/CMakeFiles/processing_autogen.dir/AutogenInfo.json Debug
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC and UIC for target processing"
+	cd /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/processing && /snap/clion/145/bin/cmake/linux/bin/cmake -E cmake_autogen /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/processing/CMakeFiles/processing_autogen.dir/AutogenInfo.json Debug
 
 processing_autogen: processing/CMakeFiles/processing_autogen
 processing_autogen: processing/CMakeFiles/processing_autogen.dir/build.make
@@ -88,10 +88,10 @@ processing/CMakeFiles/processing_autogen.dir/build: processing_autogen
 .PHONY : processing/CMakeFiles/processing_autogen.dir/build
 
 processing/CMakeFiles/processing_autogen.dir/clean:
-	cd /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/processing && $(CMAKE_COMMAND) -P CMakeFiles/processing_autogen.dir/cmake_clean.cmake
+	cd /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/processing && $(CMAKE_COMMAND) -P CMakeFiles/processing_autogen.dir/cmake_clean.cmake
 .PHONY : processing/CMakeFiles/processing_autogen.dir/clean
 
 processing/CMakeFiles/processing_autogen.dir/depend:
-	cd /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/abdallah/Documents/Study/CV/CV-tasks/task1 /home/abdallah/Documents/Study/CV/CV-tasks/task1/processing /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/processing /home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/processing/CMakeFiles/processing_autogen.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/mohamedkamal/CLionProjects/CV-tasks/task1 /home/mohamedkamal/CLionProjects/CV-tasks/task1/processing /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/processing /home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/processing/CMakeFiles/processing_autogen.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : processing/CMakeFiles/processing_autogen.dir/depend
 

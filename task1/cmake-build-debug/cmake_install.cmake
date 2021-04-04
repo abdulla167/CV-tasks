@@ -1,4 +1,4 @@
-# Install script for directory: /home/abdallah/Documents/Study/CV/CV-tasks/task1
+# Install script for directory: /home/mohamedkamal/CLionProjects/CV-tasks/task1
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,7 +39,12 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/processing/cmake_install.cmake")
+  include("/home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/processing/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("/home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/plotlib/cmake_install.cmake")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -50,5 +55,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/abdallah/Documents/Study/CV/CV-tasks/task1/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/mohamedkamal/CLionProjects/CV-tasks/task1/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
