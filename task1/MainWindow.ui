@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1142</width>
-    <height>711</height>
+    <width>1383</width>
+    <height>935</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,10 +30,10 @@
        <widget class="QFrame" name="frame">
         <property name="geometry">
          <rect>
-          <x>220</x>
-          <y>30</y>
-          <width>431</width>
-          <height>401</height>
+          <x>210</x>
+          <y>10</y>
+          <width>531</width>
+          <height>541</height>
          </rect>
         </property>
         <property name="frameShape">
@@ -58,10 +58,10 @@
         <widget class="QLabel" name="inputImageLabel">
          <property name="geometry">
           <rect>
-           <x>0</x>
+           <x>10</x>
            <y>20</y>
-           <width>431</width>
-           <height>381</height>
+           <width>512</width>
+           <height>511</height>
           </rect>
          </property>
          <property name="text">
@@ -72,10 +72,10 @@
        <widget class="QFrame" name="frame_2">
         <property name="geometry">
          <rect>
-          <x>660</x>
-          <y>30</y>
-          <width>451</width>
-          <height>401</height>
+          <x>750</x>
+          <y>10</y>
+          <width>531</width>
+          <height>541</height>
          </rect>
         </property>
         <property name="frameShape">
@@ -100,10 +100,10 @@
         <widget class="QLabel" name="outputImageLabel">
          <property name="geometry">
           <rect>
-           <x>0</x>
+           <x>10</x>
            <y>20</y>
-           <width>451</width>
-           <height>381</height>
+           <width>511</width>
+           <height>512</height>
           </rect>
          </property>
          <property name="text">
@@ -127,8 +127,8 @@
        <widget class="QFrame" name="frame_3">
         <property name="geometry">
          <rect>
-          <x>70</x>
-          <y>480</y>
+          <x>200</x>
+          <y>650</y>
           <width>1031</width>
           <height>131</height>
          </rect>
@@ -258,8 +258,8 @@
        <widget class="QLabel" name="label_3">
         <property name="geometry">
          <rect>
-          <x>70</x>
-          <y>460</y>
+          <x>200</x>
+          <y>630</y>
           <width>111</width>
           <height>17</height>
          </rect>
@@ -298,7 +298,7 @@
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>210</y>
+          <y>170</y>
           <width>41</width>
           <height>17</height>
          </rect>
@@ -310,8 +310,8 @@
        <widget class="QLabel" name="imageSize">
         <property name="geometry">
          <rect>
-          <x>50</x>
-          <y>210</y>
+          <x>40</x>
+          <y>170</y>
           <width>161</width>
           <height>17</height>
          </rect>
@@ -326,10 +326,284 @@
         <string>Histograms</string>
        </attribute>
       </widget>
+      <widget class="QWidget" name="frequencyFilters">
+       <attribute name="title">
+        <string>Frequency Filters</string>
+       </attribute>
+      </widget>
       <widget class="QWidget" name="hybrid">
        <attribute name="title">
         <string>Hybrid</string>
        </attribute>
+       <widget class="QFrame" name="frame_4">
+        <property name="geometry">
+         <rect>
+          <x>330</x>
+          <y>20</y>
+          <width>411</width>
+          <height>401</height>
+         </rect>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <widget class="QLabel" name="label_7">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>121</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Image A</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="imageALabel">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>20</y>
+           <width>391</width>
+           <height>371</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QFrame" name="frame_5">
+        <property name="geometry">
+         <rect>
+          <x>330</x>
+          <y>430</y>
+          <width>411</width>
+          <height>401</height>
+         </rect>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <widget class="QLabel" name="label_9">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>121</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Image B</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="imageBLabel">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>20</y>
+           <width>391</width>
+           <height>371</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QPushButton" name="imageABtn">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>60</y>
+          <width>151</width>
+          <height>61</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Load Image A</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="imageBBtn">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>490</y>
+          <width>151</width>
+          <height>61</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Load Image B</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="imageASize">
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>200</y>
+          <width>161</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+       <widget class="QLabel" name="imageAName">
+        <property name="geometry">
+         <rect>
+          <x>90</x>
+          <y>160</y>
+          <width>141</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_10">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>200</y>
+          <width>41</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Size:</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_11">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>160</y>
+          <width>51</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Name:</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="imageBSize">
+        <property name="geometry">
+         <rect>
+          <x>70</x>
+          <y>620</y>
+          <width>161</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+       <widget class="QLabel" name="imageBName">
+        <property name="geometry">
+         <rect>
+          <x>100</x>
+          <y>580</y>
+          <width>141</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_12">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>620</y>
+          <width>41</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Size:</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_13">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>580</y>
+          <width>51</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Name:</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="hybridBtn">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>740</y>
+          <width>131</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Make Hybrid</string>
+        </property>
+       </widget>
+       <widget class="QFrame" name="frame_6">
+        <property name="geometry">
+         <rect>
+          <x>790</x>
+          <y>110</y>
+          <width>531</width>
+          <height>541</height>
+         </rect>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <widget class="QLabel" name="label_14">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>121</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Hybrid Image</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="hybridImageLabel">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>20</y>
+           <width>512</width>
+           <height>511</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </widget>
       </widget>
      </widget>
     </item>
@@ -340,7 +614,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1142</width>
+     <width>1383</width>
      <height>22</height>
     </rect>
    </property>

@@ -6,6 +6,7 @@
 #define CV_MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QLabel>
 #include "processing/Image.h"
 
 QT_BEGIN_NAMESPACE
@@ -17,6 +18,8 @@ Q_OBJECT
 
     Image *inputImage = nullptr;
     Image *outputImage = nullptr;
+    Image *imageA = nullptr;
+    Image *imageB = nullptr;
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
@@ -27,13 +30,22 @@ private slots:
 
     void on_loadImageBtn_clicked();
 
+    void on_imageABtn_clicked();
+
+    void on_imageBBtn_clicked();
+
+    void on_hybridBtn_clicked();
+
     void on_filterSelect_currentIndexChanged(QString);
 
 private:
     Ui::MainWindow *ui;
-    void loadImage(std::string filepath);
-    void displayRGBImage(Image *image);
-    void displayGrayscaleImage(Image *image);
+
+    void loadImage(std::string filepath, Image *&image);
+
+    void displayRGBImage(Image *image, QLabel *label);
+
+    void displayGrayscaleImage(Image *image, QLabel *label);
 };
 
 #endif //CV_MAINWINDOW_H

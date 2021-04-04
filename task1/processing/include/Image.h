@@ -9,7 +9,8 @@
 
 class Image {
 public:
-    unsigned char ***data;
+    float ***data;
+
     int width, height, channels;
 
     Image(int width, int height, int channel);
@@ -22,7 +23,11 @@ public:
 
     int size();
 
-    unsigned char *flatten();
+    float *flatten();
+
+    double * flattenDouble();
+
+    Image toScale();
 
     void saveJPG(std::string filename);
 
@@ -33,7 +38,7 @@ private:
 
     void init(unsigned char *data);
 
-    void copyData(unsigned char ***data);
+    void copyData(float ***data);
 };
 
 

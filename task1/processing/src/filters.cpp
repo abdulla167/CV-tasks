@@ -6,8 +6,9 @@
 #include "utilities.h"
 #include <cmath>
 
+
 Image avgFilter(Image &inputImg, char dim) {
-    auto *kernel = new double[dim * dim];
+    auto *kernel = new float[dim * dim];
     averageGeneration(kernel, dim);
     Image im = applyFilter(inputImg, kernel, dim);
     delete[] kernel;
@@ -15,7 +16,7 @@ Image avgFilter(Image &inputImg, char dim) {
 }
 
 Image gaussianFilter(Image &inputImg, char dim, float mean, float sigma) {
-    auto *kernel = new double[dim * dim];
+    auto *kernel = new float[dim * dim];
     gaussianGeneration(kernel, dim, sigma, mean);
     Image im = applyFilter(inputImg, kernel, dim);
     delete[] kernel;
@@ -35,18 +36,34 @@ Image medianFilter(Image &inputImg, int dim) {
     return outputImg;
 }
 
+Image laplacianFilter(Image &inputImg, int dim) {
+    float kernel[] = {
+            0, -1, 0,
+            -1, 4, -1,
+            0, -1, 0
+    };
+    Image im = applyFilter(inputImg, kernel, dim);
+    return im;
+}
+
 Image perwitEdgeDetector(Image &inputImg) {
-    Image outputImg{inputImg.width, inputImg.height, inputImg.channels};
-    char xFilter[9] = {-1, 0, 1, -1, 0, 1, -1, 0, 1};
-    char yFilter[9] = {1, 1, 1, 0, 0, 0, -1, -1, -1};
+    float xFilter[9] = {
+            -1, 0, 1,
+            -1, 0, 1,
+            -1, 0, 1};
+    float yFilter[9] = {
+            1, 1, 1,
+            0, 0, 0,
+            -1, -1, -1};
+    Image outputImg{inputImg.width - 2, inputImg.height - 2, inputImg.channels};
     Image imgX = applyFilter(inputImg, xFilter, 3);
     Image imgY = applyFilter(inputImg, yFilter, 3);
     for (int y = 0; y < imgX.height; y++) {
         for (int x = 0; x < imgX.width; x++) {
             for (int z = 0; z < imgX.channels; z++) {
-                unsigned char xComponent = imgX.data[y][x][z];
-                unsigned char yComponent = imgY.data[y][x][z];
-                outputImg.data[y][x][z] = (unsigned char) sqrt(pow(xComponent, 2) + pow(yComponent, 2));
+                float xComponent = imgX.data[y][x][z];
+                float yComponent = imgY.data[y][x][z];
+                outputImg.data[y][x][z] =  sqrt(pow(xComponent, 2) + pow(yComponent, 2));
             }
         }
     }
@@ -54,23 +71,23 @@ Image perwitEdgeDetector(Image &inputImg) {
 }
 
 Image sobelEdgeDetector(Image &inputImg) {
-    Image outputImg{inputImg.width, inputImg.height, inputImg.channels};
-    char xFilter[9] = {
+    float xFilter[9] = {
             -1, 0, 1,
             -2, 0, 2,
             -1, 0, 1};
-    char yFilter[9] = {
+    float yFilter[9] = {
             1, 2, 1,
             0, 0, 0,
             -1, -2, -1};
+    Image outputImg{inputImg.width - 2, inputImg.height -2, inputImg.channels};
     Image imgX = applyFilter(inputImg, xFilter, 3);
     Image imgY = applyFilter(inputImg, yFilter, 3);
     for (int y = 0; y < imgX.height; y++) {
         for (int x = 0; x < imgX.width; x++) {
             for (int z = 0; z < imgX.channels; z++) {
-                unsigned char xComponent = imgX.data[y][x][z];
-                unsigned char yComponent = imgY.data[y][x][z];
-                outputImg.data[y][x][z] = (unsigned char) sqrt(pow(xComponent, 2) + pow(yComponent, 2));
+                float xComponent = imgX.data[y][x][z];
+                float yComponent = imgY.data[y][x][z];
+                outputImg.data[y][x][z] = std::sqrt(pow(xComponent, 2) + pow(yComponent, 2));
             }
         }
     }
@@ -79,17 +96,21 @@ Image sobelEdgeDetector(Image &inputImg) {
 
 Image robertsEdgeDetector(Image &inputImg) {
     Image outputImg{inputImg.width, inputImg.height, inputImg.channels};
-    char xFilter[4] = {1, 0, 0, -1};
-    char yFilter[4] = {0, 1, -1, 0};
+    char xFilter[4] = {
+            1, 0,
+            0, -1};
+    char yFilter[4] = {
+            0, 1,
+            -1, 0};
+    float xValue = 0;
+    float yValue = 0;
+    float result = 0;
     for (int y = 0; y < inputImg.height - 1; y++) {
         for (int x = 0; x < inputImg.width - 1; x++) {
             for (int z = 0; z < inputImg.channels; z++) {
-                int xValue = inputImg.data[y][x][z] * xFilter[0] + inputImg.data[y + 1][x][z] * xFilter[3];
-                int yValue = inputImg.data[y][x][z] * yFilter[1] + inputImg.data[y + 1][x][z] * yFilter[2];
-                int result = sqrt(pow(xValue, 2) + pow(yValue, 2));
-                if (abs(result) > 255) {
-                    result = 255;
-                }
+                xValue = inputImg.data[y][x][z] * xFilter[0] + inputImg.data[y + 1][x + 1][z] * xFilter[3];
+                yValue = inputImg.data[y][x + 1][z] * yFilter[1] + inputImg.data[y + 1][x][z] * yFilter[2];
+                result = sqrt(pow(xValue, 2) + pow(yValue, 2));
                 outputImg.data[y][x][z] = result;
             }
         }

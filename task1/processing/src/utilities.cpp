@@ -8,7 +8,7 @@
 #include <vector>
 #include <algorithm>
 
-void gaussianGeneration(double *kernel, char dim, float sigma, float mean) {
+void gaussianGeneration(float *kernel, char dim, float sigma, float mean) {
     double r, s = 2.0 * sigma * sigma;
     int t = dim / 2;
     float diff_x = 0;
@@ -23,48 +23,28 @@ void gaussianGeneration(double *kernel, char dim, float sigma, float mean) {
     }
 }
 
-void averageGeneration(double *kernel, char dim) {
+void averageGeneration(float *kernel, char dim) {
     int size = dim * dim;
     for (int i = 0; i < size; ++i) {
         kernel[i] = 1.0 / size;
     }
 }
 
-int convolution(Image &inputImg, const char *filter, int filterDim, int x, int y, int channelNo) {
+float convolution(Image &inputImg, const float *filter, int filterDim, int x, int y, int channelNo) {
     int startX = x - ((filterDim - 1) / 2);
     int startY = y - ((filterDim - 1) / 2);
-    int result = 0;
+    float result = 0;
     for (int i = 0; i < filterDim; i++) {
         for (int j = 0; j < filterDim; j++) {
-            int dataValue = inputImg.data[i + startY][j + startX][channelNo];
-            char filterValue = filter[(i * 3) + j];
+            float dataValue = inputImg.data[i + startY][j + startX][channelNo];
+            float filterValue = filter[(i * 3) + j];
             result += dataValue * filterValue;
         }
     }
-    if (abs(result) > 255) {
-        result = 255;
-    }
-    return abs(result);
+    return result;
 }
 
-double convolution(Image &inputImg, const double *filter, int filterDim, int x, int y, int channelNo) {
-    int startX = x - ((filterDim - 1) / 2);
-    int startY = y - ((filterDim - 1) / 2);
-    double result = 0;
-    for (int i = 0; i < filterDim; i++) {
-        for (int j = 0; j < filterDim; j++) {
-            int dataValue = inputImg.data[i + startY][j + startX][channelNo];
-            double filterValue = filter[(i * 3) + j];
-            result += dataValue * filterValue;
-        }
-    }
-    if (std::abs(result) > 255) {
-        result = 255;
-    }
-    return std::abs(result);
-}
-
-int convSort(Image &inputImg, int filterDim, int x, int y, int channelNo){
+int convSort(Image &inputImg, int filterDim, int x, int y, int channelNo) {
     int startX = x - ((filterDim - 1) / 2);
     int startY = y - ((filterDim - 1) / 2);
     std::vector<int> vals;
@@ -75,34 +55,72 @@ int convSort(Image &inputImg, int filterDim, int x, int y, int channelNo){
         }
     }
     std::sort(vals.begin(), vals.end());
-    return vals[vals.size() / 2];
+    return vals[vals.size() / 2 + vals.size() % 2];
 }
 
-
-Image applyFilter(Image &inputImg, char *filter, int filterDim) {
+Image applyFilter(Image &inputImg, float *filter, int filterDim) {
     Image outputImg{inputImg.width - filterDim + 1, inputImg.height - filterDim + 1, inputImg.channels};
-    int begin = filterDim / 2;
-    for (int y = begin; y < inputImg.height - begin; y++) {
-        for (int x = begin; x < inputImg.width - begin; x++) {
+    int offset = filterDim / 2;
+    for (int y = offset; y < inputImg.height - offset; y++) {
+        for (int x = offset; x < inputImg.width - offset; x++) {
             for (int z = 0; z < inputImg.channels; z++) {
-                int result = convolution(inputImg, filter, filterDim, x, y, z);
-                outputImg.data[y - begin][x - begin][z] = result;
+                float result = convolution(inputImg, filter, filterDim, x, y, z);
+                outputImg.data[y - offset][x - offset][z] = result;
             }
         }
     }
     return outputImg;
 }
 
-Image applyFilter(Image &inputImg, double *filter, int filterDim) {
-    Image outputImg{inputImg.width - filterDim + 1, inputImg.height - filterDim + 1, inputImg.channels};
-    int begin = filterDim / 2;
-    for (int y = begin; y < inputImg.height - begin; y++) {
-        for (int x = begin; x < inputImg.width - begin; x++) {
-            for (int z = 0; z < inputImg.channels; z++) {
-                double result = convolution(inputImg, filter, filterDim, x, y, z);
-                outputImg.data[y-begin][x-begin][z] = (int)result;
-            }
+void arrayToScale(double *data, int size) {
+    int max = 0;
+    for (int i = 0; i < size; ++i) {
+        data[i] = std::abs(data[i]);
+        if (data[i] > max)
+            max = data[i];
+    }
+    for (int i = 0; i < size; ++i) {
+        data[i] = (data[i] / max) * 255;
+    }
+}
+
+void arrayToScale(float *data, int size) {
+    int max = 0;
+    for (int i = 0; i < size; ++i) {
+        data[i] = std::abs(data[i]);
+        if (data[i] > max)
+            max = data[i];
+    }
+    for (int i = 0; i < size; ++i) {
+        data[i] = (data[i] / max) * 255;
+    }
+}
+
+void fft2dShift(double *data, int width, int height) {
+    double temp = 0;
+    int hWidth = width / 2;
+    int hHeight = height / 2;
+    for (int i = 0; i < height; ++i) {
+        for (int j = 0; j < hWidth; ++j) {
+            temp = data[j + i * width];
+            data[j + i * width] = data[width - 1 - j + i * width];
+            data[width - 1 - j + i * width] = temp;
         }
     }
-    return outputImg;
+
+    for (int i = 0; i < hHeight / 2; ++i) {
+        for (int j = 0; j < width; ++j) {
+            temp = data[j + i * width];
+            data[j + i * width] = data[j + (hHeight - 1 - i) * width];
+            data[j + (hHeight - 1 - i) * width] = temp;
+        }
+    }
+    int h3_4 = hHeight + hHeight / 2;
+    for (int i = hHeight, k = 0; i < h3_4; ++i, ++k) {
+        for (int j = 0; j < width; ++j) {
+            temp = data[j + i * width];
+            data[j + i * width] = data[j + (height - 1 - k) * width];
+            data[j + (height - 1 - k) * width] = temp;
+        }
+    }
 }

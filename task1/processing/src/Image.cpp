@@ -39,11 +39,11 @@ Image::Image(const Image &image) : Image{image.width, image.height, image.channe
 }
 
 void Image::creatImage() {
-    data = new unsigned char **[height];
+    data = new float **[height];
     for (int i = 0; i < height; ++i) {
-        data[i] = new unsigned char *[width];
+        data[i] = new float *[width];
         for (int j = 0; j < width; ++j) {
-            data[i][j] = new unsigned char[channels];
+            data[i][j] = new float[channels];
         }
     }
 }
@@ -58,7 +58,7 @@ void Image::init(unsigned char *data) {
     }
 }
 
-void Image::copyData(unsigned char ***data) {
+void Image::copyData(float ***data) {
     for (int i = 0; i < height; ++i) {
         for (int j = 0; j < width; ++j) {
             for (int k = 0; k < channels; ++k) {
@@ -68,8 +68,8 @@ void Image::copyData(unsigned char ***data) {
     }
 }
 
-unsigned char * Image::flatten() {
-    unsigned char *data = new unsigned char[channels * width * height];
+float *Image::flatten() {
+    float *data = new float[channels * width * height];
     for (int i = 0; i < height; ++i) {
         for (int j = 0; j < width; ++j) {
             for (int k = 0; k < channels; ++k) {
@@ -78,6 +78,44 @@ unsigned char * Image::flatten() {
         }
     }
     return data;
+}
+
+double *Image::flattenDouble() {
+    double *data = new double[channels * width * height];
+    for (int i = 0; i < height; ++i) {
+        for (int j = 0; j < width; ++j) {
+            for (int k = 0; k < channels; ++k) {
+                data[k + channels * j + width * channels * i] = this->data[i][j][k];
+            }
+        }
+    }
+    return data;
+}
+
+Image Image::toScale() {
+    Image scaleImg{width, height, channels};
+    float *max = new float[channels];
+    for (int k = 0; k < channels; ++k) {
+        max[k] = 0;
+    }
+    for (int i = 0; i < height; ++i) {
+        for (int j = 0; j < width; ++j) {
+            for (int k = 0; k < channels; ++k) {
+                scaleImg.data[i][j][k] = std::abs(data[i][j][k]);
+                if (scaleImg.data[i][j][k] > max[k])
+                    max[k] = scaleImg.data[i][j][k];
+            }
+        }
+    }
+
+    for (int i = 0; i < height; ++i) {
+        for (int j = 0; j < width; ++j) {
+            for (int k = 0; k < channels; ++k) {
+                scaleImg.data[i][j][k] = roundf((scaleImg.data[i][j][k] / max[k]) * 255);
+            }
+        }
+    }
+    return scaleImg;
 }
 
 Image Image::toGrayscale() {
@@ -97,13 +135,20 @@ Image Image::toGrayscale() {
 }
 
 int Image::size() {
-    return channels*width*height;
+    return channels * width * height;
 }
 
 void Image::saveJPG(std::string filename) {
     char buff[256];
     sprintf(buff, "%s.jpg", filename.c_str());
-    unsigned char *data_out = flatten();
+    unsigned char *data_out = new unsigned char[width * height * channels];
+    for (int i = 0; i < height; ++i) {
+        for (int j = 0; j < width; ++j) {
+            for (int k = 0; k < channels; ++k) {
+                data_out[k + j * channels + i * width] = (int) roundf(data[i][j][k]);
+            }
+        }
+    }
 //    int success = stbi_write_png(buff, width, height, channels, data_out, width*channels);
     int success = stbi_write_jpg(buff, width, height, channels, data_out, 100);
     if (!success) fprintf(stderr, "Failed to write image %s\n", buff);

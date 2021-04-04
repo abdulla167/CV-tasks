@@ -13,6 +13,8 @@ Image gaussianFilter(Image &inputImg, char dim = 3, float mean = 0, float sigma 
 
 Image medianFilter(Image &inputImg, int dim = 3);
 
+Image laplacianFilter(Image &inputImg, int dim = 3);
+
 Image perwitEdgeDetector(Image &inputImg);
 
 Image sobelEdgeDetector(Image &inputImg);
