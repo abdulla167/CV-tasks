@@ -34,8 +34,10 @@ void MainWindow::on_imageBBtn_clicked() {
 void MainWindow::on_hybridBtn_clicked() {
     auto grayImage1 = imageA->toGrayscale();
     auto im1 = gaussianFilter(grayImage1);
+//    im1.saveJPG("imageA");
     auto grayImage2 = imageB->toGrayscale();
     auto im2 = laplacianFilter(grayImage2);
+//    im2.saveJPG("imageB");
     Image hybrid{im1.width, im1.height, 1};
     for (int i = 0; i < im1.height; ++i) {
         for (int j = 0; j < im1.width; ++j) {
@@ -43,6 +45,7 @@ void MainWindow::on_hybridBtn_clicked() {
         }
     }
     auto displayImg = hybrid.toScale();
+//    displayImg.saveJPG("out_hybrid");
     displayGrayscaleImage(&displayImg, ui->hybridImageLabel);
 }
 

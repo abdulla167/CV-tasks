@@ -120,15 +120,23 @@ Image Image::toScale() {
 
 Image Image::toGrayscale() {
     Image grayImg = Image(width, height, 1);
-    float avg = 0;
-    float weights[] = {0.299, 0.587, 0.114};
-    for (int i = 0; i < height; ++i) {
-        for (int j = 0; j < width; ++j) {
-            avg = 0;
-            for (int k = 0; k < channels; ++k) {
-                avg += weights[k] * data[i][j][k];
+    if(channels > 1){
+        float avg = 0;
+        float weights[] = {0.299, 0.587, 0.114};
+        for (int i = 0; i < height; ++i) {
+            for (int j = 0; j < width; ++j) {
+                avg = 0;
+                for (int k = 0; k < channels; ++k) {
+                    avg += weights[k] * data[i][j][k];
+                }
+                grayImg.data[i][j][0] = (unsigned char) roundf(avg);
             }
-            grayImg.data[i][j][0] = (unsigned char) roundf(avg);
+        }
+    } else{
+        for (int i = 0; i < height; ++i) {
+            for (int j = 0; j < width; ++j) {
+                grayImg.data[i][j][0] = data[i][j][0];
+            }
         }
     }
     return grayImg;

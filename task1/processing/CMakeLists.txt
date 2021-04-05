@@ -1,7 +1,7 @@
 include(export_header.cmake)
 SET(LIB_NAME processing)
 include_directories(include)
-add_library(${LIB_NAME} src/Image.cpp src/filters.cpp src/utilities.cpp src/histogram.cpp)
+add_library(${LIB_NAME} src/Image.cpp src/filters.cpp src/utilities.cpp src/histogram.cpp src/fourier_transform.cpp)
 find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
 find_library(FFTW NAMES libfftw3.so.3) # kimo

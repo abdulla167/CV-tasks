@@ -15,7 +15,7 @@ public:
 
     Image(int width, int height, int channel);
 
-    Image(std::string filename, int num_channels = 0);
+    Image(std::string filename, int num_channels = 1);
 
     Image(const Image &image);
 

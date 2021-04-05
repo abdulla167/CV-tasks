@@ -48,7 +48,7 @@ void MainWindow::on_imageSelect_currentIndexChanged(QString filterName) {
         im_hist(grayIm, histogram, 1);
         cumulative_hist(histogram, cumHist);
         histDisplay(histogram, 0, ui->histPLot);
-        CDFDisplay(cumHist, 0,ui->CDFPlot);
+        CDFDisplay(cumHist, 0, ui->CDFPlot);
 
         displayGrayscaleImage(&grayIm, ui->InputImagLabel_1);
 
@@ -57,8 +57,8 @@ void MainWindow::on_imageSelect_currentIndexChanged(QString filterName) {
         hist_eq_formula(grayIm, cumHist, histogram, hist_eq_form);
         equalized_hist(grayIm, histogram, eq_hist, hist_eq_form);
         equalized_image(grayIm, hist_eq_form);
-        im_hist(grayIm,eq_hist,1);
-        histDisplay(eq_hist, 0 , ui->eqHistPlot);
+        im_hist(grayIm, eq_hist, 1);
+        histDisplay(eq_hist, 0, ui->eqHistPlot);
         int cumEqHist[256];
         cumulative_hist(eq_hist, cumEqHist);
         CDFDisplay(cumEqHist, 0, ui->eqCDFPLot);
@@ -79,7 +79,7 @@ void MainWindow::on_imageSelect_currentIndexChanged(QString filterName) {
         Image *image = new Image(*inputImage_1);
         im_hist(*image, hist_1, 1);
         cumulative_hist(hist_1, cumHist_1);
-        histDisplay(hist_1, 1,ui->histPLot);
+        histDisplay(hist_1, 1, ui->histPLot);
         CDFDisplay(cumHist_1, 1, ui->CDFPlot);
 
         int hist_2[256];
@@ -129,12 +129,12 @@ void MainWindow::histDisplay(int histogram[], int color, QCustomPlot *plot) {
     QColor colorArray[4] = {QColor(0, 0, 0), QColor(255, 0, 0), QColor(0, 255, 0), QColor(0, 0, 255)};
 
     plot->addGraph();
-    if (color != 0){
+    if (color != 0) {
         plot->graph(color - 1)->setData(x, y);
         plot->graph(color - 1)->setPen(QPen(colorArray[color]));
-    } else{
+    } else {
         plot->graph(color)->setData(x, y);
-        plot->graph(color )->setPen(QPen(colorArray[color]));
+        plot->graph(color)->setPen(QPen(colorArray[color]));
     }
 
     plot->xAxis->setRange(0, 256);
@@ -157,17 +157,17 @@ void MainWindow::CDFDisplay(int histogram[], int color, QCustomPlot *plot) {
 
     // normalize the histogram between 0 and histImage.rows
     for (int i = 0; i < 256; i++) {
-        hist[i] = ((double) histogram[i] / histogram[255]) ;//* histImage.rows;
+        hist[i] = ((double) histogram[i] / histogram[255]);//* histImage.rows;
     }
     QColor colorArray[4] = {QColor(0, 0, 0), QColor(255, 0, 0), QColor(0, 255, 0), QColor(0, 0, 255)};
 
     plot->addGraph();
-    if (color != 0){
+    if (color != 0) {
         plot->graph(color - 1)->setData(x, y);
         plot->graph(color - 1)->setPen(QPen(colorArray[color]));
-    } else{
+    } else {
         plot->graph(color)->setData(x, y);
-        plot->graph(color )->setPen(QPen(colorArray[color]));
+        plot->graph(color)->setPen(QPen(colorArray[color]));
     }
 
     plot->xAxis->setRange(0, 256);
