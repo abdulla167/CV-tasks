@@ -10396,7 +10396,7 @@ QCPAxisPainterPrivate::TickLabelData QCPAxisPainterPrivate::getTickLabelData(con
     result.basePart = text;
     result.totalBounds = QFontMetrics(result.baseFont).boundingRect(0, 0, 0, 0, Qt::TextDontClip | Qt::AlignHCenter, result.basePart);
   }
-  result.totalBounds.moveTopLeft(QPoint(0, 0)); // want bounding box aligned top left at origin, independent of how it was created, to make further processing simpler
+  result.totalBounds.moveTopLeft(QPoint(0, 0)); // want bounding box aligned top left at origin, independent of how it was created, to make further processinglib simpler
   
   // calculate possibly different bounding rect after rotation:
   result.rotatedTotalBounds = result.totalBounds;
@@ -21241,7 +21241,7 @@ void QCPGraph::getLines(QVector<QPointF> *lines, const QCPDataRange &dataRange) 
   if (mLineStyle != lsNone)
     getOptimizedLineData(&lineData, begin, end);
   
-  if (mKeyAxis->rangeReversed() != (mKeyAxis->orientation() == Qt::Vertical)) // make sure key pixels are sorted ascending in lineData (significantly simplifies following processing)
+  if (mKeyAxis->rangeReversed() != (mKeyAxis->orientation() == Qt::Vertical)) // make sure key pixels are sorted ascending in lineData (significantly simplifies following processinglib)
     std::reverse(lineData.begin(), lineData.end());
 
   switch (mLineStyle)
@@ -21285,7 +21285,7 @@ void QCPGraph::getScatters(QVector<QPointF> *scatters, const QCPDataRange &dataR
   QVector<QCPGraphData> data;
   getOptimizedScatterData(&data, begin, end);
   
-  if (mKeyAxis->rangeReversed() != (mKeyAxis->orientation() == Qt::Vertical)) // make sure key pixels are sorted ascending in data (significantly simplifies following processing)
+  if (mKeyAxis->rangeReversed() != (mKeyAxis->orientation() == Qt::Vertical)) // make sure key pixels are sorted ascending in data (significantly simplifies following processinglib)
     std::reverse(data.begin(), data.end());
   
   scatters->resize(data.size());

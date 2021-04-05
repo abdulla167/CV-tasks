@@ -5,7 +5,7 @@
 #include "filters.h"
 #include "utilities.h"
 #include <cmath>
-#include "processing/fourier_transform.h"
+#include "fourier_transform.h"
 
 
 Image avgFilter(Image &inputImg, char dim) {
@@ -137,38 +137,6 @@ Image lowPassFilter(Image &inputImg, float *kernel){
 Image highPassFilter(Image &inputImg, float *kernel){
     return lowPassFilter(inputImg, kernel);
 }
-
-Image globalThresholding(Image &inputImg, int thresholdVal) {
-    if (thresholdVal != 0) {
-        return buildSegmentedImg(inputImg, thresholdVal);
-    } else {
-        int threshold =  otsuAlgorithm(inputImg, 256);
-        return buildSegmentedImg(inputImg, threshold);
-    }
-}
-
-Image localThresholding(Image& inputImg, float k, int r, int dim){
-    Image outputImg{inputImg.width, inputImg.height, inputImg.channels};
-    int offset = (dim - 1)/2;
-    double mean = 0;
-    double std = 0;
-    for (int y = offset; y < inputImg.height-offset; y++){
-        for (int x = offset; x < inputImg.width-offset; x++){
-            for (int z=0 ; z < inputImg.channels ; z++){
-                mean =0, std=0;
-                sauvolaTechnique(inputImg, x,y, dim, mean, std);
-                int threshold = mean * (1 + (k * ((std/r)-1)));
-                if (inputImg.data[y][x][z] >= threshold){
-                    outputImg.data[y][x][z] = 255;
-                } else{
-                    outputImg.data[y][x][z] = 0;
-                }
-            }
-        }
-    }
-    return outputImg;
-}
-
 
 Image globalThresholding(Image &inputImg, int thresholdVal) {
     if (thresholdVal != 0) {

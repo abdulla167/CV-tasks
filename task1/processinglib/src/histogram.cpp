@@ -63,9 +63,3 @@ void getNormalizedHist(int *hist,double *normalizedHist, int histSize, int pixel
         normalizedHist[i] = (double) hist[i] / (double) pixelsNo;
     }
 }
-
-void getNormalizedHist(int *hist,double *normalizedHist, int histSize, int pixelsNo) {
-    for (int i = 0; i < histSize; i++) {
-        normalizedHist[i] = (double) hist[i] / (double) pixelsNo;
-    }
-}

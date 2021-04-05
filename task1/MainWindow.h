@@ -7,7 +7,7 @@
 
 #include <QMainWindow>
 #include <QLabel>
-#include "processing/Image.h"
+#include "processinglib/Image.h"
 #include <opencv2/imgproc/imgproc.hpp>
 #include "qcustomplot.h"
 

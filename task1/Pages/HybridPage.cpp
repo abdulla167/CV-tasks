@@ -1,10 +1,10 @@
 //
 // Created by abdallah drwesh on 4/4/21.
 //
-#include "MainWindow.h"
+#include "../MainWindow.h"
 #include "ui_MainWindow.h"
 #include <QFileDialog>
-#include "processing/filters.h"
+#include "processinglib/filters.h"
 
 
 void MainWindow::on_imageABtn_clicked() {

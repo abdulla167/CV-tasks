@@ -2,12 +2,12 @@
 // Created by abdallah drwesh on 4/4/21.
 //
 
-#include "MainWindow.h"
+#include "../MainWindow.h"
 #include <ui_MainWindow.h>
 #include <iostream>
-#include "processing/fourier_transform.h"
-#include "processing/utilities.h"
-#include "processing/filters.h"
+#include "processinglib/fourier_transform.h"
+#include "processinglib/utilities.h"
+#include "processinglib/filters.h"
 
 void MainWindow::on_loadImageFreqBtn_clicked() {
     QString filePath = QFileDialog::getOpenFileName(this, "load image", "../");

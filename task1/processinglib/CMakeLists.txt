@@ -1,5 +1,5 @@
 include(export_header.cmake)
-SET(LIB_NAME processing)
+SET(LIB_NAME processinglib)
 include_directories(include)
 add_library(${LIB_NAME} src/Image.cpp src/filters.cpp src/utilities.cpp src/histogram.cpp src/fourier_transform.cpp)
 find_package(OpenCV REQUIRED)
