@@ -21,6 +21,10 @@ void MainWindow::on_LoadImageBtn_1_clicked() {
     loadImage(filepathStd, inputImage_1);
     std::string imageSize = std::to_string(inputImage_1->size());
     ui->imageSize->setText(QString(imageSize.c_str()));
+    ui->histPLot->clearGraphs();
+    ui->CDFPlot->clearGraphs();
+    ui->eqHistPlot->clearGraphs();
+    ui->eqCDFPLot->clearGraphs();
     if (inputImage_1->channels == 1) {
         ui->imageSelect->setCurrentIndex(0);
     } else {
@@ -74,6 +78,7 @@ void MainWindow::on_imageSelect_currentIndexChanged(QString filterName) {
         ui->label_14->setVisible(false);
         ui->label_15->setVisible(false);
 
+        displayRGBImage(inputImage_1, ui->InputImagLabel_1);
         int hist_1[256];
         int cumHist_1[256];
         Image *image = new Image(*inputImage_1);
@@ -169,7 +174,6 @@ void MainWindow::CDFDisplay(int histogram[], int color, QCustomPlot *plot) {
         plot->graph(color)->setData(x, y);
         plot->graph(color )->setPen(QPen(colorArray[color]));
     }
-
     plot->xAxis->setRange(0, 256);
     plot->yAxis->setRange(0, max);
     plot->replot();

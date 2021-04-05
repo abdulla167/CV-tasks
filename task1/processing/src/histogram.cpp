@@ -47,12 +47,12 @@ void hist_eq_formula(Image &image, int cumhistogram[], int histogram[], int hist
             smallest_cdf = cumhistogram[i];
         }
     }
-    //float alpha = (255.0 / (image_size - smallest_cdf));
+//    float alpha = (255.0 / (image_size - smallest_cdf));
     float alpha = (255.0 / (image_size ));
     // Scale the histogram
     for (int i = 0; i < 256; i++) {
-        //histogram_equalization_formula[i] = (unsigned char) round(((double) cumhistogram[i] - smallest_cdf) * alpha);
-        histogram_equalization_formula[i] = (unsigned char) round(((double) cumhistogram[i] ) * alpha);
+        histogram_equalization_formula[i] = (unsigned char) round(((double) cumhistogram[i] - smallest_cdf) * alpha);
+//        histogram_equalization_formula[i] = (unsigned char) round(((double) cumhistogram[i] ) * alpha);
     }
 
 }
