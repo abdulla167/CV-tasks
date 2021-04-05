@@ -17,4 +17,7 @@ void equalized_hist(Image &image, int histogram[], int equalized_histogram[], in
 
 void equalized_image(Image &inImage, int histogram_equalization_formula[]);
 
+void getNormalizedHist(int *hist,double *normalizedHist, int histSize, int pixelsNo);
+
+
 #endif //CV_HISTOGRAM_H
