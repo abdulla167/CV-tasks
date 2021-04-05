@@ -56,8 +56,7 @@ void MainWindow::on_imageSelect_currentIndexChanged(QString filterName) {
 
         int hist_eq_form[256];
         int eq_hist[256];
-        hist_eq_formula(grayIm, cumHist, histogram, hist_eq_form);
-        equalized_hist(grayIm, histogram, eq_hist, hist_eq_form);
+        hist_eq_formula(grayIm, cumHist, hist_eq_form);
         equalized_image(grayIm, hist_eq_form);
         im_hist(grayIm,eq_hist,1);
         histDisplay(eq_hist, 0 , ui->eqHistPlot);
@@ -104,30 +103,15 @@ void MainWindow::on_imageSelect_currentIndexChanged(QString filterName) {
 
 
 void MainWindow::histDisplay(int histogram[], int color, QCustomPlot *plot) {
-    float hist[256];
     int max = histogram[0];
     QVector<double> x(256), y(256);
     for (int i = 0; i < 256; i++) {
-        hist[i] = histogram[i];
-        if (max < hist[i]) {
-            max = hist[i];
+        if (max < histogram[i]) {
+            max = histogram[i];
         }
         x[i] = i;
         y[i] = histogram[i];
     }
-    // draw the histograms
-    int hist_w = 512;
-    int hist_h = 400;
-    int bin_w = cvRound((double) hist_w / 256);
-
-    Mat histImage(hist_h, hist_w, CV_8UC3, Scalar(255, 255, 255));
-
-
-    // normalize the histogram between 0 and histImage.rows
-    for (int i = 0; i < 256; i++) {
-        hist[i] = ((double) hist[i] / max) * histImage.rows;
-    }
-
 
     QColor colorArray[4] = {QColor(0, 0, 0), QColor(255, 0, 0), QColor(0, 255, 0), QColor(0, 0, 255)};
 
