@@ -38,14 +38,6 @@ void hist_eq_formula(Image &image, int cumhistogram[], int histogram_equalizatio
     // Caluculate the size of image
     int image_size = image.height * image.width;
 
-
-    // smallest non zero vale of cumulative histogram
-//    int smallest_cdf = cumhistogram[0];
-//    for (int i = 1; i < 256; i++) {
-//        if (cumhistogram[i] < smallest_cdf) {
-//            smallest_cdf = cumhistogram[i];
-//        }
-//    }
     float alpha = (255.0 / (image_size ));
     // Scale the histogram
     for (int i = 0; i < 256; i++) {

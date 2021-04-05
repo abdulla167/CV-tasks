@@ -14,27 +14,11 @@ string
 Image.h
 ../processing/include/Image.h
 
-../processing/include/utilities.h
-Image.h
-../processing/include/Image.h
-
 /home/mohamedkamal/CLionProjects/CV-tasks/task1/processing/src/histogram.cpp
 histogram.h
 /home/mohamedkamal/CLionProjects/CV-tasks/task1/processing/src/histogram.h
 iostream
 -
 cmath
--
-
-/home/mohamedkamal/CLionProjects/CV-tasks/task1/processing/src/utilities.cpp
-utilities.h
-/home/mohamedkamal/CLionProjects/CV-tasks/task1/processing/src/utilities.h
-histogram.h
-/home/mohamedkamal/CLionProjects/CV-tasks/task1/processing/src/histogram.h
-cmath
--
-vector
--
-algorithm
 -
 
