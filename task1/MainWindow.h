@@ -41,6 +41,10 @@ private slots:
 
     void on_hybridBtn_clicked();
 
+    void on_plotBtn_clicked(){
+        plot();
+    }
+
     void on_LoadImageBtn_1_clicked();
     void on_filterSelect_currentIndexChanged(QString);
     void on_imageSelect_currentIndexChanged(QString);
@@ -49,6 +53,8 @@ private:
     Ui::MainWindow *ui;
 
     void loadImage(std::string filepath, Image *&image);
+
+    void plot();
 
     void displayRGBImage(Image *image, QLabel *label);
 

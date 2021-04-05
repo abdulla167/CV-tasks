@@ -6,11 +6,25 @@
 #include <QGraphicsPixmapItem>
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
+#include <QtCharts>
+#include <QChart>
+#include <QChartView>
+#include <QLineSeries>
 
 MainWindow::MainWindow(QWidget *parent) :
         QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
-
+    auto *series = new QLineSeries();
+    for (int i = 0; i < 256; ++i) {
+        series->append(i, i);
+    }
+    auto *chart = new QChart();
+    chart->addSeries(series);
+    chart->legend()->hide();
+    chart->createDefaultAxes();
+    auto *chartView = new QChartView(chart);
+    chartView->setRenderHint(QPainter::Antialiasing);
+    chartView->setParent(ui->customPlot);
 }
 
 
@@ -54,6 +68,8 @@ void MainWindow::displayGrayscaleImage(Image *image, QLabel *label) {
 MainWindow::~MainWindow() {
     delete ui;
     delete inputImage;
+    delete imageA;
+    delete imageB;
     delete inputImage_1;
     delete outputImage;
     delete outputImage_1;

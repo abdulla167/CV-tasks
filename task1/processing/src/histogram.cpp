@@ -31,7 +31,6 @@ void cumulative_hist(int histogram[], int cumulative_histogram[]) {
 
     for (int i = 1; i < 256; i++) {
         cumulative_histogram[i] = histogram[i] + cumulative_histogram[i - 1];
-
     }
 }
 
@@ -90,4 +89,10 @@ void equalized_image(Image &inImage, int histogram_equalization_formula[]) {
         }
     }
 //    outImage.saveJPG("D:/cv_task1/hello");
+}
+
+void getNormalizedHist(int *hist,double *normalizedHist, int histSize, int pixelsNo) {
+    for (int i = 0; i < histSize; i++) {
+        normalizedHist[i] = (double) hist[i] / (double) pixelsNo;
+    }
 }

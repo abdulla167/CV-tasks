@@ -21,13 +21,11 @@ void MainWindow::on_LoadImageBtn_1_clicked() {
     loadImage(filepathStd, inputImage_1);
     std::string imageSize = std::to_string(inputImage_1->size());
     ui->imageSize->setText(QString(imageSize.c_str()));
-    ui->histPLot->clearGraphs();
-    ui->CDFPlot->clearGraphs();
-    ui->eqHistPlot->clearGraphs();
-    ui->eqCDFPLot->clearGraphs();
     if (inputImage_1->channels == 1) {
+        ui->imageSelect->setCurrentIndex(1);
         ui->imageSelect->setCurrentIndex(0);
     } else {
+        ui->imageSelect->setCurrentIndex(0);
         ui->imageSelect->setCurrentIndex(1);
     }
 }
@@ -148,7 +146,6 @@ void MainWindow::histDisplay(int histogram[], int color, QCustomPlot *plot) {
 }
 
 void MainWindow::CDFDisplay(int histogram[], int color, QCustomPlot *plot) {
-    int hist[256];
     int max = histogram[0];
     QVector<double> x(256), y(256);
     for (int i = 0; i < 256; i++) {
@@ -160,10 +157,6 @@ void MainWindow::CDFDisplay(int histogram[], int color, QCustomPlot *plot) {
         y[i] = histogram[i];
     }
 
-    // normalize the histogram between 0 and histImage.rows
-    for (int i = 0; i < 256; i++) {
-        hist[i] = ((double) histogram[i] / histogram[255]) ;//* histImage.rows;
-    }
     QColor colorArray[4] = {QColor(0, 0, 0), QColor(255, 0, 0), QColor(0, 255, 0), QColor(0, 0, 255)};
 
     plot->addGraph();

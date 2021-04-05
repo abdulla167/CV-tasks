@@ -21,7 +21,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="filters">
        <attribute name="title">
@@ -461,6 +461,35 @@
        <attribute name="title">
         <string>Frequency Filters</string>
        </attribute>
+       <widget class="QPushButton" name="plotBtn">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>270</y>
+          <width>89</width>
+          <height>25</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>plot</string>
+        </property>
+       </widget>
+       <widget class="QFrame" name="customPlot">
+        <property name="geometry">
+         <rect>
+          <x>240</x>
+          <y>40</y>
+          <width>581</width>
+          <height>531</height>
+         </rect>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="hybrid">
        <attribute name="title">

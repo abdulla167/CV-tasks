@@ -21,4 +21,8 @@ Image sobelEdgeDetector(Image &inputImg);
 
 Image robertsEdgeDetector(Image &inputImg);
 
+Image globalThresholding(Image &inputImg, int thresholdVal);
+
+Image localThresholding(Image& inputImg, float k, int r, int dim);
+
 #endif //CV_FILTERS_H
