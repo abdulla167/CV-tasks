@@ -247,3 +247,4 @@ Image buildSegmentedImg(Image &inputImg, int threshold) {
     }
     return segmentedImg;
 }
+

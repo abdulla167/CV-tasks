@@ -36,4 +36,11 @@ int otsuAlgorithm(Image &inputImg, int histSize);
 
 Image buildSegmentedImg(Image &inputImg, int threshold);
 
+void sauvolaTechnique(Image& inputImg, int x, int y, int filterDim, double & mean, double & std);
+
+int otsuAlgorithm(Image &inputImg, int histSize);
+
+Image buildSegmentedImg(Image &inputImg, int threshold);
+
+
 #endif //CV_UTILITIES_H

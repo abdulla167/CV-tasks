@@ -22,8 +22,10 @@ void MainWindow::on_LoadImageBtn_1_clicked() {
     std::string imageSize = std::to_string(inputImage_1->size());
     ui->imageSize->setText(QString(imageSize.c_str()));
     if (inputImage_1->channels == 1) {
+        ui->imageSelect->setCurrentIndex(1);
         ui->imageSelect->setCurrentIndex(0);
     } else {
+        ui->imageSelect->setCurrentIndex(0);
         ui->imageSelect->setCurrentIndex(1);
     }
 }
@@ -33,7 +35,7 @@ void MainWindow::on_imageSelect_currentIndexChanged(QString filterName) {
     ui->CDFPlot->clearGraphs();
     ui->eqHistPlot->clearGraphs();
     ui->eqCDFPLot->clearGraphs();
-    if (filterName == "GrayImage" || inputImage_1->channels == 1) {
+    if (filterName == "Equalize" || inputImage_1->channels == 1) {
         ui->outpuImageLabel_1->clear();
         ui->eqHistPlot->setVisible(true);
         ui->eqCDFPLot->setVisible(true);
@@ -54,8 +56,7 @@ void MainWindow::on_imageSelect_currentIndexChanged(QString filterName) {
 
         int hist_eq_form[256];
         int eq_hist[256];
-        hist_eq_formula(grayIm, cumHist, histogram, hist_eq_form);
-        equalized_hist(grayIm, histogram, eq_hist, hist_eq_form);
+        hist_eq_formula(grayIm, cumHist, hist_eq_form);
         equalized_image(grayIm, hist_eq_form);
         im_hist(grayIm, eq_hist, 1);
         histDisplay(eq_hist, 0, ui->eqHistPlot);
@@ -65,14 +66,18 @@ void MainWindow::on_imageSelect_currentIndexChanged(QString filterName) {
         QImage qImage_1(grayIm.width, grayIm.height, QImage::Format_RGB16);
         displayGrayscaleImage(&grayIm, ui->outpuImageLabel_1);
 
-    } else if (filterName == "RGBImage" & inputImage_1->channels == 3) {
+    } else if (filterName == "Original" & inputImage_1->channels == 3) {
         ui->outpuImageLabel_1->clear();
-        ui->eqHistPlot->setVisible(false);
-        ui->eqCDFPLot->setVisible(false);
-        ui->outpuImageLabel_1->setVisible(false);
-        ui->label_9->setVisible(false);
-        ui->label_14->setVisible(false);
-        ui->label_15->setVisible(false);
+        Image grayIm = inputImage_1->toGrayscale();
+        displayRGBImage(inputImage_1, ui->InputImagLabel_1);
+        displayGrayscaleImage(&grayIm, ui->outpuImageLabel_1);
+        int histogram[256];
+        int cumHist[256];
+        im_hist(grayIm, histogram, 1);
+        cumulative_hist(histogram, cumHist);
+        histDisplay(histogram, 0, ui->eqHistPlot);
+        CDFDisplay(cumHist, 0,ui->eqCDFPLot);
+
 
         int hist_1[256];
         int cumHist_1[256];
@@ -101,30 +106,15 @@ void MainWindow::on_imageSelect_currentIndexChanged(QString filterName) {
 
 
 void MainWindow::histDisplay(int histogram[], int color, QCustomPlot *plot) {
-    float hist[256];
     int max = histogram[0];
     QVector<double> x(256), y(256);
     for (int i = 0; i < 256; i++) {
-        hist[i] = histogram[i];
-        if (max < hist[i]) {
-            max = hist[i];
+        if (max < histogram[i]) {
+            max = histogram[i];
         }
         x[i] = i;
         y[i] = histogram[i];
     }
-    // draw the histograms
-    int hist_w = 512;
-    int hist_h = 400;
-    int bin_w = cvRound((double) hist_w / 256);
-
-    Mat histImage(hist_h, hist_w, CV_8UC3, Scalar(255, 255, 255));
-
-
-    // normalize the histogram between 0 and histImage.rows
-    for (int i = 0; i < 256; i++) {
-        hist[i] = ((double) hist[i] / max) * histImage.rows;
-    }
-
 
     QColor colorArray[4] = {QColor(0, 0, 0), QColor(255, 0, 0), QColor(0, 255, 0), QColor(0, 0, 255)};
 
@@ -143,22 +133,13 @@ void MainWindow::histDisplay(int histogram[], int color, QCustomPlot *plot) {
 }
 
 void MainWindow::CDFDisplay(int histogram[], int color, QCustomPlot *plot) {
-    int hist[256];
-    int max = histogram[0];
+    int imageSize = inputImage_1->height * inputImage_1->width;
     QVector<double> x(256), y(256);
     for (int i = 0; i < 256; i++) {
-
-        if (max < histogram[i]) {
-            max = histogram[i];
-        }
         x[i] = i;
-        y[i] = histogram[i];
+        y[i] = histogram[i]/(double )histogram[255];
     }
 
-    // normalize the histogram between 0 and histImage.rows
-    for (int i = 0; i < 256; i++) {
-        hist[i] = ((double) histogram[i] / histogram[255]);//* histImage.rows;
-    }
     QColor colorArray[4] = {QColor(0, 0, 0), QColor(255, 0, 0), QColor(0, 255, 0), QColor(0, 0, 255)};
 
     plot->addGraph();
@@ -169,8 +150,7 @@ void MainWindow::CDFDisplay(int histogram[], int color, QCustomPlot *plot) {
         plot->graph(color)->setData(x, y);
         plot->graph(color)->setPen(QPen(colorArray[color]));
     }
-
     plot->xAxis->setRange(0, 256);
-    plot->yAxis->setRange(0, max);
+    plot->yAxis->setRange(0, 1);
     plot->replot();
 }
