@@ -3,7 +3,7 @@
 //
 
 #include "../MainWindow.h"
-#include <ui_MainWindow.h>
+#include "../ui_MainWindow.h"
 #include <iostream>
 #include "processinglib/fourier_transform.h"
 #include "processinglib/utilities.h"

@@ -2,7 +2,7 @@
 // Created by abdallah drwesh on 4/4/21.
 //
 #include "../MainWindow.h"
-#include "ui_MainWindow.h"
+#include "../ui_MainWindow.h"
 #include <QFileDialog>
 #include "processinglib/filters.h"
 #include "processinglib/utilities.h"
