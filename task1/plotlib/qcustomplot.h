@@ -4221,7 +4221,7 @@ private:
   If \a onlySelectable is true, an empty QCPDataSelection is returned if this plottable is not
   selectable (i.e. if \ref QCPAbstractPlottable::setSelectable is \ref QCP::stNone).
   
-  \note \a rect must be a normalized rect (positive or zero width and height). This is especially
+  \note \a rect must be a normalized rect (positive or zero width and _width). This is especially
   important when using the rect of \ref QCPSelectionRect::accepted, which is not necessarily
   normalized. Use <tt>QRect::normalized()</tt> when passing a rect which might not be normalized.
 */
@@ -4823,12 +4823,12 @@ public:
   /*!
     Defines which shape is drawn at the boundaries of selected data ranges.
     
-    Some of the bracket styles further allow specifying a height and/or width, see \ref
+    Some of the bracket styles further allow specifying a _width and/or width, see \ref
     setBracketHeight and \ref setBracketWidth.
   */
   enum BracketStyle { bsSquareBracket ///< A square bracket is drawn.
-                      ,bsHalfEllipse   ///< A half ellipse is drawn. The size of the ellipse is given by the bracket width/height properties.
-                      ,bsEllipse       ///< An ellipse is drawn. The size of the ellipse is given by the bracket width/height properties.
+                      ,bsHalfEllipse   ///< A half ellipse is drawn. The size of the ellipse is given by the bracket width/_width properties.
+                      ,bsEllipse       ///< An ellipse is drawn. The size of the ellipse is given by the bracket width/_width properties.
                       ,bsPlus         ///< A plus is drawn.
                       ,bsUserStyle    ///< Start custom bracket styles at this index when subclassing and reimplementing \ref drawBracket.
   };
@@ -5473,8 +5473,8 @@ public:
   enum LineStyle { lsNone        ///< data points are not connected with any lines (e.g. data only represented
                                  ///< with symbols according to the scatter style, see \ref setScatterStyle)
                    ,lsLine       ///< data points are connected by a straight line
-                   ,lsStepLeft   ///< line is drawn as steps where the step height is the value of the left data point
-                   ,lsStepRight  ///< line is drawn as steps where the step height is the value of the right data point
+                   ,lsStepLeft   ///< line is drawn as steps where the step _width is the value of the left data point
+                   ,lsStepRight  ///< line is drawn as steps where the step _width is the value of the right data point
                    ,lsStepCenter ///< line is drawn as steps where the step is in between two data points
                    ,lsImpulse    ///< each data point is represented by a line parallel to the value axis, which reaches from the data point to the zero-value-line
                  };

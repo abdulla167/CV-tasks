@@ -63,7 +63,7 @@ void MainWindow::on_filterSelect_currentIndexChanged(QString filterName) {
         for (int i = 0; i < im.height; ++i) {
             for (int j = 0; j < im.width; ++j) {
                 for (int k = 0; k < im.channels; ++k) {
-                    noiseImage->data[i][j][k] = im.data[i][j][k];
+                    (*noiseImage)(i, j, k) = im(i, j, k);
                 }
             }
         }

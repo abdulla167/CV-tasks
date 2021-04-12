@@ -30,7 +30,7 @@ Image medianFilter(Image &inputImg, int dim) {
     for (int i = begin; i < inputImg.height - begin; i++) {
         for (int j = begin; j < inputImg.width - begin; j++) {
             for (int k = 0; k < inputImg.channels; k++) {
-                outputImg.data[i - begin][j - begin][k] = convSort(inputImg, dim, j, i, k);
+                outputImg(i - begin, j - begin,k) = convSort(inputImg, dim, j, i, k);
             }
         }
     }
@@ -62,9 +62,9 @@ Image perwitEdgeDetector(Image &inputImg) {
     for (int y = 0; y < imgX.height; y++) {
         for (int x = 0; x < imgX.width; x++) {
             for (int z = 0; z < imgX.channels; z++) {
-                float xComponent = imgX.data[y][x][z];
-                float yComponent = imgY.data[y][x][z];
-                outputImg.data[y][x][z] =  sqrt(pow(xComponent, 2) + pow(yComponent, 2));
+                float xComponent = imgX(y,x,z);
+                float yComponent = imgY(y, x, z);
+                outputImg(y, x, z) =  sqrt(pow(xComponent, 2) + pow(yComponent, 2));
             }
         }
     }
@@ -86,9 +86,9 @@ Image sobelEdgeDetector(Image &inputImg) {
     for (int y = 0; y < imgX.height; y++) {
         for (int x = 0; x < imgX.width; x++) {
             for (int z = 0; z < imgX.channels; z++) {
-                float xComponent = imgX.data[y][x][z];
-                float yComponent = imgY.data[y][x][z];
-                outputImg.data[y][x][z] = std::sqrt(pow(xComponent, 2) + pow(yComponent, 2));
+                float xComponent = imgX(y, x, z);
+                float yComponent = imgY(y, x, z);
+                outputImg(y, x, z) = std::sqrt(pow(xComponent, 2) + pow(yComponent, 2));
             }
         }
     }
@@ -109,10 +109,10 @@ Image robertsEdgeDetector(Image &inputImg) {
     for (int y = 0; y < inputImg.height - 1; y++) {
         for (int x = 0; x < inputImg.width - 1; x++) {
             for (int z = 0; z < inputImg.channels; z++) {
-                xValue = inputImg.data[y][x][z] * xFilter[0] + inputImg.data[y + 1][x + 1][z] * xFilter[3];
-                yValue = inputImg.data[y][x + 1][z] * yFilter[1] + inputImg.data[y + 1][x][z] * yFilter[2];
+                xValue = inputImg(y, x, z) * xFilter[0] + inputImg(y + 1, x + 1, z) * xFilter[3];
+                yValue = inputImg(y, x + 1, z) * yFilter[1] + inputImg(y + 1, x, z) * yFilter[2];
                 result = sqrt(pow(xValue, 2) + pow(yValue, 2));
-                outputImg.data[y][x][z] = result;
+                outputImg(y, x, z) = result;
             }
         }
     }
@@ -158,10 +158,10 @@ Image localThresholding(Image& inputImg, float k, int r, int dim){
                 mean =0, std=0;
                 sauvolaTechnique(inputImg, x,y, dim, mean, std);
                 int threshold = mean * (1 + (k * ((std/r)-1)));
-                if (inputImg.data[y][x][z] >= threshold){
-                    outputImg.data[y][x][z] = 255;
+                if (inputImg(y, x, z) >= threshold){
+                    outputImg(y, x, z) = 255;
                 } else{
-                    outputImg.data[y][x][z] = 0;
+                    outputImg(y, x, z) = 0;
                 }
             }
         }

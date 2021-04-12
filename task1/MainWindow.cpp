@@ -30,7 +30,7 @@ void MainWindow::displayRGBImage(Image *image, QLabel *label) {
     QRgb rgb;
     for (int j = 0; j < image->width; ++j) {
         for (int i = 0; i < image->height; ++i) {
-            rgb = qRgb(image->data[i][j][0], image->data[i][j][1], image->data[i][j][2]);
+            rgb = qRgb((*image)(i, j, 0), (*image)(i, j, 1), (*image)(i, j, 2));
 //            printf("%i %i %i \n",inputImage->data[i][j][0],inputImage->data[i][j][1],inputImage->data[i][j][2]);
             qImage.setPixel(j, i, rgb);
         }
@@ -43,7 +43,7 @@ void MainWindow::displayGrayscaleImage(Image *image, QLabel *label) {
     QRgb rgb;
     for (int j = 0; j < image->width; ++j) {
         for (int i = 0; i < image->height; ++i) {
-            rgb = qRgb(image->data[i][j][0], image->data[i][j][0], image->data[i][j][0]);
+            rgb = qRgb((*image)(i, j), (*image)(i, j), (*image)(i, j));
 //            printf("%i %i %i \n",inputImage->data[i][j][0],inputImage->data[i][j][1],inputImage->data[i][j][2]);
             qImage.setPixel(j, i, rgb);
         }

@@ -4,7 +4,6 @@
 
 #include "../MainWindow.h"
 #include "../ui_MainWindow.h"
-#include <iostream>
 #include "processinglib/fourier_transform.h"
 #include "processinglib/utilities.h"
 #include "processinglib/filters.h"
@@ -32,7 +31,7 @@ void MainWindow::on_filterFreqSelect_currentIndexChanged(QString filterName) {
         lpfGeneration(kernel, filterImg.width, filterImg.height);
         for (int i = 0; i < filterImg.width; ++i) {
             for (int j = 0; j < filterImg.height; ++j) {
-                filterImg.data[i][j][0] = kernel[j + i * filterImg.width];
+                filterImg(i, j) = kernel[j + i * filterImg.width];
             }
         }
         Image result = lowPassFilter(*inputFreqImage, kernel);
@@ -42,7 +41,7 @@ void MainWindow::on_filterFreqSelect_currentIndexChanged(QString filterName) {
         hpfGeneration(kernel, filterImg.width, filterImg.height);
         for (int i = 0; i < filterImg.width; ++i) {
             for (int j = 0; j < filterImg.height; ++j) {
-                filterImg.data[i][j][0] = kernel[j + i * filterImg.width];
+                filterImg(i, j) = kernel[j + i * filterImg.width];
             }
         }
         Image result = highPassFilter(*inputFreqImage, kernel).toScale();

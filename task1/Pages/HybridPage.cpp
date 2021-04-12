@@ -41,7 +41,7 @@ void MainWindow::on_hybridBtn_clicked() {
     Image hybrid{im1.width, im1.height, 1};
     for (int i = 0; i < im1.height; ++i) {
         for (int j = 0; j < im1.width; ++j) {
-            hybrid.data[i][j][0] = im1.data[i][j][0] + im2.data[i][j][0];
+            hybrid(i, j) = im1(i, j) + im2(i, j);
         }
     }
     auto displayImg = hybrid.toScale();

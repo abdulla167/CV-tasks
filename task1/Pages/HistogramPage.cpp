@@ -5,7 +5,6 @@
 #include "../ui_MainWindow.h"
 #include <QFileDialog>
 #include "processinglib/histogram.h"
-#include <opencv2/imgproc/imgproc.hpp>
 
 using namespace cv;
 

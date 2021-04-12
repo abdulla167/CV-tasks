@@ -24,7 +24,7 @@ void multiply(fftw_complex val1, fftw_complex val2, fftw_complex reslult) {
 }
 
 std::vector<std::vector<std::complex<double>>> fft2(Image &inputImg) {
-    auto data = inputImg.flattenDouble();
+    auto data = inputImg.copyData<double>();
     int nComplexCols = inputImg.width / 2 + 1;
     int fftDateSize = nComplexCols * inputImg.height;
     fftw_complex *fftData = new fftw_complex[fftDateSize];
@@ -132,7 +132,7 @@ Image fft2dMag(Image &inputImg) {
     Image im{width, height, 1};
     for (int i = 0; i < height; ++i) {
         for (int j = 0; j < width; ++j) {
-            im.data[i][j][0] = std::log10(1 + abs(fftMirror[i][j]));
+            im(i,j) = std::log10(1 + abs(fftMirror[i][j]));
         }
     }
     return im;
@@ -193,7 +193,7 @@ Image ifft2(std::vector<std::vector<std::complex<double>>> &fftComplex) {
 
     for (int i = 0; i < outImg.height; ++i) {
         for (int j = 0; j < outImg.width; ++j) {
-            outImg.data[i][j][0] = (ifftData[j + i * outImg.width] / (outImg.height * outImg.width));
+            outImg(i, j) = (ifftData[j + i * outImg.width] / (outImg.height * outImg.width));
         }
     }
     fftw_destroy_plan(iplan);

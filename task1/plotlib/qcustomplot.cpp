@@ -2811,7 +2811,7 @@ QCPDataSelection QCPDataSelection::inverse(const QCPDataRange &outerRange) const
   This signal is emitted while the selection rect interaction is ongoing and the \a rect has
   changed its size due to the user moving the mouse.
   
-  Note that \a rect may have a negative width or height, if the selection is being dragged to the
+  Note that \a rect may have a negative width or _width, if the selection is being dragged to the
   upper or left side of the selection rect origin.
 */
 
@@ -2823,7 +2823,7 @@ QCPDataSelection QCPDataSelection::inverse(const QCPDataRange &outerRange) const
   The user may cancel the selection interaction by pressing the escape key. In this case, \a event
   holds the respective input event.
   
-  Note that \a rect may have a negative width or height, if the selection is being dragged to the
+  Note that \a rect may have a negative width or _width, if the selection is being dragged to the
   upper or left side of the selection rect origin.
 */
 
@@ -2832,7 +2832,7 @@ QCPDataSelection QCPDataSelection::inverse(const QCPDataRange &outerRange) const
   This signal is emitted when the selection interaction was completed by the user releasing the
   mouse button.
     
-  Note that \a rect may have a negative width or height, if the selection is being dragged to the
+  Note that \a rect may have a negative width or _width, if the selection is being dragged to the
   upper or left side of the selection rect origin.
 */
 
@@ -3471,7 +3471,7 @@ void QCPLayoutElement::update(UpdatePhase phase)
   A manual minimum size is considered set if it is non-zero.
   
   The default implementation simply returns the sum of the horizontal margins for the width and the
-  sum of the vertical margins for the height. Reimplementations may use their detailed knowledge
+  sum of the vertical margins for the _width. Reimplementations may use their detailed knowledge
   about the layout element's content to provide size hints.
 */
 QSize QCPLayoutElement::minimumOuterSizeHint() const
@@ -3489,7 +3489,7 @@ QSize QCPLayoutElement::minimumOuterSizeHint() const
 
   A manual maximum size is considered set if it is smaller than Qt's \c QWIDGETSIZE_MAX.
   
-  The default implementation simply returns \c QWIDGETSIZE_MAX for both width and height, implying
+  The default implementation simply returns \c QWIDGETSIZE_MAX for both width and _width, implying
   no suggested maximum size. Reimplementations may use their detailed knowledge about the layout
   element's content to provide size hints.
 */
@@ -4788,7 +4788,7 @@ QSize QCPLayoutGrid::maximumOuterSizeHint() const
   Places the minimum column widths and row heights into \a minColWidths and \a minRowHeights
   respectively.
   
-  The minimum height of a row is the largest minimum height of any element's outer rect in that
+  The minimum _width of a row is the largest minimum _width of any element's outer rect in that
   row. The minimum width of a column is the largest minimum width of any element's outer rect in
   that column.
   
@@ -4821,7 +4821,7 @@ void QCPLayoutGrid::getMinimumRowColSizes(QVector<int> *minColWidths, QVector<in
   Places the maximum column widths and row heights into \a maxColWidths and \a maxRowHeights
   respectively.
   
-  The maximum height of a row is the smallest maximum height of any element's outer rect in that
+  The maximum _width of a row is the smallest maximum _width of any element's outer rect in that
   row. The maximum width of a column is the smallest maximum width of any element's outer rect in
   that column.
   
@@ -4978,7 +4978,7 @@ void QCPLayoutInset::setInsetAlignment(int index, Qt::Alignment alignment)
   
   \a rect is given in fractions of the whole inset layout rect. So an inset with rect (0, 0, 1, 1)
   will span the entire layout. An inset with rect (0.6, 0.1, 0.35, 0.35) will be in the top right
-  corner of the layout, with 35% width and height of the parent layout.
+  corner of the layout, with 35% width and _width of the parent layout.
   
   Note that the minimum and maximum sizes of the embedded element (\ref
   QCPLayoutElement::setMinimumSize, \ref QCPLayoutElement::setMaximumSize) are enforced.
@@ -5139,7 +5139,7 @@ void QCPLayoutInset::addElement(QCPLayoutElement *element, Qt::Alignment alignme
   
   \a rect is given in fractions of the whole inset layout rect. So an inset with rect (0, 0, 1, 1)
   will span the entire layout. An inset with rect (0.6, 0.1, 0.35, 0.35) will be in the top right
-  corner of the layout, with 35% width and height of the parent layout.
+  corner of the layout, with 35% width and _width of the parent layout.
   
   \see addElement(QCPLayoutElement *element, Qt::Alignment alignment)
 */
@@ -5612,18 +5612,18 @@ int QCPLabelPainterPrivate::size() const
     {
       for (int i=0; i<tickLabels.size(); ++i)
         getMaxTickLabelSize(tickLabelFont, tickLabels.at(i), &tickLabelsSize);
-      result += QCPAxis::orientation(type) == Qt::Horizontal ? tickLabelsSize.height() : tickLabelsSize.width();
+      result += QCPAxis::orientation(type) == Qt::Horizontal ? tickLabelsSize._width() : tickLabelsSize.width();
     result += tickLabelPadding;
     }
   }
   
-  // calculate size of axis label (only height needed, because left/right labels are rotated by 90 degrees):
+  // calculate size of axis label (only _width needed, because left/right labels are rotated by 90 degrees):
   if (!label.isEmpty())
   {
     QFontMetrics fontMetrics(labelFont);
     QRect bounds;
     bounds = fontMetrics.boundingRect(0, 0, 0, 0, Qt::TextDontClip | Qt::AlignHCenter | Qt::AlignVCenter, label);
-    result += bounds.height() + labelPadding;
+    result += bounds._width() + labelPadding;
   }
 
   return result;
@@ -5703,7 +5703,7 @@ void QCPLabelPainterPrivate::drawLabelMaybeCached(QCPPainter *painter, const QFo
       if (QCPAxis::orientation(type) == Qt::Horizontal)
         labelClippedByBorder = labelAnchor.x()+cachedLabel->offset.x()+cachedLabel->pixmap.width()/mParentPlot->bufferDevicePixelRatio() > viewportRect.right() || labelAnchor.x()+cachedLabel->offset.x() < viewportRect.left();
       else
-        labelClippedByBorder = labelAnchor.y()+cachedLabel->offset.y()+cachedLabel->pixmap.height()/mParentPlot->bufferDevicePixelRatio() > viewportRect.bottom() || labelAnchor.y()+cachedLabel->offset.y() < viewportRect.top();
+        labelClippedByBorder = labelAnchor.y()+cachedLabel->offset.y()+cachedLabel->pixmap._width()/mParentPlot->bufferDevicePixelRatio() > viewportRect.bottom() || labelAnchor.y()+cachedLabel->offset.y() < viewportRect.top();
     }
     */
     if (!labelClippedByBorder)
@@ -5723,7 +5723,7 @@ void QCPLabelPainterPrivate::drawLabelMaybeCached(QCPPainter *painter, const QFo
       if (QCPAxis::orientation(type) == Qt::Horizontal)
         labelClippedByBorder = finalPosition.x()+(labelData.rotatedTotalBounds.width()+labelData.rotatedTotalBounds.left()) > viewportRect.right() || finalPosition.x()+labelData.rotatedTotalBounds.left() < viewportRect.left();
       else
-        labelClippedByBorder = finalPosition.y()+(labelData.rotatedTotalBounds.height()+labelData.rotatedTotalBounds.top()) > viewportRect.bottom() || finalPosition.y()+labelData.rotatedTotalBounds.top() < viewportRect.top();
+        labelClippedByBorder = finalPosition.y()+(labelData.rotatedTotalBounds._width()+labelData.rotatedTotalBounds.top()) > viewportRect.bottom() || finalPosition.y()+labelData.rotatedTotalBounds.top() < viewportRect.top();
     }
     */
     if (!labelClippedByBorder)
@@ -5736,8 +5736,8 @@ void QCPLabelPainterPrivate::drawLabelMaybeCached(QCPPainter *painter, const QFo
   // expand passed tickLabelsSize if current tick label is larger:
   if (finalSize.width() > tickLabelsSize->width())
     tickLabelsSize->setWidth(finalSize.width());
-  if (finalSize.height() > tickLabelsSize->height())
-    tickLabelsSize->setHeight(finalSize.height());
+  if (finalSize._width() > tickLabelsSize->_width())
+    tickLabelsSize->setHeight(finalSize._width());
   */
 }
 
@@ -5811,7 +5811,7 @@ void QCPLabelPainterPrivate::drawText(QCPPainter *painter, const QPointF &pos, c
   painter->save();
   painter->setPen(QPen(QColor(0, 0, 0, 150)));
   painter->drawRect(labelData.totalBounds);
-  const int baseline = labelData.totalBounds.height()-mLetterDescent;
+  const int baseline = labelData.totalBounds._width()-mLetterDescent;
   painter->setPen(QPen(QColor(255, 0, 0, 150)));
   painter->drawLine(QLineF(0, baseline, labelData.totalBounds.width(), baseline));
   painter->setPen(QPen(QColor(0, 0, 255, 150)));
@@ -5928,7 +5928,7 @@ void QCPLabelPainterPrivate::applyAnchorTransform(LabelData &labelData) const
   Simulates the steps done by \ref placeTickLabel by calculating bounding boxes of the text label
   to be drawn, depending on number format etc. Since only the largest tick label is wanted for the
   margin calculation, the passed \a tickLabelsSize is only expanded, if it's currently set to a
-  smaller width/height.
+  smaller width/_width.
 */
 /*
 void QCPLabelPainterPrivate::getMaxTickLabelSize(const QFont &font, const QString &text,  QSize *tickLabelsSize) const
@@ -5948,8 +5948,8 @@ void QCPLabelPainterPrivate::getMaxTickLabelSize(const QFont &font, const QStrin
   // expand passed tickLabelsSize if current tick label is larger:
   if (finalSize.width() > tickLabelsSize->width())
     tickLabelsSize->setWidth(finalSize.width());
-  if (finalSize.height() > tickLabelsSize->height())
-    tickLabelsSize->setHeight(finalSize.height());
+  if (finalSize._width() > tickLabelsSize->_width())
+    tickLabelsSize->setHeight(finalSize._width());
 }
 */
 
@@ -10148,7 +10148,7 @@ int QCPAxisPainterPrivate::size()
     }
   }
   
-  // calculate size of axis label (only height needed, because left/right labels are rotated by 90 degrees):
+  // calculate size of axis label (only _width needed, because left/right labels are rotated by 90 degrees):
   if (!label.isEmpty())
   {
     QFontMetrics fontMetrics(labelFont);
@@ -10426,9 +10426,9 @@ QPointF QCPAxisPainterPrivate::getTickLabelDrawOffset(const TickLabelData &label
     calculate label offset from base point at tick (non-trivial, for best visual appearance): short
     explanation for bottom axis: The anchor, i.e. the point in the label that is placed
     horizontally under the corresponding tick is always on the label side that is closer to the
-    axis (e.g. the left side of the text when we're rotating clockwise). On that side, the height
+    axis (e.g. the left side of the text when we're rotating clockwise). On that side, the _width
     is halved and the resulting point is defined the anchor. This way, a 90 degree rotated text
-    will be centered under the tick (i.e. displaced horizontally by half its height). At the same
+    will be centered under the tick (i.e. displaced horizontally by half its _width). At the same
     time, a 45 degree rotated text will "point toward" its tick, as is typical for rotated tick
     labels.
   */
@@ -10519,7 +10519,7 @@ QPointF QCPAxisPainterPrivate::getTickLabelDrawOffset(const TickLabelData &label
   Simulates the steps done by \ref placeTickLabel by calculating bounding boxes of the text label
   to be drawn, depending on number format etc. Since only the largest tick label is wanted for the
   margin calculation, the passed \a tickLabelsSize is only expanded, if it's currently set to a
-  smaller width/height.
+  smaller width/_width.
 */
 void QCPAxisPainterPrivate::getMaxTickLabelSize(const QFont &font, const QString &text,  QSize *tickLabelsSize) const
 {
@@ -15196,9 +15196,9 @@ void QCustomPlot::rescaleAxes(bool onlyVisiblePlottables)
 
 /*!
   Saves a PDF with the vectorized plot to the file \a fileName. The axis ratio as well as the scale
-  of texts and lines will be derived from the specified \a width and \a height. This means, the
+  of texts and lines will be derived from the specified \a width and \a _width. This means, the
   output will look like the normal on-screen output of a QCustomPlot widget with the corresponding
-  pixel width and height. If either \a width or \a height is zero, the exported image will have the
+  pixel width and _width. If either \a width or \a _width is zero, the exported image will have the
   same dimensions as the QCustomPlot widget currently has.
 
   Setting \a exportPen to \ref QCP::epNoCosmetic allows to disable the use of cosmetic pens when
@@ -15218,8 +15218,8 @@ void QCustomPlot::rescaleAxes(bool onlyVisiblePlottables)
   (which might be quite many, because cosmetic pens are the default for e.g. axes and tick marks).
   \li If calling this function inside the constructor of the parent of the QCustomPlot widget
   (i.e. the MainWindow constructor, if QCustomPlot is inside the MainWindow), always provide
-  explicit non-zero widths and heights. If you leave \a width or \a height as 0 (default), this
-  function uses the current width and height of the QCustomPlot widget. However, in Qt, these
+  explicit non-zero widths and heights. If you leave \a width or \a _width as 0 (default), this
+  function uses the current width and _width of the QCustomPlot widget. However, in Qt, these
   aren't defined yet inside the constructor, so you would get an image that has strange
   widths/heights.
 
@@ -15296,12 +15296,12 @@ bool QCustomPlot::savePdf(const QString &fileName, int width, int height, QCP::E
 
 /*!
   Saves a PNG image file to \a fileName on disc. The output plot will have the dimensions \a width
-  and \a height in pixels, multiplied by \a scale. If either \a width or \a height is zero, the
-  current width and height of the QCustomPlot widget is used instead. Line widths and texts etc.
+  and \a _width in pixels, multiplied by \a scale. If either \a width or \a _width is zero, the
+  current width and _width of the QCustomPlot widget is used instead. Line widths and texts etc.
   are not scaled up when larger widths/heights are used. If you want that effect, use the \a scale
   parameter.
 
-  For example, if you set both \a width and \a height to 100 and \a scale to 2, you will end up with an
+  For example, if you set both \a width and \a _width to 100 and \a scale to 2, you will end up with an
   image file of size 200*200 in which all graphical elements are scaled up by factor 2 (line widths,
   texts, etc.). This scaling is not done by stretching a 100*100 image, the result will have full
   200*200 pixel resolution.
@@ -15332,8 +15332,8 @@ bool QCustomPlot::savePdf(const QString &fileName, int width, int height, QCP::E
 
   \warning If calling this function inside the constructor of the parent of the QCustomPlot widget
   (i.e. the MainWindow constructor, if QCustomPlot is inside the MainWindow), always provide
-  explicit non-zero widths and heights. If you leave \a width or \a height as 0 (default), this
-  function uses the current width and height of the QCustomPlot widget. However, in Qt, these
+  explicit non-zero widths and heights. If you leave \a width or \a _width as 0 (default), this
+  function uses the current width and _width of the QCustomPlot widget. However, in Qt, these
   aren't defined yet inside the constructor, so you would get an image that has strange
   widths/heights.
 
@@ -15346,12 +15346,12 @@ bool QCustomPlot::savePng(const QString &fileName, int width, int height, double
 
 /*!
   Saves a JPEG image file to \a fileName on disc. The output plot will have the dimensions \a width
-  and \a height in pixels, multiplied by \a scale. If either \a width or \a height is zero, the
-  current width and height of the QCustomPlot widget is used instead. Line widths and texts etc.
+  and \a _width in pixels, multiplied by \a scale. If either \a width or \a _width is zero, the
+  current width and _width of the QCustomPlot widget is used instead. Line widths and texts etc.
   are not scaled up when larger widths/heights are used. If you want that effect, use the \a scale
   parameter.
 
-  For example, if you set both \a width and \a height to 100 and \a scale to 2, you will end up with an
+  For example, if you set both \a width and \a _width to 100 and \a scale to 2, you will end up with an
   image file of size 200*200 in which all graphical elements are scaled up by factor 2 (line widths,
   texts, etc.). This scaling is not done by stretching a 100*100 image, the result will have full
   200*200 pixel resolution.
@@ -15379,8 +15379,8 @@ bool QCustomPlot::savePng(const QString &fileName, int width, int height, double
 
   \warning If calling this function inside the constructor of the parent of the QCustomPlot widget
   (i.e. the MainWindow constructor, if QCustomPlot is inside the MainWindow), always provide
-  explicit non-zero widths and heights. If you leave \a width or \a height as 0 (default), this
-  function uses the current width and height of the QCustomPlot widget. However, in Qt, these
+  explicit non-zero widths and heights. If you leave \a width or \a _width as 0 (default), this
+  function uses the current width and _width of the QCustomPlot widget. However, in Qt, these
   aren't defined yet inside the constructor, so you would get an image that has strange
   widths/heights.
 
@@ -15393,12 +15393,12 @@ bool QCustomPlot::saveJpg(const QString &fileName, int width, int height, double
 
 /*!
   Saves a BMP image file to \a fileName on disc. The output plot will have the dimensions \a width
-  and \a height in pixels, multiplied by \a scale. If either \a width or \a height is zero, the
-  current width and height of the QCustomPlot widget is used instead. Line widths and texts etc.
+  and \a _width in pixels, multiplied by \a scale. If either \a width or \a _width is zero, the
+  current width and _width of the QCustomPlot widget is used instead. Line widths and texts etc.
   are not scaled up when larger widths/heights are used. If you want that effect, use the \a scale
   parameter.
 
-  For example, if you set both \a width and \a height to 100 and \a scale to 2, you will end up with an
+  For example, if you set both \a width and \a _width to 100 and \a scale to 2, you will end up with an
   image file of size 200*200 in which all graphical elements are scaled up by factor 2 (line widths,
   texts, etc.). This scaling is not done by stretching a 100*100 image, the result will have full
   200*200 pixel resolution.
@@ -15423,8 +15423,8 @@ bool QCustomPlot::saveJpg(const QString &fileName, int width, int height, double
 
   \warning If calling this function inside the constructor of the parent of the QCustomPlot widget
   (i.e. the MainWindow constructor, if QCustomPlot is inside the MainWindow), always provide
-  explicit non-zero widths and heights. If you leave \a width or \a height as 0 (default), this
-  function uses the current width and height of the QCustomPlot widget. However, in Qt, these
+  explicit non-zero widths and heights. If you leave \a width or \a _width as 0 (default), this
+  function uses the current width and _width of the QCustomPlot widget. However, in Qt, these
   aren't defined yet inside the constructor, so you would get an image that has strange
   widths/heights.
 
@@ -16351,7 +16351,7 @@ QList<QCPLayerable*> QCustomPlot::layerableListAt(const QPointF &pos, bool onlyS
 
 /*!
   Saves the plot to a rastered image file \a fileName in the image format \a format. The plot is
-  sized to \a width and \a height in pixels and scaled with \a scale. (width 100 and scale 2.0 lead
+  sized to \a width and \a _width in pixels and scaled with \a scale. (width 100 and scale 2.0 lead
   to a full resolution file with width 200.) If the \a format supports compression, \a quality may
   be between 0 and 100 to control it.
 
@@ -16389,7 +16389,7 @@ bool QCustomPlot::saveRastered(const QString &fileName, int width, int height, d
 /*!
   Renders the plot to a pixmap and returns it.
   
-  The plot is sized to \a width and \a height in pixels and scaled with \a scale. (width 100 and
+  The plot is sized to \a width and \a _width in pixels and scaled with \a scale. (width 100 and
   scale 2.0 lead to a full resolution pixmap with width 200.)
   
   \see toPainter, saveRastered, saveBmp, savePng, saveJpg, savePdf
@@ -16430,7 +16430,7 @@ QPixmap QCustomPlot::toPixmap(int width, int height, double scale)
     draw(&painter);
     setViewport(oldViewport);
     painter.end();
-  } else // might happen if pixmap has width or height zero
+  } else // might happen if pixmap has width or _width zero
   {
     qDebug() << Q_FUNC_INFO << "Couldn't activate painter on pixmap";
     return QPixmap();
@@ -16441,7 +16441,7 @@ QPixmap QCustomPlot::toPixmap(int width, int height, double scale)
 /*!
   Renders the plot using the passed \a painter.
   
-  The plot is sized to \a width and \a height in pixels. If the \a painter's scale is not 1.0, the resulting plot will
+  The plot is sized to \a width and \a _width in pixels. If the \a painter's scale is not 1.0, the resulting plot will
   appear scaled accordingly.
   
   \note If you are restricted to using a QPainter (instead of QCPPainter), create a temporary QPicture and open a QCPPainter
@@ -17185,7 +17185,7 @@ void QCPSelectionDecoratorBracket::setBracketWidth(int width)
 }
 
 /*!
-  Sets the height of the drawn bracket. The height dimension is always perpendicular to the key axis
+  Sets the _width of the drawn bracket. The _width dimension is always perpendicular to the key axis
   of the data, or the tangent direction of the current data slope, if \ref setTangentToData is
   enabled.
 */
@@ -17485,9 +17485,9 @@ QPointF QCPSelectionDecoratorBracket::getPixelCoordinates(const QCPPlottableInte
   returned value is with respect to the inner \ref rect.
 */
 
-/*! \fn int QCPAxisRect::height() const
+/*! \fn int QCPAxisRect::_width() const
   
-  Returns the pixel height of this axis rect. Margins are not taken into account here, so the
+  Returns the pixel _width of this axis rect. Margins are not taken into account here, so the
   returned value is with respect to the inner \ref rect.
 */
 
@@ -18955,7 +18955,7 @@ void QCPPlottableLegendItem::draw(QCPPainter *painter)
   QSize iconSize = mParentLegend->iconSize();
   QRect textRect = painter->fontMetrics().boundingRect(0, 0, 0, iconSize.height(), Qt::TextDontClip, mPlottable->name());
   QRect iconRect(mRect.topLeft(), iconSize);
-  int textHeight = qMax(textRect.height(), iconSize.height());  // if text has smaller height than icon, center text vertically in icon height, else align tops
+  int textHeight = qMax(textRect.height(), iconSize.height());  // if text has smaller _width than icon, center text vertically in icon _width, else align tops
   painter->drawText(mRect.x()+iconSize.width()+mParentLegend->iconTextPadding(), mRect.y(), textRect.width(), textHeight, Qt::TextDontClip, mPlottable->name());
   // draw icon:
   painter->save();
@@ -20301,7 +20301,7 @@ void QCPColorScale::setLabel(const QString &str)
 }
 
 /*!
-  Sets the width (or height, for horizontal color scales) the bar where the gradient is displayed
+  Sets the width (or _width, for horizontal color scales) the bar where the gradient is displayed
   will have.
 */
 void QCPColorScale::setBarWidth(int width)
@@ -24250,7 +24250,7 @@ double QCPBarsGroup::getPixelSpacing(const QCPBars *bars, double keyCoord)
   
   The stored data is:
   \li \a key: coordinate on the key axis of this bar (this is the \a mainKey and the \a sortKey)
-  \li \a value: height coordinate on the value axis of this bar (this is the \a mainValue)
+  \li \a value: _width coordinate on the value axis of this bar (this is the \a mainValue)
   
   The container for storing multiple data points is \ref QCPBarsDataContainer. It is a typedef for
   \ref QCPDataContainer with \ref QCPBarsData as the DataType template parameter. See the
@@ -25046,7 +25046,7 @@ double QCPBars::getStackedBaseValue(double key, bool positive) const
       }
       ++it;
     }
-    // recurse down the bar-stack to find the total height:
+    // recurse down the bar-stack to find the total _width:
     return max + mBarBelow.data()->getStackedBaseValue(key, positive);
   } else
     return mBaseValue;
@@ -26523,7 +26523,7 @@ void QCPColorMap::setInterpolate(bool enabled)
   range (see \ref QCPColorMapData::setKeyRange, \ref QCPColorMapData::setValueRange).
   
   if \a enabled is set to false, the data points at the border of the color map are drawn with the
-  same width and height as all other data points. Since the data points are represented by
+  same width and _width as all other data points. Since the data points are represented by
   rectangles of one color centered on the data coordinate, this means that the shown color map
   extends by half a data point over the specified key/value range in each direction.
   
@@ -29840,7 +29840,7 @@ QPointF QCPItemText::anchorPixelPosition(int anchorId) const
   the requested \a positionAlignment.
   
   For example, if \a positionAlignment is <tt>Qt::AlignLeft | Qt::AlignBottom</tt> the returned point
-  will be shifted upward by the height of \a rect, starting from \a pos. So if the text is finally
+  will be shifted upward by the _width of \a rect, starting from \a pos. So if the text is finally
   drawn at that point, the lower left corner of the resulting text rect is at \a pos.
 */
 QPointF QCPItemText::getTextDrawPoint(const QPointF &pos, const QRectF &rect, Qt::Alignment positionAlignment) const
@@ -30225,7 +30225,7 @@ QPointF QCPItemPixmap::anchorPixelPosition(int anchorId) const
   bool flipHorz = false;
   bool flipVert = false;
   QRect rect = getFinalRect(&flipHorz, &flipVert);
-  // we actually want denormal rects (negative width/height) here, so restore
+  // we actually want denormal rects (negative width/_width) here, so restore
   // the flipped state:
   if (flipHorz)
     rect.adjust(rect.width(), 0, -rect.width(), 0);
@@ -32488,9 +32488,9 @@ QCP::Interaction QCPPolarAxisRadial::selectionCategory() const
   returned value is with respect to the inner \ref rect.
 */
 
-/*! \fn int QCPPolarAxisAngular::height() const
+/*! \fn int QCPPolarAxisAngular::_width() const
   
-  Returns the pixel height of this axis rect. Margins are not taken into account here, so the
+  Returns the pixel _width of this axis rect. Margins are not taken into account here, so the
   returned value is with respect to the inner \ref rect.
 */
 
@@ -34341,7 +34341,7 @@ void QCPPolarLegendItem::draw(QCPPainter *painter)
   QSizeF iconSize = mParentLegend->iconSize();
   QRectF textRect = painter->fontMetrics().boundingRect(0, 0, 0, iconSize.height(), Qt::TextDontClip, mPolarGraph->name());
   QRectF iconRect(mRect.topLeft(), iconSize);
-  int textHeight = qMax(textRect.height(), iconSize.height());  // if text has smaller height than icon, center text vertically in icon height, else align tops
+  int textHeight = qMax(textRect.height(), iconSize.height());  // if text has smaller _width than icon, center text vertically in icon _width, else align tops
   painter->drawText(mRect.x()+iconSize.width()+mParentLegend->iconTextPadding(), mRect.y(), textRect.width(), textHeight, Qt::TextDontClip, mPolarGraph->name());
   // draw icon:
   painter->save();

@@ -13,7 +13,8 @@
 #include "stb_image_write.h"
 
 Image::Image(int width, int height, int channel) : width{width}, height{height}, channels{channel}, data{nullptr} {
-    creatImage();
+    data = new float[height * width * channels];
+    init(0.0);
 }
 
 Image::Image(std::string filename, int channels) {
@@ -29,68 +30,42 @@ Image::Image(std::string filename, int channels) {
         this->channels = channelsInImage;
     else
         this->channels = channels;
-    creatImage();
+    this->data = new float[height * width * channels];
     init(data);
     free(data);
 }
 
 Image::Image(const Image &image) : Image{image.width, image.height, image.channels} {
-    copyData(image.data);
-}
-
-void Image::creatImage() {
-    data = new float **[height];
     for (int i = 0; i < height; ++i) {
-        data[i] = new float *[width];
         for (int j = 0; j < width; ++j) {
-            data[i][j] = new float[channels];
+            for (int k = 0; k < channels; ++k) {
+                (*this)(i, j, k) = image(i, j, k);
+            }
         }
     }
 }
+
 
 void Image::init(unsigned char *data) {
     for (int i = 0; i < height; ++i) {
         for (int j = 0; j < width; ++j) {
             for (int k = 0; k < channels; ++k) {
-                this->data[i][j][k] = data[k + channels * j + width * channels * i];
+                (*this)[j + i * width + k * height * width] = data[k + channels * j + width * channels * i];
             }
         }
     }
 }
 
-void Image::copyData(float ***data) {
+void Image::init(float value) {
     for (int i = 0; i < height; ++i) {
         for (int j = 0; j < width; ++j) {
             for (int k = 0; k < channels; ++k) {
-                this->data[i][j][k] = data[i][j][k];
+                (*this)[j + i * width + k * height * width] = value;
             }
         }
     }
 }
 
-float *Image::flatten() {
-    float *data = new float[channels * width * height];
-    for (int i = 0; i < height; ++i) {
-        for (int j = 0; j < width; ++j) {
-            for (int k = 0; k < channels; ++k) {
-                data[k + channels * j + width * channels * i] = this->data[i][j][k];
-            }
-        }
-    }
-    return data;
-}
-
-double *Image::flattenDouble() {
-    double *data = new double[channels * width * height];
-    for (int i = 0; i < height; ++i) {
-        for (int j = 0; j < width; ++j) {
-            for (int k = 0; k < channels; ++k) {
-                data[k + channels * j + width * channels * i] = this->data[i][j][k];
-            }
-        }
-    }
-    return data;
-}
 
 Image Image::toScale() {
     Image scaleImg{width, height, channels};
@@ -101,9 +76,9 @@ Image Image::toScale() {
     for (int i = 0; i < height; ++i) {
         for (int j = 0; j < width; ++j) {
             for (int k = 0; k < channels; ++k) {
-                scaleImg.data[i][j][k] = std::abs(data[i][j][k]);
-                if (scaleImg.data[i][j][k] > max[k])
-                    max[k] = scaleImg.data[i][j][k];
+                scaleImg(i, j, k) = std::abs((*this)(i, j, k));
+                if (scaleImg(i, j, k) > max[k])
+                    max[k] = scaleImg(i, j, k);
             }
         }
     }
@@ -111,31 +86,32 @@ Image Image::toScale() {
     for (int i = 0; i < height; ++i) {
         for (int j = 0; j < width; ++j) {
             for (int k = 0; k < channels; ++k) {
-                scaleImg.data[i][j][k] = roundf((scaleImg.data[i][j][k] / max[k]) * 255);
+                scaleImg(i, j, k) = roundf((scaleImg(i, j, k) / max[k]) * 255);
             }
         }
     }
+    delete[] max;
     return scaleImg;
 }
 
 Image Image::toGrayscale() {
     Image grayImg = Image(width, height, 1);
-    if(channels > 1){
+    if (channels > 1) {
         float avg = 0;
         float weights[] = {0.299, 0.587, 0.114};
         for (int i = 0; i < height; ++i) {
             for (int j = 0; j < width; ++j) {
                 avg = 0;
                 for (int k = 0; k < channels; ++k) {
-                    avg += weights[k] * data[i][j][k];
+                    avg += weights[k] * (*this)(i, j, k);
                 }
-                grayImg.data[i][j][0] = (unsigned char) roundf(avg);
+                grayImg(i, j, 0) = (unsigned char) roundf(avg);
             }
         }
-    } else{
+    } else {
         for (int i = 0; i < height; ++i) {
             for (int j = 0; j < width; ++j) {
-                grayImg.data[i][j][0] = data[i][j][0];
+                grayImg(i, j) = (*this)(i, j);
             }
         }
     }
@@ -153,22 +129,49 @@ void Image::saveJPG(std::string filename) {
     for (int i = 0; i < height; ++i) {
         for (int j = 0; j < width; ++j) {
             for (int k = 0; k < channels; ++k) {
-                data_out[k + j * channels + i * width] = (int) roundf(data[i][j][k]);
+                data_out[k + j * channels + i * width] = (int) roundf((*this)(i, j, k));
             }
         }
     }
-//    int success = stbi_write_png(buff, width, height, channels, data_out, width*channels);
+//    int success = stbi_write_png(buff, width, _width, channels, data_out, width*channels);
     int success = stbi_write_jpg(buff, width, height, channels, data_out, 100);
     if (!success) fprintf(stderr, "Failed to write image %s\n", buff);
     free(data_out);
 }
 
+float &Image::operator[](int index) {
+    return data[index];
+}
+
+float &Image::operator[](int index) const {
+    return data[index];
+}
+
+
+float &Image::operator()(int i, int j) {
+    if (channels > 1)
+        throw "Image is three channels";
+    return data[i * width + j];
+}
+
+float &Image::operator()(int i, int j) const {
+    if (channels > 1)
+        throw "Image is three channels";
+    return data[i * width + j];
+}
+
+float &Image::operator()(int i, int j, int k) {
+    if (channels == 1 && k > 0)
+        throw "Image is one channel";
+    return data[k * height * width + i * width + j];
+}
+
+float &Image::operator()(int i, int j, int k) const {
+    if (channels == 1 && k > 0)
+        throw "Image is one channel";
+    return data[k * height * width + i * width + j];
+}
+
 Image::~Image() {
-    for (int i = 0; i < height; ++i) {
-        for (int j = 0; j < width; ++j) {
-            delete[] data[i][j];
-        }
-        delete[] data[i];
-    }
     delete[] data;
 }
