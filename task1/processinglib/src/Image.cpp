@@ -50,7 +50,7 @@ void Image::init(unsigned char *data) {
     for (int i = 0; i < height; ++i) {
         for (int j = 0; j < width; ++j) {
             for (int k = 0; k < channels; ++k) {
-                (*this)[j + i * width + k * height * width] = data[k + channels * j + width * channels * i];
+                (*this)(i, j, k) = data[k + channels * j + width * channels * i];
             }
         }
     }
@@ -60,7 +60,7 @@ void Image::init(float value) {
     for (int i = 0; i < height; ++i) {
         for (int j = 0; j < width; ++j) {
             for (int k = 0; k < channels; ++k) {
-                (*this)[j + i * width + k * height * width] = value;
+                (*this)(i, j, k) = value;
             }
         }
     }

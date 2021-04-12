@@ -132,7 +132,6 @@ void MainWindow::histDisplay(int histogram[], int color, QCustomPlot *plot) {
 }
 
 void MainWindow::CDFDisplay(int histogram[], int color, QCustomPlot *plot) {
-    int imageSize = inputImage_1->height * inputImage_1->width;
     QVector<double> x(256), y(256);
     for (int i = 0; i < 256; i++) {
         x[i] = i;
