@@ -2,7 +2,7 @@
 // Created by abdallah drwesh on 4/3/21.
 //
 
-#include "histogram.h"
+#include "processinglib/histogram.h"
 
 #include <iostream>
 

@@ -2,8 +2,8 @@
 // Created by abdallah drwesh on 4/3/21.
 //
 
-#include "fourier_transform.h"
-#include "utilities.h"
+#include "processinglib/fourier_transform.h"
+#include "processinglib/utilities.h"
 #include "fftw3.h"
 #include <cmath>
 #include <complex>

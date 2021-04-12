@@ -2,10 +2,10 @@
 // Created by abdallah drwesh on 4/3/21.
 //
 
-#include "filters.h"
-#include "utilities.h"
+#include "processinglib/filters.h"
+#include "processinglib/utilities.h"
 #include <cmath>
-#include "fourier_transform.h"
+#include "processinglib/fourier_transform.h"
 
 
 Image avgFilter(Image &inputImg, char dim) {

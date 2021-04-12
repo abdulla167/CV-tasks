@@ -2,15 +2,15 @@
 // Created by abdallah on 3/31/21.
 //
 
-#include "Image.h"
+#include "processinglib/Image.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 
-#include "stb_image.h"
+#include "processinglib/stb_image.h"
 
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 
-#include "stb_image_write.h"
+#include "processinglib/stb_image_write.h"
 
 Image::Image(int width, int height, int channel) : width{width}, height{height}, channels{channel}, data{nullptr} {
     data = new float[height * width * channels];

@@ -2,8 +2,8 @@
 // Created by abdallah drwesh on 4/3/21.
 //
 
-#include "utilities.h"
-#include "histogram.h"
+#include "processinglib/utilities.h"
+#include "processinglib/histogram.h"
 #include <cmath>
 #include <vector>
 #include <algorithm>
