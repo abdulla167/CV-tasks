@@ -8,7 +8,7 @@
 #include "utilities.h"
 #include "filters.h"
 
-float median(Image & image){
+float median(Image &image) {
     std::vector<int> vals;
     for (int i = 0; i < image.height; i++) {
         for (int j = 0; j < image.width; j++) {
@@ -19,7 +19,8 @@ float median(Image & image){
     std::sort(vals.begin(), vals.end());
     return vals[vals.size() / 2 + vals.size() % 2];
 }
-Image cannyEdgeDetector(Image &image) {
+
+Image cannyEdgeDetector(Image &image, float sigma) {
     float xFilter[9] = {
             -1, 0, 1,
             -2, 0, 2,
@@ -35,7 +36,7 @@ Image cannyEdgeDetector(Image &image) {
     Image direction = getDirection(imgX, imgY);
     Image nonMax = cannyNonMaxSuppression(magnitude, direction);
     float medianVal = median(image);
-    return edgeLink(std::min(1.33*medianVal, 255.), std::max(0.66*medianVal, 0.), nonMax);
+    return edgeLink(std::min((1. + sigma) * medianVal, 255.), std::max((1. - sigma) * medianVal, 0.), nonMax);
 }
 
 void dirToCoordinates(float dir, char coordinates[]) {
@@ -83,8 +84,8 @@ Image cannyNonMaxSuppression(Image &mag, Image &dir) {
 
 Image edgeLink(int tHigh, int tLow, Image &image) {
     Image outImage{image.width - 2, image.height - 2, 1};
-    for (int i = 1; i < image.height -1; ++i) {
-        for (int j = 1; j < image.width -1; ++j) {
+    for (int i = 1; i < image.height - 1; ++i) {
+        for (int j = 1; j < image.width - 1; ++j) {
             if (image(i, j) > tHigh) {
                 outImage(i - 1, j - 1) = 255;
             } else if (image(i, j) < tLow) {
@@ -94,15 +95,15 @@ Image edgeLink(int tHigh, int tLow, Image &image) {
                 while (k < 2) {
                     if (image(i + k, j) > tLow ||
                         image(i + k, j - 1) > tLow ||
-                        image(i + k, j + 1) > tLow){
+                        image(i + k, j + 1) > tLow) {
                         break;
                     }
-                        k++;
+                    k++;
                 }
-                if(k < 2){
-                    outImage(i-1, j-1) = 255;
-                } else{
-                    outImage(i-1, j-1) = 0;
+                if (k < 2) {
+                    outImage(i - 1, j - 1) = 255;
+                } else {
+                    outImage(i - 1, j - 1) = 0;
                 }
             }
         }

@@ -9,7 +9,7 @@
 
 Image cannyNonMaxSuppression(Image &mag, Image& dir);
 
-Image cannyEdgeDetector(Image &image);
+Image cannyEdgeDetector(Image &image, float sigma = 0.23);
 
 Image edgeLink(int tHigh, int tLow, Image& image);
 
