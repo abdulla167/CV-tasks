@@ -24,7 +24,7 @@ void MainWindow::on_loadImageBtn_clicked() {
 void MainWindow::on_filterSelect_currentIndexChanged(QString filterName) {
     std::cout << filterName.toStdString() << std::endl;
     if (filterName == "Average") {
-        auto grayImage = inputImage->toGrayscale();
+        auto grayImage = noiseImage->toGrayscale();
         auto im = avgFilter(grayImage, 7);
         displayGrayscaleImage(&im, ui->outputImageLabel);
 //        im.saveJPG("out_average");
