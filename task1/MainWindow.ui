@@ -241,6 +241,11 @@
               <string>Local Thresholding</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>Canny</string>
+             </property>
+            </item>
            </widget>
           </item>
          </layout>

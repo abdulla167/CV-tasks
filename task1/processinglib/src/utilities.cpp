@@ -185,6 +185,41 @@ Image minMaxNormalize(Image &image) {
     return normalizedImage;
 }
 
+int approximateAngle(float x, float y) {
+    auto angle = atan(y / x);
+    if (angle > -22.5 && angle <= 22.5) {
+        return 0;
+    } else if (angle > 22.5 && angle <= 67.5) {
+        return 45;
+    } else if ((angle > 67.5 && angle <= 90) || (angle > -90 && angle <= -67.5)) {
+        return 90;
+    } else if (angle > -67.5 && angle <= -22.5) {
+        return 135;
+    }
+}
+
+
+Image getMagnitude(Image &imgX, Image &imgY) {
+    Image outImage{imgX.width, imgX.height, 1};
+    for (int i = 0; i < imgX.height; ++i) {
+        for (int j = 0; j < imgX.width; ++j) {
+            outImage(i, j) = sqrt(imgX(i, j) * imgX(i, j) + imgY(i, j) * imgY(i, j));
+        }
+    }
+    return outImage;
+}
+
+Image getDirection(Image &imgX, Image &imgY) {
+    Image outImage{imgX.width, imgX.height, 1};
+    for (int i = 0; i < imgX.height; ++i) {
+        for (int j = 0; j < imgX.width; ++j) {
+            outImage(i, j) = approximateAngle(imgX(i, j), imgY(i, j));
+        }
+    }
+    return outImage;
+}
+
+
 void sauvolaTechnique(Image &inputImg, int x, int y, int filterDim, double &mean, double &std) {
     int offset = (filterDim - 1) / 2;
     int startX = x - offset;

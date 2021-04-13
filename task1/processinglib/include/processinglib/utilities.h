@@ -29,6 +29,9 @@ Image saltPepper(Image & image, int count, int pixelSize);
 
 Image minMaxNormalize(Image & image);
 
+Image getMagnitude(Image& imgX, Image& imgY);
+
+Image getDirection(Image& imgX, Image& imgY);
 
 void sauvolaTechnique(Image& inputImg, int x, int y, int filterDim, double & mean, double & std);
 

@@ -6,6 +6,7 @@
 #include <QFileDialog>
 #include "processinglib/filters.h"
 #include "processinglib/utilities.h"
+#include "processinglib/canny.h"
 #include <iostream>
 
 void MainWindow::on_loadImageBtn_clicked() {
@@ -23,7 +24,7 @@ void MainWindow::on_loadImageBtn_clicked() {
 void MainWindow::on_filterSelect_currentIndexChanged(QString filterName) {
     std::cout << filterName.toStdString() << std::endl;
     if (filterName == "Average") {
-        auto grayImage = noiseImage->toGrayscale();
+        auto grayImage = inputImage->toGrayscale();
         auto im = avgFilter(grayImage, 7);
         displayGrayscaleImage(&im, ui->outputImageLabel);
 //        im.saveJPG("out_average");
@@ -87,6 +88,10 @@ void MainWindow::on_filterSelect_currentIndexChanged(QString filterName) {
         auto im = localThresholding(grayImage, 0, 128, 15);
         displayGrayscaleImage(&im, ui->outputImageLabel);
 //        im.saveJPG("out_local_thresholding");
+    } else if(filterName == "Canny"){
+        auto grayImage = inputImage->toGrayscale();
+        auto im = cannyEdgeDetector(grayImage);
+        displayGrayscaleImage(&im, ui->outputImageLabel);
     }
 }
 

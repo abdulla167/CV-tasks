@@ -56,19 +56,9 @@ Image perwitEdgeDetector(Image &inputImg) {
             1, 1, 1,
             0, 0, 0,
             -1, -1, -1};
-    Image outputImg{inputImg.width - 2, inputImg.height - 2, inputImg.channels};
     Image imgX = applyFilter(inputImg, xFilter, 3);
     Image imgY = applyFilter(inputImg, yFilter, 3);
-    for (int y = 0; y < imgX.height; y++) {
-        for (int x = 0; x < imgX.width; x++) {
-            for (int z = 0; z < imgX.channels; z++) {
-                float xComponent = imgX(y,x,z);
-                float yComponent = imgY(y, x, z);
-                outputImg(y, x, z) =  sqrt(pow(xComponent, 2) + pow(yComponent, 2));
-            }
-        }
-    }
-    return outputImg;
+    return getMagnitude(imgX, imgY);
 }
 
 Image sobelEdgeDetector(Image &inputImg) {
@@ -80,19 +70,9 @@ Image sobelEdgeDetector(Image &inputImg) {
             1, 2, 1,
             0, 0, 0,
             -1, -2, -1};
-    Image outputImg{inputImg.width - 2, inputImg.height -2, inputImg.channels};
     Image imgX = applyFilter(inputImg, xFilter, 3);
     Image imgY = applyFilter(inputImg, yFilter, 3);
-    for (int y = 0; y < imgX.height; y++) {
-        for (int x = 0; x < imgX.width; x++) {
-            for (int z = 0; z < imgX.channels; z++) {
-                float xComponent = imgX(y, x, z);
-                float yComponent = imgY(y, x, z);
-                outputImg(y, x, z) = std::sqrt(pow(xComponent, 2) + pow(yComponent, 2));
-            }
-        }
-    }
-    return outputImg;
+    return getMagnitude(imgX, imgY);
 }
 
 Image robertsEdgeDetector(Image &inputImg) {
@@ -168,6 +148,5 @@ Image localThresholding(Image& inputImg, float k, int r, int dim){
     }
     return outputImg;
 }
-
 
 
