@@ -6,18 +6,23 @@
 #include <algorithm>
 #include "canny.h"
 #include "utilities.h"
+#include "histogram.h"
 #include "filters.h"
 
 float median(Image &image) {
-    std::vector<int> vals;
-    for (int i = 0; i < image.height; i++) {
-        for (int j = 0; j < image.width; j++) {
-            int dataValue = image(i, j);
-            vals.push_back(dataValue);
+    int histogram[256];
+    im_hist(image, histogram, 1);
+    int medianVal = 0;
+    int size = image.width * image.height;
+    int halfIndex = size / 2;
+    for (int i = 0; i < 256; ++i) {
+        medianVal += histogram[i];
+        if(medianVal >= halfIndex){
+            medianVal = i;
+            break;
         }
     }
-    std::sort(vals.begin(), vals.end());
-    return vals[vals.size() / 2 + vals.size() % 2];
+    return medianVal;
 }
 
 Image cannyEdgeDetector(Image &image, float sigma) {
