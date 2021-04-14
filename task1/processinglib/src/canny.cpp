@@ -29,7 +29,7 @@ Image cannyEdgeDetector(Image &image, float sigma) {
             1, 2, 1,
             0, 0, 0,
             -1, -2, -1};
-    Image outputImg = gaussianFilter(image);
+    Image outputImg = gaussianFilter(image, 5);
     Image imgX = applyFilter(outputImg, xFilter, 3);
     Image imgY = applyFilter(outputImg, yFilter, 3);
     Image magnitude = getMagnitude(imgX, imgY);
