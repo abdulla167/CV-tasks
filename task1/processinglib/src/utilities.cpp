@@ -186,7 +186,7 @@ Image minMaxNormalize(Image &image) {
 }
 
 int approximateAngle(float x, float y) {
-    auto angle = atan(y / x);
+    auto angle = atan(y / x) * (180 / 3.14159265);
     if (angle > -22.5 && angle <= 22.5) {
         return 0;
     } else if (angle > 22.5 && angle <= 67.5) {
