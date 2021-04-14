@@ -2,8 +2,6 @@
 // Created by abdallah drwesh on 4/13/21.
 //
 
-#include <vector>
-#include <algorithm>
 #include "canny.h"
 #include "utilities.h"
 #include "histogram.h"
@@ -42,7 +40,7 @@ Image cannyEdgeDetector(Image &image, float sigma, float thHigh, float thLow) {
     Image direction = getDirection(imgX, imgY);
     Image nonMax = cannyNonMaxSuppression(magnitude, direction);
 //    float medianVal = median(image);
-    return edgeLink(255. * thHigh, 255 * thLow, nonMax);
+    return edgeLink(255. * thHigh, 255 * thLow, nonMax).toScale();
 }
 
 void dirToCoordinates(float dir, char coordinates[]) {

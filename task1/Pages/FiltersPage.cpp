@@ -92,8 +92,8 @@ void MainWindow::on_filterSelect_currentIndexChanged(QString filterName) {
         auto grayImage = inputImage->toGrayscale();
         auto im = cannyEdgeDetector(grayImage);
         displayGrayscaleImage(&im, ui->outputImageLabel);
-        ui->sigmaCannySlider->setValue(20);
-        ui->thLowCannySlider->setValue(0.2 * 255 +1);
+        ui->sigmaCannySlider->setValue(30);
+        ui->thLowCannySlider->setValue(0.05 * 255 +1);
         ui->thHighCannySlider->setValue(0.5 * 255 + 1);
     }
 }
