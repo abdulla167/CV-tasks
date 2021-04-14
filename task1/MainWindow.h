@@ -57,6 +57,12 @@ private slots:
 
     void on_filterFreqSelect_currentIndexChanged(QString);
 
+    void on_thHighCannySlider_valueChanged(int);
+
+    void on_sigmaCannySlider_valueChanged(int);
+
+    void on_thLowCannySlider_valueChanged(int);
+
 private:
     Ui::MainWindow *ui;
 
