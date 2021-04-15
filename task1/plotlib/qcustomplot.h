@@ -3753,7 +3753,9 @@ private:
 class QCP_LIB_DECL QCustomPlot : public QWidget
 {
   Q_OBJECT
-  /// \cond INCLUDE_QPROPERTIES
+
+    virtual void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    /// \cond INCLUDE_QPROPERTIES
   Q_PROPERTY(QRect viewport READ viewport WRITE setViewport)
   Q_PROPERTY(QPixmap background READ background WRITE setBackground)
   Q_PROPERTY(bool backgroundScaled READ backgroundScaled WRITE setBackgroundScaled)
@@ -3980,8 +3982,8 @@ protected:
   virtual void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
   virtual void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;
   virtual void mouseDoubleClickEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
-  virtual void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
-  virtual void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+
+    virtual void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
   virtual void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
   virtual void wheelEvent(QWheelEvent *event) Q_DECL_OVERRIDE;
   
