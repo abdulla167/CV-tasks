@@ -2,25 +2,29 @@
 // Created by abdallah drwesh on 4/13/21.
 //
 
-#include <vector>
-#include <algorithm>
 #include "canny.h"
 #include "utilities.h"
+#include "histogram.h"
 #include "filters.h"
 
+
 float median(Image &image) {
-    std::vector<int> vals;
-    for (int i = 0; i < image.height; i++) {
-        for (int j = 0; j < image.width; j++) {
-            int dataValue = image(i, j);
-            vals.push_back(dataValue);
+    int histogram[256];
+    im_hist(image, histogram, 1);
+    int medianVal = 0;
+    int size = image.width * image.height;
+    int halfIndex = size / 2;
+    for (int i = 0; i < 256; ++i) {
+        medianVal += histogram[i];
+        if(medianVal >= halfIndex){
+            medianVal = i;
+            break;
         }
     }
-    std::sort(vals.begin(), vals.end());
-    return vals[vals.size() / 2 + vals.size() % 2];
+    return medianVal;
 }
 
-Image cannyEdgeDetector(Image &image, float sigma) {
+Image cannyEdgeDetector(Image &image, float sigma, float thHigh, float thLow) {
     float xFilter[9] = {
             -1, 0, 1,
             -2, 0, 2,
@@ -29,14 +33,14 @@ Image cannyEdgeDetector(Image &image, float sigma) {
             1, 2, 1,
             0, 0, 0,
             -1, -2, -1};
-    Image outputImg = gaussianFilter(image);
+    Image outputImg = gaussianFilter(image, 7, 0,sigma);
     Image imgX = applyFilter(outputImg, xFilter, 3);
     Image imgY = applyFilter(outputImg, yFilter, 3);
     Image magnitude = getMagnitude(imgX, imgY);
     Image direction = getDirection(imgX, imgY);
     Image nonMax = cannyNonMaxSuppression(magnitude, direction);
-    float medianVal = median(image);
-    return edgeLink(std::min((1. + sigma) * medianVal, 255.), std::max((1. - sigma) * medianVal, 0.), nonMax);
+//    float medianVal = median(image);
+    return edgeLink(255. * thHigh, 255 * thLow, nonMax).toScale();
 }
 
 void dirToCoordinates(float dir, char coordinates[]) {

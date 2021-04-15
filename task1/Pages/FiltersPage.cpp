@@ -24,7 +24,7 @@ void MainWindow::on_loadImageBtn_clicked() {
 void MainWindow::on_filterSelect_currentIndexChanged(QString filterName) {
     std::cout << filterName.toStdString() << std::endl;
     if (filterName == "Average") {
-        auto grayImage = inputImage->toGrayscale();
+        auto grayImage = noiseImage->toGrayscale();
         auto im = avgFilter(grayImage, 7);
         displayGrayscaleImage(&im, ui->outputImageLabel);
 //        im.saveJPG("out_average");
@@ -92,7 +92,30 @@ void MainWindow::on_filterSelect_currentIndexChanged(QString filterName) {
         auto grayImage = inputImage->toGrayscale();
         auto im = cannyEdgeDetector(grayImage);
         displayGrayscaleImage(&im, ui->outputImageLabel);
+        ui->sigmaCannySlider->setValue(30);
+        ui->thLowCannySlider->setValue(0.05 * 255 +1);
+        ui->thHighCannySlider->setValue(0.5 * 255 + 1);
     }
+}
+
+void MainWindow::on_thHighCannySlider_valueChanged(int val) {
+    ui->thHighCannyValLabel->setNum((int)(val / 255. * 100));
+    auto grayImage = Image(inputImage);
+    auto im = cannyEdgeDetector(grayImage, ui->sigmaCannySlider->value()/10., val / 255., ui->thLowCannySlider->value()/255.);
+    displayGrayscaleImage(&im, ui->outputImageLabel);
+}
+
+void MainWindow::on_thLowCannySlider_valueChanged(int val) {
+    ui->thLowCannyValLabel->setNum((int)(val / 255. * 100));
+    auto grayImage = Image(inputImage);
+    auto im = cannyEdgeDetector(grayImage, ui->sigmaCannySlider->value()/10.,ui->thHighCannySlider->value()/255. , val / 255.);
+    displayGrayscaleImage(&im, ui->outputImageLabel);
+}
+void MainWindow::on_sigmaCannySlider_valueChanged(int val) {
+    ui->sigmaCannyValLabel->setNum(val/10.);
+    auto grayImage = Image(inputImage);
+    auto im = cannyEdgeDetector(grayImage, val/10, ui->thHighCannySlider->value()/255., ui->thLowCannySlider->value()/255.);
+    displayGrayscaleImage(&im, ui->outputImageLabel);
 }
 
 

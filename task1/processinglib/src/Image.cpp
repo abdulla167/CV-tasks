@@ -45,16 +45,10 @@ Image::Image(const Image &image) : Image{image.width, image.height, image.channe
     }
 }
 
-
-void Image::init(unsigned char *data) {
-    for (int i = 0; i < height; ++i) {
-        for (int j = 0; j < width; ++j) {
-            for (int k = 0; k < channels; ++k) {
-                (*this)(i, j, k) = data[k + channels * j + width * channels * i];
-            }
-        }
-    }
+Image::Image(const Image *image): Image{image->width, image->height, image->channels} {
+    init(image->data);
 }
+
 
 void Image::init(float value) {
     for (int i = 0; i < height; ++i) {

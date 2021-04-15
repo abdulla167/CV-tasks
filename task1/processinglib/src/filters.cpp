@@ -30,7 +30,7 @@ Image medianFilter(Image &inputImg, int dim) {
     for (int i = begin; i < inputImg.height - begin; i++) {
         for (int j = begin; j < inputImg.width - begin; j++) {
             for (int k = 0; k < inputImg.channels; k++) {
-                outputImg(i - begin, j - begin,k) = convSort(inputImg, dim, j, i, k);
+                outputImg(i - begin, j - begin, k) = convSort(inputImg, dim, j, i, k);
             }
         }
     }
@@ -99,7 +99,7 @@ Image robertsEdgeDetector(Image &inputImg) {
     return outputImg;
 }
 
-Image lowPassFilter(Image &inputImg, float *kernel){
+Image lowPassFilter(Image &inputImg, float *kernel) {
     auto fftComplex = fft2(inputImg);
     auto fftShift = fft2dShift(fftComplex);
     auto fftMirror = mirror_fft2d(fftShift);
@@ -107,14 +107,14 @@ Image lowPassFilter(Image &inputImg, float *kernel){
     int height = fftMirror.size();
     for (int i = 0; i < height; ++i) {
         for (int j = 0; j < width; ++j) {
-            fftMirror[i][j] = (double) kernel[j + i * width]* fftMirror[i][j];
+            fftMirror[i][j] = (double) kernel[j + i * width] * fftMirror[i][j];
         }
     }
     Image outputImg = ifft2(fftMirror);
     return outputImg;
 }
 
-Image highPassFilter(Image &inputImg, float *kernel){
+Image highPassFilter(Image &inputImg, float *kernel) {
     return lowPassFilter(inputImg, kernel);
 }
 
@@ -122,25 +122,25 @@ Image globalThresholding(Image &inputImg, int thresholdVal) {
     if (thresholdVal != 0) {
         return buildSegmentedImg(inputImg, thresholdVal);
     } else {
-        int threshold =  otsuAlgorithm(inputImg, 256);
+        int threshold = otsuAlgorithm(inputImg, 256);
         return buildSegmentedImg(inputImg, threshold);
     }
 }
 
-Image localThresholding(Image& inputImg, float k, int r, int dim){
+Image localThresholding(Image &inputImg, float k, int r, int dim) {
     Image outputImg{inputImg.width, inputImg.height, inputImg.channels};
-    int offset = (dim - 1)/2;
+    int offset = (dim - 1) / 2;
     double mean = 0;
     double std = 0;
-    for (int y = offset; y < inputImg.height-offset; y++){
-        for (int x = offset; x < inputImg.width-offset; x++){
-            for (int z=0 ; z < inputImg.channels ; z++){
-                mean =0, std=0;
-                sauvolaTechnique(inputImg, x,y, dim, mean, std);
-                int threshold = mean * (1 + (k * ((std/r)-1)));
-                if (inputImg(y, x, z) >= threshold){
+    for (int y = offset; y < inputImg.height - offset; y++) {
+        for (int x = offset; x < inputImg.width - offset; x++) {
+            for (int z = 0; z < inputImg.channels; z++) {
+                mean = 0, std = 0;
+                sauvolaTechnique(inputImg, x, y, dim, mean, std);
+                int threshold = mean * (1 + (k * ((std / r) - 1)));
+                if (inputImg(y, x, z) >= threshold) {
                     outputImg(y, x, z) = 255;
-                } else{
+                } else {
                     outputImg(y, x, z) = 0;
                 }
             }

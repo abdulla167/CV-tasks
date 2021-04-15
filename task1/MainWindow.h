@@ -75,8 +75,15 @@ private slots:
 
     void on_filterFreqSelect_currentIndexChanged(QString);
 
+
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
+
+    void on_thHighCannySlider_valueChanged(int);
+
+    void on_sigmaCannySlider_valueChanged(int);
+
+    void on_thLowCannySlider_valueChanged(int);
 
 private:
     Ui::MainWindow *ui;

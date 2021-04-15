@@ -15,6 +15,8 @@ public:
 
     Image(int width, int height, int channel);
 
+    Image(const Image* image);
+
     Image(std::string filename, int num_channels = 1);
 
     Image(const Image &image);
@@ -57,7 +59,16 @@ public:
 
 
 private:
-    void init(unsigned char *data);
+    template<class T>
+    void init(T *data){
+        for (int i = 0; i < height; ++i) {
+            for (int j = 0; j < width; ++j) {
+                for (int k = 0; k < channels; ++k) {
+                    (*this)(i, j, k) = data[k + channels * j + width * channels * i];
+                }
+            }
+        }
+    }
     void init(float value);
 };
 
