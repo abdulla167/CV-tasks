@@ -14,15 +14,19 @@ void MainWindow::on_start_clicked(){
 
 
     qDebug() << "started";
-    for(int j =0; j<5 ; j++){
-        float alpha = 2, beta = 1.7, gamma = 2.5, sigma = 9 -2*j, maxIt = 10000;
+    for (int count = 0 ; count <4 ; count ++){
+        for (int k = 0; k < 2; k++) {
+            for (int j = 0; j < 5 - k; j++) {
+                float alpha = 1.5, beta = 1.7, gamma = 2.5, sigma = 9 - 2 * j - 2 * k, maxIt = 450;
 
-        for (int i = 0; i < 5-j; i++) {
-            Image image = snakeImage->toGrayscale();
-            greedySnake(image, maxIt, 50, arrayOfPointsX, arrayOfPointsY, sigma, alpha, beta, gamma);
+                for (int i = 0; i < 5 - j - k; i++) {
+                    Image image = snakeImage->toGrayscale();
+                    greedySnake(image, maxIt, 50, arrayOfPointsX, arrayOfPointsY, sigma, alpha, beta, gamma);
 
-                sigma = sigma - 2;
+                    sigma = sigma - 2;
 
+                }
+            }
         }
     }
     qDebug() << "ended";
