@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1385</width>
+    <width>1313</width>
     <height>1051</height>
    </rect>
   </property>
@@ -1302,10 +1302,10 @@
        <widget class="QCustomPlot" name="snake" native="true">
         <property name="geometry">
          <rect>
-          <x>200</x>
+          <x>340</x>
           <y>90</y>
-          <width>691</width>
-          <height>481</height>
+          <width>741</width>
+          <height>451</height>
          </rect>
         </property>
        </widget>
@@ -1313,26 +1313,90 @@
         <property name="geometry">
          <rect>
           <x>50</x>
-          <y>260</y>
-          <width>91</width>
+          <y>110</y>
+          <width>101</width>
           <height>51</height>
          </rect>
         </property>
         <property name="text">
-         <string>PushButton</string>
+         <string>Load Image</string>
         </property>
        </widget>
        <widget class="QPushButton" name="start">
         <property name="geometry">
          <rect>
-          <x>60</x>
-          <y>350</y>
-          <width>81</width>
+          <x>50</x>
+          <y>300</y>
+          <width>101</width>
           <height>51</height>
          </rect>
         </property>
         <property name="text">
-         <string>PushButton</string>
+         <string>start</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="clearBtn">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>220</y>
+          <width>101</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Clear points</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="checkBlurr">
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>180</y>
+          <width>161</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: 15pt &quot;Ubuntu&quot;;
+</string>
+        </property>
+        <property name="text">
+         <string>Image is blured</string>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>16</width>
+          <height>20</height>
+         </size>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_29">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>30</y>
+          <width>1031</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: 18pt &quot;Ubuntu&quot;;</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="text">
+         <string>click one time on the center of the object  and second tim to determine the radius of the circle</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::RichText</enum>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
         </property>
        </widget>
       </widget>
@@ -1345,7 +1409,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1385</width>
+     <width>1313</width>
      <height>22</height>
     </rect>
    </property>

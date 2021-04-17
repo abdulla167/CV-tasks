@@ -6,8 +6,9 @@
 #include "algorithm"
 #include "filters.h"
 #include "iostream"
-
 using namespace std;
+int pointsCount = 70;
+bool stop_it[70] = {false};
 void currentPrevNextPointIndex(int iteration , int numberOfPoints, int * pointsIndexArray) {
     int prevIndex = iteration - 1;
     int nextIndex = iteration + 1;
@@ -48,19 +49,18 @@ double diatance(int x1, int y1, int x2, int y2){
 
 
 void greedySnake(Image&image,int iteration, int numberOfPoints, int* arrayOfPointsX, int* arrayOfPointsY, float sigma, float alpha, float beta, float gamma) {
-    std::cout<< "i am in";
     int neighbourDim = 5;
     float curvatureThreshold = 0.3;
     float imgEnergyThreshold = 250;
     int counter = 0;
-    float arrayOfAlpha[50] ;
-    float arrayOfBeta[50];
-    float arrayOfgamma[50] ;
+    float arrayOfAlpha[pointsCount] ;
+    float arrayOfBeta[pointsCount];
+    float arrayOfgamma[pointsCount] ;
     float energyCountinuty[25];
     float energyCurvature[25];
     float energyImage[25];
-    float pointsCurvature[50];
-    float pointsImageEnergy[50];
+    float pointsCurvature[pointsCount];
+    float pointsImageEnergy[pointsCount];
     Image energyOfImage = imageEnergy(image,sigma);
 
     // average siatance between each two points
@@ -78,7 +78,11 @@ void greedySnake(Image&image,int iteration, int numberOfPoints, int* arrayOfPoin
     };
     for (int i = 0; i<numberOfPoints;i++){
         arrayOfAlpha[i] = alpha;
-        arrayOfBeta[i] = beta;
+        if(stop_it[i] == false) {
+            arrayOfBeta[i] = beta;
+        }else{
+            arrayOfBeta[i] = 0;
+        }
         arrayOfgamma[i] = gamma;
 
     }
@@ -89,7 +93,6 @@ void greedySnake(Image&image,int iteration, int numberOfPoints, int* arrayOfPoin
         int countMovedPoints = 0;
 
         for ( int i =0; i<numberOfPoints; i++){
-//            std::cout<< "i am in first loop";
             int pointIndexArray[3];
             currentPrevNextPointIndex(i,numberOfPoints,pointIndexArray);
 
@@ -122,7 +125,11 @@ void greedySnake(Image&image,int iteration, int numberOfPoints, int* arrayOfPoin
                 energyCurvature[k] = energyCurvature[k]/ maxCurv;
                 energyCountinuty[k] = energyCountinuty[k]/maxcountinuty;
                 energyImage[k] = (minImage - energyImage[k])/(maxImage - minImage);
-                eSnake[k] = energyCountinuty[k]*arrayOfAlpha[i] + energyCurvature[k]*arrayOfBeta[i] + energyImage[k]*arrayOfgamma[i] ;
+                float beta = arrayOfBeta[i];
+//                if (stop_it[i] == true){
+//                    beta = 0;
+//                }
+                eSnake[k] = energyCountinuty[k]*arrayOfAlpha[i] + energyCurvature[k]*beta + energyImage[k]*arrayOfgamma[i] ;
                 if (k>0) {
                     if (eSnake[k] < minSnake){
                         maxIndex = k;
@@ -132,7 +139,7 @@ void greedySnake(Image&image,int iteration, int numberOfPoints, int* arrayOfPoin
                     minSnake = eSnake[0];
                 }
             }
-            if(maxIndex != 12//floor((float )neighpourCount/2)
+            if(maxIndex != 12
             ) {
                 countMovedPoints++;
                 arrayOfPointsX[i] = arrayOfPointsX[i] + neighbourCoordinate[maxIndex][0];
@@ -166,12 +173,15 @@ void greedySnake(Image&image,int iteration, int numberOfPoints, int* arrayOfPoin
                 pointsImageEnergy[i]> imgEnergyThreshold &&
                 arrayOfBeta[i]!=0){
                 arrayOfBeta[i] = 0;
+                stop_it[i] = true;
             }
+//            if( pointsImageEnergy[i]> imgEnergyThreshold ){
+//                stop_it[i] = true;
+//            }
         }
         counter++;
         if (counter == iteration || countMovedPoints <3)
         { loop = false; }
         avgDist = averageDistance(arrayOfPointsX,arrayOfPointsY,numberOfPoints);
     }
-    std::cout<<counter;
 }

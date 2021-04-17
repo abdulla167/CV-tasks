@@ -20,7 +20,7 @@ QT_END_NAMESPACE
 class MainWindow : public QMainWindow {
 Q_OBJECT
 
-    int pointsCount = 0;
+    static const int pointsCount = 70;
     int centerX = 0;
     int centerY = 0 ;
     int raduis = 0;
@@ -42,8 +42,8 @@ Q_OBJECT
     QCPGraph *points;
     QVector<double> *xData = new QVector<double>();
     QVector<double> *yData = new QVector<double>();
-    int arrayOfPointsX [50] ;
-    int arrayOfPointsY [50] ;
+    int arrayOfPointsX [pointsCount] ;
+    int arrayOfPointsY [pointsCount] ;
 
 
 public:
@@ -73,7 +73,10 @@ private slots:
 
     void on_start_clicked();
 
+    void on_clearBtn_clicked();
+
     void on_filterFreqSelect_currentIndexChanged(QString);
+
 
 
 protected:

@@ -13,35 +13,39 @@ using namespace cv;
 void MainWindow::on_start_clicked(){
 
 
-    qDebug() << "started";
-    for (int count = 0 ; count <4 ; count ++){
-        for (int k = 0; k < 2; k++) {
-            for (int j = 0; j < 5 - k; j++) {
-                float alpha = 1.5, beta = 1.7, gamma = 2.5, sigma = 9 - 2 * j - 2 * k, maxIt = 450;
+   if (snakeImage != nullptr && !xData->empty()) {
+        qDebug() << "started";
+        int blurred = ui->checkBlurr->isChecked();
 
-                for (int i = 0; i < 5 - j - k; i++) {
-                    Image image = snakeImage->toGrayscale();
-                    greedySnake(image, maxIt, 50, arrayOfPointsX, arrayOfPointsY, sigma, alpha, beta, gamma);
+        for (int count = 0; count < (8 - blurred * 7); count++) {
+            for (int k = 0; k < 4; k++) {
+                for (int j = 0; j < 5 - k; j++) {
+                    float alpha = 1.5, beta = 1.7, gamma = 2.5, sigma = 9 - 2 * j - 2 * k - 2 * blurred, maxIt = 200;
 
-                    sigma = sigma - 2;
+                    for (int i = 0; i < 5 - j - k - blurred; i++) {
+                        Image image = snakeImage->toGrayscale();
+                        greedySnake(image, maxIt, pointsCount, arrayOfPointsX, arrayOfPointsY, sigma, alpha, beta,
+                                    gamma);
 
+                        sigma = sigma - 2;
+
+                    }
                 }
             }
         }
-    }
-    qDebug() << "ended";
-    xData->clear();
-    yData->clear();
-    for (int i=0; i<50; i++){
-        int xCoordinate = (arrayOfPointsX[i]/(float )snakeImage->width)*ui->snake->background().rect().width();
-        int yCoordinate = (arrayOfPointsY[i]/(float )snakeImage->height)*ui->snake->background().rect().height();
+        xData->clear(), yData->clear();
+        for (int i = 0; i < pointsCount; i++) {
+            int xCoordinate = ceil(
+                    (arrayOfPointsX[i] / (float) snakeImage->width) * ui->snake->background().rect().width());
+            int yCoordinate = ceil(
+                    (arrayOfPointsY[i] / (float) snakeImage->height) * ui->snake->background().rect().height());
 
-        xData->append(ui->snake->xAxis->pixelToCoord( xCoordinate) );
-        yData->append(ui->snake->yAxis->pixelToCoord( yCoordinate) );
+            xData->append(ui->snake->xAxis->pixelToCoord(xCoordinate));
+            yData->append(ui->snake->yAxis->pixelToCoord(yCoordinate));
+        }
+        points->setData(*xData, *yData);
+        ui->snake->replot();
     }
-//    points->data()->clear();
-    points->setData(*xData, *yData);
-    ui->snake->replot();
 
 }
 void MainWindow::on_loadSnake_clicked() {
@@ -51,11 +55,6 @@ void MainWindow::on_loadSnake_clicked() {
     auto filename = filepathStd.substr(filepathStd.find_last_of("/") + 1);
     QPixmap pixmap{filePath};
     snakeImage = new Image(filepathStd,3);
-    qDebug() <<"hellp";
-    std::string imageHeight = std::to_string(snakeImage->height);
-    std::string imageWidth = std::to_string(snakeImage->width);
-    ui->imageSize->setText(QString(imageHeight.c_str()));
-    ui->imageName->setText(QString(imageWidth.c_str()));
 
     QImage qImage(snakeImage->width, snakeImage->height, QImage::Format_RGB16);
     QRgb rgb;
@@ -75,5 +74,11 @@ void MainWindow::on_loadSnake_clicked() {
 
 }
 
-
+void  MainWindow::on_clearBtn_clicked() {
+    xData->clear();
+    yData->clear();
+    points->data()->clear();
+    ui->snake->replot();
+    centerX = 0 , centerY = 0, raduis = 0;
+}
 

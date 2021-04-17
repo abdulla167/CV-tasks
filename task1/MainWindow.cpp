@@ -71,26 +71,25 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
         if (event->type() == QEvent::MouseButtonPress) {
             QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
 
-            int  x = ((float )mouseEvent->x() / ui->snake->background().rect().width() )* snakeImage->width ;
-            int y = ((float )mouseEvent->y() / ui->snake->background().rect().height() )* snakeImage->height; //qDebug()
+            int  x = ceil(((float )mouseEvent->x() / ui->snake->background().rect().width() )* snakeImage->width );
+            int y = ceil(((float )mouseEvent->y() / ui->snake->background().rect().height() )* snakeImage->height); //qDebug()
             if (centerX == 0){
                 centerX = x;
                 centerY = y;
-                qDebug()<< "center";
             }else if (raduis == 0){
                 raduis = sqrt(pow(x-centerX,2) + pow(y-centerY,2));
-                qDebug()<< "raduis";
+
             }
 
 
             if (raduis!=0) {
                 qDebug() << "start drawing";
-                float step =  2 *3.14 /50;
-                for (int i =0 ; i<50 ; i++){
+                float step =  2 *3.14 /pointsCount;
+                for (int i =0 ; i<pointsCount ; i++){
                     arrayOfPointsX[i]= centerX + cos(step*i)*raduis;
                     arrayOfPointsY[i]= centerY + sin(step*i)*raduis;
-                    int xCoordinate = (arrayOfPointsX[i]/(float )snakeImage->width)*ui->snake->background().rect().width();
-                    int yCoordinate = (arrayOfPointsY[i]/(float )snakeImage->height)*ui->snake->background().rect().height();
+                    int xCoordinate = ceil((arrayOfPointsX[i]/(float )snakeImage->width)*ui->snake->background().rect().width());
+                    int yCoordinate = ceil((arrayOfPointsY[i]/(float )snakeImage->height)*ui->snake->background().rect().height());
                     xData->append(ui->snake->xAxis->pixelToCoord( xCoordinate) );
                     yData->append(ui->snake->yAxis->pixelToCoord( yCoordinate) );
                 }
