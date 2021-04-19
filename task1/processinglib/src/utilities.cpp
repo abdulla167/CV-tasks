@@ -6,6 +6,7 @@
 #include "processinglib/histogram.h"
 #include <cmath>
 #include <vector>
+#include <list>
 #include <algorithm>
 
 void gaussianGeneration(float *kernel, char dim, float sigma, float mean) {

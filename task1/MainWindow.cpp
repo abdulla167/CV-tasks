@@ -35,7 +35,9 @@ void MainWindow::displayRGBImage(Image *image, QLabel *label) {
             qImage.setPixel(j, i, rgb);
         }
     }
-    label->setPixmap(QPixmap::fromImage(qImage));
+    int width = label->width();
+    int height = label->height();
+    label->setPixmap(QPixmap::fromImage(qImage).scaled(width, height));
 }
 
 void MainWindow::displayGrayscaleImage(Image *image, QLabel *label) {

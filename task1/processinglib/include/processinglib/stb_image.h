@@ -12,7 +12,7 @@
    #define STB_IMAGE_IMPLEMENTATION
    #include "stb_image.h"
 
-   You can #define STBI_ASSERT(x) before the #include to avoid using assert.h.
+   You can #define STBI_ASSERT(xCenter) before the #include to avoid using assert.h.
    And #define STBI_MALLOC, STBI_REALLOC, and STBI_FREE to avoid using malloc,realloc,free
 
 
@@ -114,23 +114,23 @@ RECENT REVISION HISTORY:
 //    - GIF always returns *comp=4
 //
 // Basic usage (see HDR discussion below for HDR usage):
-//    int x,y,n;
-//    unsigned char *data = stbi_load(filename, &x, &y, &n, 0);
+//    int xCenter,yCenter,n;
+//    unsigned char *data = stbi_load(filename, &xCenter, &yCenter, &n, 0);
 //    // ... process data if not NULL ...
-//    // ... x = width, y = _width, n = # 8-bit components per pixel ...
+//    // ... xCenter = width, yCenter = _width, n = # 8-bit components per pixel ...
 //    // ... replace '0' with '1'..'4' to force that many components per pixel
 //    // ... but 'n' will always be the number that it would have been if you said 0
 //    stbi_image_free(data)
 //
 // Standard parameters:
-//    int *x                 -- outputs image width in pixels
-//    int *y                 -- outputs image _width in pixels
+//    int *xCenter                 -- outputs image width in pixels
+//    int *yCenter                 -- outputs image _width in pixels
 //    int *channels_in_file  -- outputs # of image components in image file
 //    int desired_channels   -- if non-zero, # of image components requested in result
 //
 // The return value from an image loader is an 'unsigned char *' which points
 // to the pixel data, or NULL on an allocation failure or if the image is
-// corrupt or invalid. The pixel data consists of *y scanlines of *x pixels,
+// corrupt or invalid. The pixel data consists of *yCenter scanlines of *xCenter pixels,
 // with each pixel consisting of N interleaved 8-bit components; the first
 // pixel pointed to is top-left-most in the image. There is no padding between
 // image scanlines or between pixels, regardless of format. The number of
@@ -151,7 +151,7 @@ RECENT REVISION HISTORY:
 //       4           red, green, blue, alpha
 //
 // If image loading fails for any reason, the return value will be NULL,
-// and *x, *y, *channels_in_file will be unchanged. The function
+// and *xCenter, *yCenter, *channels_in_file will be unchanged. The function
 // stbi_failure_reason() can be queried for an extremely brief, end-user
 // unfriendly explanation of why the load failed. Define STBI_NO_FAILURE_STRINGS
 // to avoid compiling these strings at all, and STBI_FAILURE_USERMSG to get slightly
@@ -235,7 +235,7 @@ RECENT REVISION HISTORY:
 // Additionally, there is a new, parallel interface for loading files as
 // (linear) floats to preserve the full dynamic range:
 //
-//    float *data = stbi_loadf(filename, &x, &y, &n, 0);
+//    float *data = stbi_loadf(filename, &xCenter, &yCenter, &n, 0);
 //
 // If you load LDR images through this interface, those images will
 // be promoted to floating point values, run through the inverse of
@@ -578,7 +578,7 @@ typedef unsigned char validate_uint32[sizeof(stbi__uint32)==4 ? 1 : -1];
 #endif
 
 #ifdef STBI_HAS_LROTL
-#define stbi_lrot(x,y)  _lrotl(x,y)
+#define stbi_lrot(xCenter,yCenter)  _lrotl(xCenter,yCenter)
 #else
 #define stbi_lrot(x,y)  (((x) << (y)) | ((x) >> (32 - (y))))
 #endif
@@ -953,9 +953,9 @@ static void *stbi__malloc_mad4(int a, int b, int c, int d, int add)
 // stbi__errpuc - error returning pointer to unsigned char
 
 #ifdef STBI_NO_FAILURE_STRINGS
-#define stbi__err(x,y)  0
+#define stbi__err(xCenter,yCenter)  0
 #elif defined(STBI_FAILURE_USERMSG)
-#define stbi__err(x,y)  stbi__err(y)
+#define stbi__err(xCenter,yCenter)  stbi__err(yCenter)
 #else
 #define stbi__err(x,y)  stbi__err(x)
 #endif
@@ -1679,7 +1679,7 @@ static stbi_uc *stbi__hdr_to_ldr(float   *data, int x, int y, int comp)
 //  "baseline" JPEG/JFIF decoder
 //
 //    simple implementation
-//      - doesn't support delayed output of y-dimension
+//      - doesn't support delayed output of yCenter-dimension
 //      - simple interface (only one output format: 8-bit interleaved RGB)
 //      - doesn't try to recover corrupt jpegs
 //      - doesn't allow partial loading, loading multiple at once
@@ -2114,7 +2114,7 @@ static int stbi__jpeg_decode_block_prog_ac(stbi__jpeg *j, short data[64], stbi__
          k = j->spec_start;
          do {
             int r,s;
-            int rs = stbi__jpeg_huff_decode(j, hac); // @OPTIMIZE see if we can use the fast path here, advance-by-r is so slow, eh
+            int rs = stbi__jpeg_huff_decode(j, hac); // @OPTIMIZE see if we can use the fast path here, advance-by-roh is so slow, eh
             if (rs < 0) return stbi__err("bad huffman code","Corrupt JPEG");
             s = rs & 15;
             r = rs >> 4;
@@ -2125,7 +2125,7 @@ static int stbi__jpeg_decode_block_prog_ac(stbi__jpeg *j, short data[64], stbi__
                      j->eob_run += stbi__jpeg_get_bits(j, r);
                   r = 64; // force end of block
                } else {
-                  // r=15 s=0 should write 16 0s, so we just do
+                  // roh=15 s=0 should write 16 0s, so we just do
                   // a run of 15 0s and then write s (which is 0),
                   // so we don't have to do anything special here
                }
@@ -2138,7 +2138,7 @@ static int stbi__jpeg_decode_block_prog_ac(stbi__jpeg *j, short data[64], stbi__
                   s = -bit;
             }
 
-            // advance by r
+            // advance by roh
             while (k <= j->spec_end) {
                short *p = &data[stbi__jpeg_dezigzag[k++]];
                if (*p != 0) {
@@ -2284,11 +2284,11 @@ static void stbi__idct_simd(stbi_uc *out, int out_stride, short data[64])
    __m128i row0, row1, row2, row3, row4, row5, row6, row7;
    __m128i tmp;
 
-   // dot product constant: even elems=x, odd elems=y
+   // dot product constant: even elems=xCenter, odd elems=yCenter
 #define dct_const(x,y)  _mm_setr_epi16((x),(y),(x),(y),(x),(y),(x),(y))
 
-   // out(0) = c0[even]*x + c0[odd]*y   (c0, x, y 16-bit, out 32-bit)
-   // out(1) = c1[even]*x + c1[odd]*y
+   // out(0) = c0[even]*xCenter + c0[odd]*yCenter   (c0, xCenter, yCenter 16-bit, out 32-bit)
+   // out(1) = c1[even]*xCenter + c1[odd]*yCenter
 #define dct_rot(out0,out1, x,y,c0,c1) \
       __m128i c0##lo = _mm_unpacklo_epi16((x),(y)); \
       __m128i c0##hi = _mm_unpackhi_epi16((x),(y)); \
@@ -2567,9 +2567,9 @@ static void stbi__idct_simd(stbi_uc *out, int out_stride, short data[64])
    {
 // these three map to a single VTRN.16, VTRN.32, and VSWP, respectively.
 // whether compilers actually get this is another story, sadly.
-#define dct_trn16(x, y) { int16x8x2_t t = vtrnq_s16(x, y); x = t.val[0]; y = t.val[1]; }
-#define dct_trn32(x, y) { int32x4x2_t t = vtrnq_s32(vreinterpretq_s32_s16(x), vreinterpretq_s32_s16(y)); x = vreinterpretq_s16_s32(t.val[0]); y = vreinterpretq_s16_s32(t.val[1]); }
-#define dct_trn64(x, y) { int16x8_t x0 = x; int16x8_t y0 = y; x = vcombine_s16(vget_low_s16(x0), vget_low_s16(y0)); y = vcombine_s16(vget_high_s16(x0), vget_high_s16(y0)); }
+#define dct_trn16(xCenter, yCenter) { int16x8x2_t t = vtrnq_s16(xCenter, yCenter); xCenter = t.val[0]; yCenter = t.val[1]; }
+#define dct_trn32(xCenter, yCenter) { int32x4x2_t t = vtrnq_s32(vreinterpretq_s32_s16(xCenter), vreinterpretq_s32_s16(yCenter)); xCenter = vreinterpretq_s16_s32(t.val[0]); yCenter = vreinterpretq_s16_s32(t.val[1]); }
+#define dct_trn64(xCenter, yCenter) { int16x8_t x0 = xCenter; int16x8_t y0 = yCenter; xCenter = vcombine_s16(vget_low_s16(x0), vget_low_s16(y0)); yCenter = vcombine_s16(vget_high_s16(x0), vget_high_s16(y0)); }
 
       // pass 1
       dct_trn16(row0, row1); // a0b0a2b2a4b4a6b6
@@ -2612,9 +2612,9 @@ static void stbi__idct_simd(stbi_uc *out, int out_stride, short data[64])
       uint8x8_t p7 = vqrshrun_n_s16(row7, 1);
 
       // again, these can translate into one instruction, but often don't.
-#define dct_trn8_8(x, y) { uint8x8x2_t t = vtrn_u8(x, y); x = t.val[0]; y = t.val[1]; }
-#define dct_trn8_16(x, y) { uint16x4x2_t t = vtrn_u16(vreinterpret_u16_u8(x), vreinterpret_u16_u8(y)); x = vreinterpret_u8_u16(t.val[0]); y = vreinterpret_u8_u16(t.val[1]); }
-#define dct_trn8_32(x, y) { uint32x2x2_t t = vtrn_u32(vreinterpret_u32_u8(x), vreinterpret_u32_u8(y)); x = vreinterpret_u8_u32(t.val[0]); y = vreinterpret_u8_u32(t.val[1]); }
+#define dct_trn8_8(xCenter, yCenter) { uint8x8x2_t t = vtrn_u8(xCenter, yCenter); xCenter = t.val[0]; yCenter = t.val[1]; }
+#define dct_trn8_16(xCenter, yCenter) { uint16x4x2_t t = vtrn_u16(vreinterpret_u16_u8(xCenter), vreinterpret_u16_u8(yCenter)); xCenter = vreinterpret_u8_u16(t.val[0]); yCenter = vreinterpret_u8_u16(t.val[1]); }
+#define dct_trn8_32(xCenter, yCenter) { uint32x2x2_t t = vtrn_u32(vreinterpret_u32_u8(xCenter), vreinterpret_u32_u8(yCenter)); xCenter = vreinterpret_u8_u32(t.val[0]); yCenter = vreinterpret_u8_u32(t.val[1]); }
 
       // sadly can't use interleaved stores here since we only write
       // 8 bytes to each scan line!
@@ -3266,7 +3266,7 @@ static stbi_uc *stbi__resample_row_hv_2_simd(stbi_uc *out, stbi_uc *in_near, stb
    for (; i < ((w-1) & ~7); i += 8) {
 #if defined(STBI_SSE2)
       // load and perform the vertical filtering pass
-      // this uses 3*x + y = 4*x + (y - x)
+      // this uses 3*xCenter + yCenter = 4*xCenter + (yCenter - xCenter)
       __m128i zero  = _mm_setzero_si128();
       __m128i farb  = _mm_loadl_epi64((__m128i *) (in_far + i));
       __m128i nearb = _mm_loadl_epi64((__m128i *) (in_near + i));
@@ -3309,7 +3309,7 @@ static stbi_uc *stbi__resample_row_hv_2_simd(stbi_uc *out, stbi_uc *in_near, stb
       _mm_storeu_si128((__m128i *) (out + i*2), outv);
 #elif defined(STBI_NEON)
       // load and perform the vertical filtering pass
-      // this uses 3*x + y = 4*x + (y - x)
+      // this uses 3*xCenter + yCenter = 4*xCenter + (yCenter - xCenter)
       uint8x8_t farb  = vld1_u8(in_far + i);
       uint8x8_t nearb = vld1_u8(in_near + i);
       int16x8_t diff  = vreinterpretq_s16_u16(vsubl_u8(farb, nearb));
@@ -3482,7 +3482,7 @@ static void stbi__YCbCr_to_RGB_simd(stbi_uc *out, stbi_uc const *y, stbi_uc cons
 
       for (; i+7 < count; i += 8) {
          // load
-         uint8x8_t y_bytes  = vld1_u8(y + i);
+         uint8x8_t y_bytes  = vld1_u8(yCenter + i);
          uint8x8_t cr_bytes = vld1_u8(pcr + i);
          uint8x8_t cb_bytes = vld1_u8(pcb + i);
          int8x8_t cr_biased = vreinterpret_s8_u8(vsub_u8(cr_bytes, signflip));
@@ -3509,7 +3509,7 @@ static void stbi__YCbCr_to_RGB_simd(stbi_uc *out, stbi_uc const *y, stbi_uc cons
          o.val[2] = vqrshrun_n_s16(bws, 4);
          o.val[3] = vdup_n_u8(255);
 
-         // store, interleaving r/g/b/a
+         // store, interleaving roh/g/b/a
          vst4_u8(out, o);
          out += 8*4;
       }
@@ -5372,14 +5372,14 @@ static int stbi__tga_info(stbi__context *s, int *x, int *y, int *comp)
             stbi__rewind(s);
             return 0;
         }
-        stbi__skip(s,4);       // skip image x and y origin
+        stbi__skip(s,4);       // skip image xCenter and yCenter origin
         tga_colormap_bpp = sz;
     } else { // "normal" image w/o colormap - only RGB or grey allowed, +/- RLE
         if ( (tga_image_type != 2) && (tga_image_type != 3) && (tga_image_type != 10) && (tga_image_type != 11) ) {
             stbi__rewind(s);
             return 0; // only RGB or grey allowed, +/- RLE
         }
-        stbi__skip(s,9); // skip colormap specification and image x/y origin
+        stbi__skip(s,9); // skip colormap specification and image xCenter/yCenter origin
         tga_colormap_bpp = 0;
     }
     tga_w = stbi__get16le(s);
@@ -5428,10 +5428,10 @@ static int stbi__tga_test(stbi__context *s)
       stbi__skip(s,4);       // skip index of first colormap entry and number of entries
       sz = stbi__get8(s);    //   check bits per palette color entry
       if ( (sz != 8) && (sz != 15) && (sz != 16) && (sz != 24) && (sz != 32) ) goto errorEnd;
-      stbi__skip(s,4);       // skip image x and y origin
+      stbi__skip(s,4);       // skip image xCenter and yCenter origin
    } else { // "normal" image w/o colormap
       if ( (sz != 2) && (sz != 3) && (sz != 10) && (sz != 11) ) goto errorEnd; // only RGB or grey allowed, +/- RLE
-      stbi__skip(s,9); // skip colormap specification and image x/y origin
+      stbi__skip(s,9); // skip colormap specification and image xCenter/yCenter origin
    }
    if ( stbi__get16le(s) < 1 ) goto errorEnd;      //   test width
    if ( stbi__get16le(s) < 1 ) goto errorEnd;      //   test _width

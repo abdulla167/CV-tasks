@@ -7,7 +7,6 @@
 #include "histogram.h"
 #include "filters.h"
 
-
 float median(Image &image) {
     int histogram[256];
     im_hist(image, histogram, 1);
@@ -16,7 +15,7 @@ float median(Image &image) {
     int halfIndex = size / 2;
     for (int i = 0; i < 256; ++i) {
         medianVal += histogram[i];
-        if(medianVal >= halfIndex){
+        if (medianVal >= halfIndex) {
             medianVal = i;
             break;
         }
@@ -33,14 +32,14 @@ Image cannyEdgeDetector(Image &image, float sigma, float thHigh, float thLow) {
             1, 2, 1,
             0, 0, 0,
             -1, -2, -1};
-    Image outputImg = gaussianFilter(image, 7, 0,sigma);
+    Image outputImg = gaussianFilter(image, 7, 0, sigma);
     Image imgX = applyFilter(outputImg, xFilter, 3);
     Image imgY = applyFilter(outputImg, yFilter, 3);
     Image magnitude = getMagnitude(imgX, imgY);
     Image direction = getDirection(imgX, imgY);
     Image nonMax = cannyNonMaxSuppression(magnitude, direction);
 //    float medianVal = median(image);
-    return edgeLink(255. * thHigh, 255 * thLow, nonMax).toScale();
+    return edgeLink(255. * thHigh, 255 * thLow, nonMax);
 }
 
 void dirToCoordinates(float dir, char coordinates[]) {

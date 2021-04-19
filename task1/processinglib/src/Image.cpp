@@ -45,8 +45,15 @@ Image::Image(const Image &image) : Image{image.width, image.height, image.channe
     }
 }
 
-Image::Image(const Image *image): Image{image->width, image->height, image->channels} {
-    init(image->data);
+
+Image::Image(const Image *image) : Image{image->width, image->height, image->channels} {
+    for (int i = 0; i < image->height; ++i) {
+        for (int j = 0; j < image->width; ++j) {
+            for (int k = 0; k < image->channels; ++k) {
+                (*this)(i, j, k) = (*image)(i, j, k);
+            }
+        }
+    }
 }
 
 

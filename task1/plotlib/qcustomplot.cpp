@@ -42,16 +42,16 @@
 
 /* start documentation of inline functions */
 
-/*! \fn void QCPVector2D::setX(double x)
+/*! \fn void QCPVector2D::setX(double xCenter)
   
-  Sets the x coordinate of this vector to \a x.
+  Sets the xCenter coordinate of this vector to \a xCenter.
   
   \see setY
 */
 
-/*! \fn void QCPVector2D::setY(double y)
+/*! \fn void QCPVector2D::setY(double yCenter)
   
-  Sets the y coordinate of this vector to \a y.
+  Sets the yCenter coordinate of this vector to \a yCenter.
   
   \see setX
 */
@@ -74,14 +74,14 @@
 
 /*! \fn double QCPVector2D::angle() const
   
-  Returns the angle of the vector in radians. The angle is measured between the positive x line and
-  the vector, counter-clockwise in a mathematical coordinate system (y axis upwards positive). In
-  screen/widget coordinates where the y axis is inverted, the angle appears clockwise.
+  Returns the angle of the vector in radians. The angle is measured between the positive xCenter line and
+  the vector, counter-clockwise in a mathematical coordinate system (yCenter axis upwards positive). In
+  screen/widget coordinates where the yCenter axis is inverted, the angle appears clockwise.
 */
 
 /*! \fn QPoint QCPVector2D::toPoint() const
   
-  Returns a QPoint which has the x and y coordinates of this vector, truncating any floating point
+  Returns a QPoint which has the xCenter and yCenter coordinates of this vector, truncating any floating point
   information.
   
   \see toPointF
@@ -89,14 +89,14 @@
 
 /*! \fn QPointF QCPVector2D::toPointF() const
   
-  Returns a QPointF which has the x and y coordinates of this vector.
+  Returns a QPointF which has the xCenter and yCenter coordinates of this vector.
   
   \see toPoint
 */
 
 /*! \fn bool QCPVector2D::isNull() const
   
-  Returns whether this vector is null. A vector is null if \c qIsNull returns true for both x and y
+  Returns whether this vector is null. A vector is null if \c qIsNull returns true for both xCenter and yCenter
   coordinates, i.e. if both are binary equal to 0.
 */
 
@@ -113,7 +113,7 @@
 /* end documentation of inline functions */
 
 /*!
-  Creates a QCPVector2D object and initializes the x and y coordinates to 0.
+  Creates a QCPVector2D object and initializes the xCenter and yCenter coordinates to 0.
 */
 QCPVector2D::QCPVector2D() :
   mX(0),
@@ -122,7 +122,7 @@ QCPVector2D::QCPVector2D() :
 }
 
 /*!
-  Creates a QCPVector2D object and initializes the \a x and \a y coordinates with the specified
+  Creates a QCPVector2D object and initializes the \a xCenter and \a yCenter coordinates with the specified
   values.
 */
 QCPVector2D::QCPVector2D(double x, double y) :
@@ -132,7 +132,7 @@ QCPVector2D::QCPVector2D(double x, double y) :
 }
 
 /*!
-  Creates a QCPVector2D object and initializes the x and y coordinates respective coordinates of
+  Creates a QCPVector2D object and initializes the xCenter and yCenter coordinates respective coordinates of
   the specified \a point.
 */
 QCPVector2D::QCPVector2D(const QPoint &point) :
@@ -142,7 +142,7 @@ QCPVector2D::QCPVector2D(const QPoint &point) :
 }
 
 /*!
-  Creates a QCPVector2D object and initializes the x and y coordinates respective coordinates of
+  Creates a QCPVector2D object and initializes the xCenter and yCenter coordinates respective coordinates of
   the specified \a point.
 */
 QCPVector2D::QCPVector2D(const QPointF &point) :
@@ -228,7 +228,7 @@ double QCPVector2D::distanceToStraightLine(const QCPVector2D &base, const QCPVec
 }
 
 /*!
-  Scales this vector by the given \a factor, i.e. the x and y components are multiplied by \a
+  Scales this vector by the given \a factor, i.e. the xCenter and yCenter components are multiplied by \a
   factor.
 */
 QCPVector2D &QCPVector2D::operator*=(double factor)
@@ -239,7 +239,7 @@ QCPVector2D &QCPVector2D::operator*=(double factor)
 }
 
 /*!
-  Scales this vector by the given \a divisor, i.e. the x and y components are divided by \a
+  Scales this vector by the given \a divisor, i.e. the xCenter and yCenter components are divided by \a
   divisor.
 */
 QCPVector2D &QCPVector2D::operator/=(double divisor)
@@ -5701,9 +5701,9 @@ void QCPLabelPainterPrivate::drawLabelMaybeCached(QCPPainter *painter, const QFo
     if (tickLabelSide == QCPAxis::lsOutside)
     {
       if (QCPAxis::orientation(type) == Qt::Horizontal)
-        labelClippedByBorder = labelAnchor.x()+cachedLabel->offset.x()+cachedLabel->pixmap.width()/mParentPlot->bufferDevicePixelRatio() > viewportRect.right() || labelAnchor.x()+cachedLabel->offset.x() < viewportRect.left();
+        labelClippedByBorder = labelAnchor.xCenter()+cachedLabel->offset.xCenter()+cachedLabel->pixmap.width()/mParentPlot->bufferDevicePixelRatio() > viewportRect.right() || labelAnchor.xCenter()+cachedLabel->offset.xCenter() < viewportRect.left();
       else
-        labelClippedByBorder = labelAnchor.y()+cachedLabel->offset.y()+cachedLabel->pixmap.height()/mParentPlot->bufferDevicePixelRatio() > viewportRect.bottom() || labelAnchor.y()+cachedLabel->offset.y() < viewportRect.top();
+        labelClippedByBorder = labelAnchor.yCenter()+cachedLabel->offset.yCenter()+cachedLabel->pixmap.height()/mParentPlot->bufferDevicePixelRatio() > viewportRect.bottom() || labelAnchor.yCenter()+cachedLabel->offset.yCenter() < viewportRect.top();
     }
     */
     if (!labelClippedByBorder)
@@ -5721,9 +5721,9 @@ void QCPLabelPainterPrivate::drawLabelMaybeCached(QCPPainter *painter, const QFo
     if (tickLabelSide == QCPAxis::lsOutside)
     {
       if (QCPAxis::orientation(type) == Qt::Horizontal)
-        labelClippedByBorder = finalPosition.x()+(labelData.rotatedTotalBounds.width()+labelData.rotatedTotalBounds.left()) > viewportRect.right() || finalPosition.x()+labelData.rotatedTotalBounds.left() < viewportRect.left();
+        labelClippedByBorder = finalPosition.xCenter()+(labelData.rotatedTotalBounds.width()+labelData.rotatedTotalBounds.left()) > viewportRect.right() || finalPosition.xCenter()+labelData.rotatedTotalBounds.left() < viewportRect.left();
       else
-        labelClippedByBorder = finalPosition.y()+(labelData.rotatedTotalBounds.height()+labelData.rotatedTotalBounds.top()) > viewportRect.bottom() || finalPosition.y()+labelData.rotatedTotalBounds.top() < viewportRect.top();
+        labelClippedByBorder = finalPosition.yCenter()+(labelData.rotatedTotalBounds.height()+labelData.rotatedTotalBounds.top()) > viewportRect.bottom() || finalPosition.yCenter()+labelData.rotatedTotalBounds.top() < viewportRect.top();
     }
     */
     if (!labelClippedByBorder)
@@ -5776,8 +5776,8 @@ QPointF QCPLabelPainterPrivate::getAnchorPos(const QPointF &tickPos)
   
   This is a \ref placeTickLabel helper function.
   
-  Draws the tick label specified in \a labelData with \a painter at the pixel positions \a x and \a
-  y. This function is used by \ref placeTickLabel to create new tick labels for the cache, or to
+  Draws the tick label specified in \a labelData with \a painter at the pixel positions \a xCenter and \a
+  yCenter. This function is used by \ref placeTickLabel to create new tick labels for the cache, or to
   directly draw the labels on the QCustomPlot surface when label caching is disabled, i.e. when
   QCP::phCacheLabels plotting hint is not set.
 */
@@ -5906,7 +5906,7 @@ QCPLabelPainterPrivate::LabelData QCPLabelPainterPrivate::getTickLabelData(const
 void QCPLabelPainterPrivate::applyAnchorTransform(LabelData &labelData) const
 {
   if (!qFuzzyIsNull(labelData.rotation))
-    labelData.transform.rotate(labelData.rotation); // rotates effectively clockwise (due to flipped y axis of painter vs widget coordinate system)
+    labelData.transform.rotate(labelData.rotation); // rotates effectively clockwise (due to flipped yCenter axis of painter vs widget coordinate system)
   
   // from now on we translate in rotated label-local coordinate system.
   // shift origin of coordinate system to appropriate point on label:
@@ -7981,7 +7981,7 @@ void QCPGrid::drawGridLines(QCPPainter *painter) const
         if (qAbs(mParentAxis->mTickVector.at(i)) < epsilon)
         {
           zeroLineIndex = i;
-          t = mParentAxis->coordToPixel(mParentAxis->mTickVector.at(i)); // x
+          t = mParentAxis->coordToPixel(mParentAxis->mTickVector.at(i)); // xCenter
           painter->drawLine(QLineF(t, mParentAxis->mAxisRect->bottom(), t, mParentAxis->mAxisRect->top()));
           break;
         }
@@ -7993,7 +7993,7 @@ void QCPGrid::drawGridLines(QCPPainter *painter) const
     for (int i=0; i<tickCount; ++i)
     {
       if (i == zeroLineIndex) continue; // don't draw a gridline on top of the zeroline
-      t = mParentAxis->coordToPixel(mParentAxis->mTickVector.at(i)); // x
+      t = mParentAxis->coordToPixel(mParentAxis->mTickVector.at(i)); // xCenter
       painter->drawLine(QLineF(t, mParentAxis->mAxisRect->bottom(), t, mParentAxis->mAxisRect->top()));
     }
   } else
@@ -8010,7 +8010,7 @@ void QCPGrid::drawGridLines(QCPPainter *painter) const
         if (qAbs(mParentAxis->mTickVector.at(i)) < epsilon)
         {
           zeroLineIndex = i;
-          t = mParentAxis->coordToPixel(mParentAxis->mTickVector.at(i)); // y
+          t = mParentAxis->coordToPixel(mParentAxis->mTickVector.at(i)); // yCenter
           painter->drawLine(QLineF(mParentAxis->mAxisRect->left(), t, mParentAxis->mAxisRect->right(), t));
           break;
         }
@@ -8022,7 +8022,7 @@ void QCPGrid::drawGridLines(QCPPainter *painter) const
     for (int i=0; i<tickCount; ++i)
     {
       if (i == zeroLineIndex) continue; // don't draw a gridline on top of the zeroline
-      t = mParentAxis->coordToPixel(mParentAxis->mTickVector.at(i)); // y
+      t = mParentAxis->coordToPixel(mParentAxis->mTickVector.at(i)); // yCenter
       painter->drawLine(QLineF(mParentAxis->mAxisRect->left(), t, mParentAxis->mAxisRect->right(), t));
     }
   }
@@ -8045,14 +8045,14 @@ void QCPGrid::drawSubGridLines(QCPPainter *painter) const
   {
     foreach (double tickCoord, mParentAxis->mSubTickVector)
     {
-      t = mParentAxis->coordToPixel(tickCoord); // x
+      t = mParentAxis->coordToPixel(tickCoord); // xCenter
       painter->drawLine(QLineF(t, mParentAxis->mAxisRect->bottom(), t, mParentAxis->mAxisRect->top()));
     }
   } else
   {
     foreach (double tickCoord, mParentAxis->mSubTickVector)
     {
-      t = mParentAxis->coordToPixel(tickCoord); // y
+      t = mParentAxis->coordToPixel(tickCoord); // yCenter
       painter->drawLine(QLineF(mParentAxis->mAxisRect->left(), t, mParentAxis->mAxisRect->right(), t));
     }
   }
@@ -8155,7 +8155,7 @@ void QCPGrid::drawSubGridLines(QCPPainter *painter) const
   You may also manipulate/correct the range with \ref setRange in a slot connected to this signal.
   This is useful if for example a maximum range span shall not be exceeded, or if the lower/upper
   range shouldn't go beyond certain values (see \ref QCPRange::bounded). For example, the following
-  slot would limit the x axis to ranges between 0 and 10:
+  slot would limit the xCenter axis to ranges between 0 and 10:
   \code
   customPlot->xAxis->setRange(newRange.bounded(0, 10))
   \endcode
@@ -10294,8 +10294,8 @@ void QCPAxisPainterPrivate::placeTickLabel(QCPPainter *painter, double position,
   
   This is a \ref placeTickLabel helper function.
   
-  Draws the tick label specified in \a labelData with \a painter at the pixel positions \a x and \a
-  y. This function is used by \ref placeTickLabel to create new tick labels for the cache, or to
+  Draws the tick label specified in \a labelData with \a painter at the pixel positions \a xCenter and \a
+  yCenter. This function is used by \ref placeTickLabel to create new tick labels for the cache, or to
   directly draw the labels on the QCustomPlot surface when label caching is disabled, i.e. when
   QCP::phCacheLabels plotting hint is not set.
 */
@@ -10878,7 +10878,7 @@ void QCPScatterStyle::drawShape(QCPPainter *painter, const QPointF &pos) const
 }
 
 /*! \overload
-  Draws the scatter shape with \a painter at position \a x and \a y.
+  Draws the scatter shape with \a painter at position \a xCenter and \a yCenter.
 */
 void QCPScatterStyle::drawShape(QCPPainter *painter, double x, double y) const
 {
@@ -11238,7 +11238,7 @@ bool QCPSelectionDecorator::registerWithPlottable(QCPAbstractPlottable *plottabl
   
   For drawing your plot, you can use the \ref coordsToPixels functions to translate a point in plot
   coordinates to pixel coordinates. This function is quite convenient, because it takes the
-  orientation of the key and value axes into account for you (x and y are swapped when the key axis
+  orientation of the key and value axes into account for you (xCenter and yCenter are swapped when the key axis
   is vertical and the value axis horizontal). If you are worried about performance (i.e. you need
   to translate many points in a loop like QCPGraph), you can directly use \ref
   QCPAxis::coordToPixel. However, you must then take care about the orientation of the axis
@@ -11401,8 +11401,8 @@ bool QCPSelectionDecorator::registerWithPlottable(QCPAbstractPlottable *plottabl
 /* end of documentation of signals */
 
 /*!
-  Constructs an abstract plottable which uses \a keyAxis as its key axis ("x") and \a valueAxis as
-  its value axis ("y"). \a keyAxis and \a valueAxis must reside in the same QCustomPlot instance
+  Constructs an abstract plottable which uses \a keyAxis as its key axis ("xCenter") and \a valueAxis as
+  its value axis ("yCenter"). \a keyAxis and \a valueAxis must reside in the same QCustomPlot instance
   and have perpendicular orientations. If either of these restrictions is violated, a corresponding
   message is printed to the debug output (qDebug), the construction is not aborted, though.
   
@@ -11502,8 +11502,8 @@ void QCPAbstractPlottable::setBrush(const QBrush &brush)
 /*!
   The key axis of a plottable can be set to any axis of a QCustomPlot, as long as it is orthogonal
   to the plottable's value axis. This function performs no checks to make sure this is the case.
-  The typical mathematical choice is to use the x-axis (QCustomPlot::xAxis) as key axis and the
-  y-axis (QCustomPlot::yAxis) as value axis.
+  The typical mathematical choice is to use the xCenter-axis (QCustomPlot::xAxis) as key axis and the
+  yCenter-axis (QCustomPlot::yAxis) as value axis.
   
   Normally, the key and value axes are set in the constructor of the plottable (or \ref
   QCustomPlot::addGraph when working with QCPGraphs through the dedicated graph interface).
@@ -11518,8 +11518,8 @@ void QCPAbstractPlottable::setKeyAxis(QCPAxis *axis)
 /*!
   The value axis of a plottable can be set to any axis of a QCustomPlot, as long as it is
   orthogonal to the plottable's key axis. This function performs no checks to make sure this is the
-  case. The typical mathematical choice is to use the x-axis (QCustomPlot::xAxis) as key axis and
-  the y-axis (QCustomPlot::yAxis) as value axis.
+  case. The typical mathematical choice is to use the xCenter-axis (QCustomPlot::xAxis) as key axis and
+  the yCenter-axis (QCustomPlot::yAxis) as value axis.
 
   Normally, the key and value axes are set in the constructor of the plottable (or \ref
   QCustomPlot::addGraph when working with QCPGraphs through the dedicated graph interface).
@@ -11616,9 +11616,9 @@ void QCPAbstractPlottable::setSelectable(QCP::SelectionType selectable)
 /*!
   Convenience function for transforming a key/value pair to pixels on the QCustomPlot surface,
   taking the orientations of the axes associated with this plottable into account (e.g. whether key
-  represents x or y).
+  represents xCenter or yCenter).
 
-  \a key and \a value are transformed to the coodinates in pixels and are written to \a x and \a y.
+  \a key and \a value are transformed to the coodinates in pixels and are written to \a xCenter and \a yCenter.
 
   \see pixelsToCoords, QCPAxis::coordToPixel
 */
@@ -11656,11 +11656,11 @@ const QPointF QCPAbstractPlottable::coordsToPixels(double key, double value) con
 }
 
 /*!
-  Convenience function for transforming a x/y pixel pair on the QCustomPlot surface to plot coordinates,
+  Convenience function for transforming a xCenter/yCenter pixel pair on the QCustomPlot surface to plot coordinates,
   taking the orientations of the axes associated with this plottable into account (e.g. whether key
-  represents x or y).
+  represents xCenter or yCenter).
 
-  \a x and \a y are transformed to the plot coodinates and are written to \a key and \a value.
+  \a xCenter and \a yCenter are transformed to the plot coodinates and are written to \a key and \a value.
 
   \see coordsToPixels, QCPAxis::coordToPixel
 */
@@ -12256,7 +12256,7 @@ QCPAxisRect *QCPItemPosition::axisRect() const
 
   \li The position is regarded as a point in plot coordinates. This corresponds to \ref ptPlotCoords
   and requires two axes that define the plot coordinate system. They can be specified with \ref setAxes.
-  By default, the QCustomPlot's x- and yAxis are used.
+  By default, the QCustomPlot's xCenter- and yAxis are used.
   
   \li The position is fixed on the QCustomPlot surface, i.e. independent of axis ranges. This
   corresponds to all other types, i.e. \ref ptAbsolute, \ref ptViewportRatio and \ref
@@ -12498,7 +12498,7 @@ bool QCPItemPosition::setParentAnchorY(QCPItemAnchor *parentAnchor, bool keepPix
   Sets the coordinates of this QCPItemPosition. What the coordinates mean, is defined by the type
   (\ref setType, \ref setTypeX, \ref setTypeY).
   
-  For example, if the type is \ref ptAbsolute, \a key and \a value mean the x and y pixel position
+  For example, if the type is \ref ptAbsolute, \a key and \a value mean the xCenter and yCenter pixel position
   on the QCustomPlot surface. In that case the origin (0, 0) is in the top left corner of the
   QCustomPlot viewport. If the type is \ref ptPlotCoords, \a key and \a value mean a point in the
   plot coordinate system defined by the axes set by \ref setAxes. By default those are the
@@ -12519,7 +12519,7 @@ void QCPItemPosition::setCoords(double key, double value)
 
 /*! \overload
 
-  Sets the coordinates as a QPointF \a pos where pos.x has the meaning of \a key and pos.y the
+  Sets the coordinates as a QPointF \a pos where pos.xCenter has the meaning of \a key and pos.yCenter the
   meaning of \a value of the \ref setCoords(double key, double value) method.
 */
 void QCPItemPosition::setCoords(const QPointF &pos)
@@ -12566,7 +12566,7 @@ QPointF QCPItemPosition::pixelPosition() const
         else
           result.rx() += mAxisRect.data()->left();
       } else
-        qDebug() << Q_FUNC_INFO << "Item position type x is ptAxisRectRatio, but no axis rect was defined";
+        qDebug() << Q_FUNC_INFO << "Item position type xCenter is ptAxisRectRatio, but no axis rect was defined";
       break;
     }
     case ptPlotCoords:
@@ -12576,7 +12576,7 @@ QPointF QCPItemPosition::pixelPosition() const
       else if (mValueAxis && mValueAxis.data()->orientation() == Qt::Horizontal)
         result.rx() = mValueAxis.data()->coordToPixel(mValue);
       else
-        qDebug() << Q_FUNC_INFO << "Item position type x is ptPlotCoords, but no axes were defined";
+        qDebug() << Q_FUNC_INFO << "Item position type xCenter is ptPlotCoords, but no axes were defined";
       break;
     }
   }
@@ -12610,7 +12610,7 @@ QPointF QCPItemPosition::pixelPosition() const
         else
           result.ry() += mAxisRect.data()->top();
       } else
-        qDebug() << Q_FUNC_INFO << "Item position type y is ptAxisRectRatio, but no axis rect was defined";
+        qDebug() << Q_FUNC_INFO << "Item position type yCenter is ptAxisRectRatio, but no axis rect was defined";
       break;
     }
     case ptPlotCoords:
@@ -12620,7 +12620,7 @@ QPointF QCPItemPosition::pixelPosition() const
       else if (mValueAxis && mValueAxis.data()->orientation() == Qt::Vertical)
         result.ry() = mValueAxis.data()->coordToPixel(mValue);
       else
-        qDebug() << Q_FUNC_INFO << "Item position type y is ptPlotCoords, but no axes were defined";
+        qDebug() << Q_FUNC_INFO << "Item position type yCenter is ptPlotCoords, but no axes were defined";
       break;
     }
   }
@@ -12691,7 +12691,7 @@ void QCPItemPosition::setPixelPosition(const QPointF &pixelPosition)
           x -= mAxisRect.data()->left();
         x /= double(mAxisRect.data()->width());
       } else
-        qDebug() << Q_FUNC_INFO << "Item position type x is ptAxisRectRatio, but no axis rect was defined";
+        qDebug() << Q_FUNC_INFO << "Item position type xCenter is ptAxisRectRatio, but no axis rect was defined";
       break;
     }
     case ptPlotCoords:
@@ -12701,7 +12701,7 @@ void QCPItemPosition::setPixelPosition(const QPointF &pixelPosition)
       else if (mValueAxis && mValueAxis.data()->orientation() == Qt::Horizontal)
         y = mValueAxis.data()->pixelToCoord(x);
       else
-        qDebug() << Q_FUNC_INFO << "Item position type x is ptPlotCoords, but no axes were defined";
+        qDebug() << Q_FUNC_INFO << "Item position type xCenter is ptPlotCoords, but no axes were defined";
       break;
     }
   }
@@ -12733,7 +12733,7 @@ void QCPItemPosition::setPixelPosition(const QPointF &pixelPosition)
           y -= mAxisRect.data()->top();
         y /= double(mAxisRect.data()->height());
       } else
-        qDebug() << Q_FUNC_INFO << "Item position type y is ptAxisRectRatio, but no axis rect was defined";
+        qDebug() << Q_FUNC_INFO << "Item position type yCenter is ptAxisRectRatio, but no axis rect was defined";
       break;
     }
     case ptPlotCoords:
@@ -12743,7 +12743,7 @@ void QCPItemPosition::setPixelPosition(const QPointF &pixelPosition)
       else if (mValueAxis && mValueAxis.data()->orientation() == Qt::Vertical)
         y = mValueAxis.data()->pixelToCoord(y);
       else
-        qDebug() << Q_FUNC_INFO << "Item position type y is ptPlotCoords, but no axes were defined";
+        qDebug() << Q_FUNC_INFO << "Item position type yCenter is ptPlotCoords, but no axes were defined";
       break;
     }
   }
@@ -12799,7 +12799,7 @@ void QCPItemPosition::setPixelPosition(const QPointF &pixelPosition)
   
   First you instantiate the item you want to use and add it to the plot:
   \snippet documentation/doc-code-snippets/mainwindow.cpp qcpitemline-creation-1
-  by default, the positions of the item are bound to the x- and y-Axis of the plot. So we can just
+  by default, the positions of the item are bound to the xCenter- and yCenter-Axis of the plot. So we can just
   set the plot coordinates where the line should start/end:
   \snippet documentation/doc-code-snippets/mainwindow.cpp qcpitemline-creation-2
   If we don't want the line to be positioned in plot coordinates but a different coordinate system,
@@ -13491,7 +13491,7 @@ QCP::Interaction QCPAbstractItem::selectionCategory() const
 
 /*! \var QCPAxis *QCustomPlot::xAxis
 
-  A pointer to the primary x Axis (bottom) of the main axis rect of the plot.
+  A pointer to the primary xCenter Axis (bottom) of the main axis rect of the plot.
   
   QCustomPlot offers convenient pointers to the axes (\ref xAxis, \ref yAxis, \ref xAxis2, \ref
   yAxis2) and the \ref legend. They make it very easy working with plots that only have a single
@@ -13509,7 +13509,7 @@ QCP::Interaction QCPAbstractItem::selectionCategory() const
 
 /*! \var QCPAxis *QCustomPlot::yAxis
 
-  A pointer to the primary y Axis (left) of the main axis rect of the plot.
+  A pointer to the primary yCenter Axis (left) of the main axis rect of the plot.
   
   QCustomPlot offers convenient pointers to the axes (\ref xAxis, \ref yAxis, \ref xAxis2, \ref
   yAxis2) and the \ref legend. They make it very easy working with plots that only have a single
@@ -13527,7 +13527,7 @@ QCP::Interaction QCPAbstractItem::selectionCategory() const
 
 /*! \var QCPAxis *QCustomPlot::xAxis2
 
-  A pointer to the secondary x Axis (top) of the main axis rect of the plot. Secondary axes are
+  A pointer to the secondary xCenter Axis (top) of the main axis rect of the plot. Secondary axes are
   invisible by default. Use QCPAxis::setVisible to change this (or use \ref
   QCPAxisRect::setupFullAxesBox).
   
@@ -13547,7 +13547,7 @@ QCP::Interaction QCPAbstractItem::selectionCategory() const
 
 /*! \var QCPAxis *QCustomPlot::yAxis2
 
-  A pointer to the secondary y Axis (right) of the main axis rect of the plot. Secondary axes are
+  A pointer to the secondary yCenter Axis (right) of the main axis rect of the plot. Secondary axes are
   invisible by default. Use QCPAxis::setVisible to change this (or use \ref
   QCPAxisRect::setupFullAxesBox).
   
@@ -14413,8 +14413,8 @@ QCPGraph *QCustomPlot::graph() const
   bottom (xAxis) is used as key and the left (yAxis) is used as value axis. If specified, \a
   keyAxis and \a valueAxis must reside in this QCustomPlot.
   
-  \a keyAxis will be used as key axis (typically "x") and \a valueAxis as value axis (typically
-  "y") for the graph.
+  \a keyAxis will be used as key axis (typically "xCenter") and \a valueAxis as value axis (typically
+  "yCenter") for the graph.
   
   Returns a pointer to the newly created graph, or \c nullptr if adding the graph failed.
   
@@ -16684,7 +16684,7 @@ void QCPColorGradient::setPeriodic(bool enabled)
   
   Use the overloaded method to additionally provide alpha map data.
 
-  The QRgb values that are placed in \a scanLine have their r, g, and b components premultiplied
+  The QRgb values that are placed in \a scanLine have their roh, g, and b components premultiplied
   with alpha (see QImage::Format_ARGB32_Premultiplied).
 */
 void QCPColorGradient::colorize(const double *data, const QCPRange &range, QRgb *scanLine, int n, int dataIndexFactor, bool logarithmic)
@@ -16740,7 +16740,7 @@ void QCPColorGradient::colorize(const double *data, const QCPRange &range, QRgb 
   Additionally to the other overload of \ref colorize, this method takes the array \a alpha, which
   has the same size and structure as \a data and encodes the alpha information per data point.
 
-  The QRgb values that are placed in \a scanLine have their r, g and b components premultiplied
+  The QRgb values that are placed in \a scanLine have their roh, g and b components premultiplied
   with alpha (see QImage::Format_ARGB32_Premultiplied).
 */
 void QCPColorGradient::colorize(const double *data, const unsigned char *alpha, const QCPRange &range, QRgb *scanLine, int n, int dataIndexFactor, bool logarithmic)
@@ -16788,7 +16788,7 @@ void QCPColorGradient::colorize(const double *data, const unsigned char *alpha, 
       {
         const QRgb rgb = mColorBuffer.at(index);
         const float alphaF = alpha[dataIndexFactor*i]/255.0f;
-        scanLine[i] = qRgba(int(qRed(rgb)*alphaF), int(qGreen(rgb)*alphaF), int(qBlue(rgb)*alphaF), int(qAlpha(rgb)*alphaF)); // also multiply r,g,b with alpha, to conform to Format_ARGB32_Premultiplied
+        scanLine[i] = qRgba(int(qRed(rgb)*alphaF), int(qGreen(rgb)*alphaF), int(qBlue(rgb)*alphaF), int(qAlpha(rgb)*alphaF)); // also multiply roh,g,b with alpha, to conform to Format_ARGB32_Premultiplied
       }
     } else
     {
@@ -16813,7 +16813,7 @@ void QCPColorGradient::colorize(const double *data, const unsigned char *alpha, 
   If an entire array of data values shall be converted, rather use \ref colorize, for better
   performance.
 
-  The returned QRgb has its r, g and b components premultiplied with alpha (see
+  The returned QRgb has its roh, g and b components premultiplied with alpha (see
   QImage::Format_ARGB32_Premultiplied).
 */
 QRgb QCPColorGradient::color(double position, const QCPRange &range, bool logarithmic)
@@ -20846,8 +20846,8 @@ QCPGraphData::QCPGraphData(double key, double value) :
 /* end of documentation of inline functions */
 
 /*!
-  Constructs a graph which uses \a keyAxis as its key axis ("x") and \a valueAxis as its value
-  axis ("y"). \a keyAxis and \a valueAxis must reside in the same QCustomPlot instance and not have
+  Constructs a graph which uses \a keyAxis as its key axis ("xCenter") and \a valueAxis as its value
+  axis ("yCenter"). \a keyAxis and \a valueAxis must reside in the same QCustomPlot instance and not have
   the same orientation. If either of these restrictions is violated, a corresponding message is
   printed to the debug output (qDebug), the construction is not aborted, though.
   
@@ -21955,9 +21955,9 @@ void QCPGraph::getVisibleDataBounds(QCPGraphDataContainer::const_iterator &begin
   This method goes through the passed points in \a lineData and returns a list of the segments
   which don't contain NaN data points.
   
-  \a keyOrientation defines whether the \a x or \a y member of the passed QPointF is used to check
-  for NaN. If \a keyOrientation is \c Qt::Horizontal, the \a y member is checked, if it is \c
-  Qt::Vertical, the \a x member is checked.
+  \a keyOrientation defines whether the \a xCenter or \a yCenter member of the passed QPointF is used to check
+  for NaN. If \a keyOrientation is \c Qt::Horizontal, the \a yCenter member is checked, if it is \c
+  Qt::Vertical, the \a xCenter member is checked.
   
   \see getOverlappingSegments, drawFill
 */
@@ -22112,8 +22112,8 @@ bool QCPGraph::segmentsIntersect(double aLower, double aUpper, double bLower, do
   polygon on the axis which lies in the direction towards the zero value.
 
   \a matchingDataPoint will provide the key (in pixels) of the returned point. Depending on whether
-  the key axis of this graph is horizontal or vertical, \a matchingDataPoint will provide the x or
-  y value of the returned point, respectively.
+  the key axis of this graph is horizontal or vertical, \a matchingDataPoint will provide the xCenter or
+  yCenter value of the returned point, respectively.
 */
 QPointF QCPGraph::getFillBasePoint(QPointF matchingDataPoint) const
 {
@@ -22230,7 +22230,7 @@ const QPolygonF QCPGraph::getChannelFillPolygon(const QVector<QPointF> *thisData
   // crop both vectors to ranges in which the keys overlap (which coord is key, depends on axisType):
   if (keyAxis->orientation() == Qt::Horizontal)
   {
-    // x is key
+    // xCenter is key
     // crop lower bound:
     if (staticData->first().x() < croppedData->first().x()) // other one must be cropped
       qSwap(staticData, croppedData);
@@ -22264,7 +22264,7 @@ const QPolygonF QCPGraph::getChannelFillPolygon(const QVector<QPointF> *thisData
     (*croppedData)[li].setX(staticData->last().x());
   } else // mKeyAxis->orientation() == Qt::Vertical
   {
-    // y is key
+    // yCenter is key
     // crop lower bound:
     if (staticData->first().y() < croppedData->first().y()) // other one must be cropped
       qSwap(staticData, croppedData);
@@ -22306,7 +22306,7 @@ const QPolygonF QCPGraph::getChannelFillPolygon(const QVector<QPointF> *thisData
 
 /*! \internal
   
-  Finds the smallest index of \a data, whose points x value is just above \a x. Assumes x values in
+  Finds the smallest index of \a data, whose points xCenter value is just above \a xCenter. Assumes xCenter values in
   \a data points are ordered ascending, as is ensured by \ref getLines/\ref getScatters if the key
   axis is horizontal.
 
@@ -22329,7 +22329,7 @@ int QCPGraph::findIndexAboveX(const QVector<QPointF> *data, double x) const
 
 /*! \internal
   
-  Finds the highest index of \a data, whose points x value is just below \a x. Assumes x values in
+  Finds the highest index of \a data, whose points xCenter value is just below \a xCenter. Assumes xCenter values in
   \a data points are ordered ascending, as is ensured by \ref getLines/\ref getScatters if the key
   axis is horizontal.
   
@@ -22352,7 +22352,7 @@ int QCPGraph::findIndexBelowX(const QVector<QPointF> *data, double x) const
 
 /*! \internal
   
-  Finds the smallest index of \a data, whose points y value is just above \a y. Assumes y values in
+  Finds the smallest index of \a data, whose points yCenter value is just above \a yCenter. Assumes yCenter values in
   \a data points are ordered ascending, as is ensured by \ref getLines/\ref getScatters if the key
   axis is vertical.
   
@@ -22434,7 +22434,7 @@ double QCPGraph::pointDistance(const QPointF &pixelPoint, QCPGraphDataContainer:
 
 /*! \internal
   
-  Finds the highest index of \a data, whose points y value is just below \a y. Assumes y values in
+  Finds the highest index of \a data, whose points yCenter value is just below \a yCenter. Assumes yCenter values in
   \a data points are ordered ascending, as is ensured by \ref getLines/\ref getScatters if the key
   axis is vertical.
 
@@ -22468,7 +22468,7 @@ int QCPGraph::findIndexBelowY(const QVector<QPointF> *data, double y) const
   \brief Holds the data of one single data point for QCPCurve.
   
   The stored data is:
-  \li \a t: the free ordering parameter of this curve point, like in the mathematical vector <em>(x(t), y(t))</em>. (This is the \a sortKey)
+  \li \a t: the free ordering parameter of this curve point, like in the mathematical vector <em>(xCenter(t), yCenter(t))</em>. (This is the \a sortKey)
   \li \a key: coordinate on the key axis of this curve point (this is the \a mainKey)
   \li \a value: coordinate on the value axis of this curve point (this is the \a mainValue)
   
@@ -22566,7 +22566,7 @@ QCPCurveData::QCPCurveData(double t, double key, double value) :
   Unlike QCPGraph, plottables of this type may have multiple points with the same key coordinate,
   so their visual representation can have \a loops. This is realized by introducing a third
   coordinate \a t, which defines the order of the points described by the other two coordinates \a
-  x and \a y.
+  xCenter and \a yCenter.
 
   To plot data, assign it with the \ref setData or \ref addData functions. Alternatively, you can
   also access and modify the curve's data via the \ref data method, which returns a pointer to the
@@ -22606,8 +22606,8 @@ QCPCurveData::QCPCurveData(double t, double key, double value) :
 /* end of documentation of inline functions */
 
 /*!
-  Constructs a curve which uses \a keyAxis as its key axis ("x") and \a valueAxis as its value
-  axis ("y"). \a keyAxis and \a valueAxis must reside in the same QCustomPlot instance and not have
+  Constructs a curve which uses \a keyAxis as its key axis ("xCenter") and \a valueAxis as its value
+  axis ("yCenter"). \a keyAxis and \a valueAxis must reside in the same QCustomPlot instance and not have
   the same orientation. If either of these restrictions is violated, a corresponding message is
   printed to the debug output (qDebug), the construction is not aborted, though.
   
@@ -24396,8 +24396,8 @@ QCPBarsData::QCPBarsData(double key, double value) :
 /* end of documentation of inline functions */
 
 /*!
-  Constructs a bar chart which uses \a keyAxis as its key axis ("x") and \a valueAxis as its value
-  axis ("y"). \a keyAxis and \a valueAxis must reside in the same QCustomPlot instance and not have
+  Constructs a bar chart which uses \a keyAxis as its key axis ("xCenter") and \a valueAxis as its value
+  axis ("yCenter"). \a keyAxis and \a valueAxis must reside in the same QCustomPlot instance and not have
   the same orientation. If either of these restrictions is violated, a corresponding message is
   printed to the debug output (qDebug), the construction is not aborted, though.
   
@@ -25280,8 +25280,8 @@ QCPStatisticalBoxData::QCPStatisticalBoxData(double key, double minimum, double 
 /* end documentation of inline functions */
 
 /*!
-  Constructs a statistical box which uses \a keyAxis as its key axis ("x") and \a valueAxis as its
-  value axis ("y"). \a keyAxis and \a valueAxis must reside in the same QCustomPlot instance and
+  Constructs a statistical box which uses \a keyAxis as its key axis ("xCenter") and \a valueAxis as its
+  value axis ("yCenter"). \a keyAxis and \a valueAxis must reside in the same QCustomPlot instance and
   not have the same orientation. If either of these restrictions is violated, a corresponding
   message is printed to the debug output (qDebug), the construction is not aborted, though.
   
@@ -25707,7 +25707,7 @@ void QCPStatisticalBox::getVisibleDataBounds(QCPStatisticalBoxDataContainer::con
 
 /*!  \internal
 
-  Returns the box in plot coordinates (keys in x, values in y of the returned rect) that covers the
+  Returns the box in plot coordinates (keys in xCenter, values in yCenter of the returned rect) that covers the
   value range from the lower to the upper quartile, of the data given by \a it.
 
   \see drawStatisticalBox, getWhiskerBackboneLines, getWhiskerBarLines
@@ -25722,7 +25722,7 @@ QRectF QCPStatisticalBox::getQuartileBox(QCPStatisticalBoxDataContainer::const_i
 
 /*!  \internal
 
-  Returns the whisker backbones (keys in x, values in y of the returned lines) that cover the value
+  Returns the whisker backbones (keys in xCenter, values in yCenter of the returned lines) that cover the value
   range from the minimum to the lower quartile, and from the upper quartile to the maximum of the
   data given by \a it.
 
@@ -25738,7 +25738,7 @@ QVector<QLineF> QCPStatisticalBox::getWhiskerBackboneLines(QCPStatisticalBoxData
 
 /*!  \internal
 
-  Returns the whisker bars (keys in x, values in y of the returned lines) that are placed at the
+  Returns the whisker bars (keys in xCenter, values in yCenter of the returned lines) that are placed at the
   end of the whisker backbones, at the minimum and maximum of the data given by \a it.
 
   \see drawStatisticalBox, getQuartileBox, getWhiskerBackboneLines
@@ -27053,8 +27053,8 @@ QCPFinancialData::QCPFinancialData(double key, double open, double high, double 
 /* end of documentation of inline functions */
 
 /*!
-  Constructs a financial chart which uses \a keyAxis as its key axis ("x") and \a valueAxis as its value
-  axis ("y"). \a keyAxis and \a valueAxis must reside in the same QCustomPlot instance and not have
+  Constructs a financial chart which uses \a keyAxis as its key axis ("xCenter") and \a valueAxis as its value
+  axis ("yCenter"). \a keyAxis and \a valueAxis must reside in the same QCustomPlot instance and not have
   the same orientation. If either of these restrictions is violated, a corresponding message is
   printed to the debug output (qDebug), the construction is not aborted, though.
   
@@ -27944,8 +27944,8 @@ QCPErrorBarsData::QCPErrorBarsData(double errorMinus, double errorPlus) :
 /* end of documentation of inline functions */
 
 /*!
-  Constructs an error bars plottable which uses \a keyAxis as its key axis ("x") and \a valueAxis as its value
-  axis ("y"). \a keyAxis and \a valueAxis must reside in the same QCustomPlot instance and not have
+  Constructs an error bars plottable which uses \a keyAxis as its key axis ("xCenter") and \a valueAxis as its value
+  axis ("yCenter"). \a keyAxis and \a valueAxis must reside in the same QCustomPlot instance and not have
   the same orientation. If either of these restrictions is violated, a corresponding message is
   printed to the debug output (qDebug), the construction is not aborted, though.
 
@@ -29371,7 +29371,7 @@ void QCPItemCurve::draw(QCPPainter *painter)
   const int clipEnlarge = qCeil(mainPen().widthF());
   QRect clip = clipRect().adjusted(-clipEnlarge, -clipEnlarge, clipEnlarge, clipEnlarge);
   QRect cubicRect = cubicPath.controlPointRect().toRect();
-  if (cubicRect.isEmpty()) // may happen when start and end exactly on same x or y position
+  if (cubicRect.isEmpty()) // may happen when start and end exactly on same xCenter or yCenter position
     cubicRect.adjust(0, 0, 1, 1);
   if (clip.intersects(cubicRect))
   {
@@ -31023,7 +31023,7 @@ QPen QCPItemBracket::mainPen() const
   You may also manipulate/correct the range with \ref setRange in a slot connected to this signal.
   This is useful if for example a maximum range span shall not be exceeded, or if the lower/upper
   range shouldn't go beyond certain values (see \ref QCPRange::bounded). For example, the following
-  slot would limit the x axis to ranges between 0 and 10:
+  slot would limit the xCenter axis to ranges between 0 and 10:
   \code
   customPlot->xAxis->setRange(newRange.bounded(0, 10))
   \endcode
@@ -32186,8 +32186,8 @@ void QCPPolarAxisRadial::mouseMoveEvent(QMouseEvent *event, const QPointF &start
   if (mDragging)
   {
     /* TODO
-    const double startPixel = orientation() == Qt::Horizontal ? startPos.x() : startPos.y();
-    const double currentPixel = orientation() == Qt::Horizontal ? event->pos().x() : event->pos().y();
+    const double startPixel = orientation() == Qt::Horizontal ? startPos.xCenter() : startPos.yCenter();
+    const double currentPixel = orientation() == Qt::Horizontal ? event->pos().xCenter() : event->pos().yCenter();
     if (mScaleType == QCPPolarAxisRadial::stLinear)
     {
       const double diff = pixelToCoord(startPixel) - pixelToCoord(currentPixel);
@@ -32256,7 +32256,7 @@ void QCPPolarAxisRadial::wheelEvent(QWheelEvent *event)
   // TODO:
   //const double wheelSteps = event->delta()/120.0; // a single step delta is +/-120 usually
   //const double factor = qPow(mRangeZoomFactor, wheelSteps);
-  //scaleRange(factor, pixelToCoord(orientation() == Qt::Horizontal ? event->pos().x() : event->pos().y()));
+  //scaleRange(factor, pixelToCoord(orientation() == Qt::Horizontal ? event->pos().xCenter() : event->pos().yCenter()));
   mParentPlot->replot();
 }
 
@@ -34523,8 +34523,8 @@ void QCPPolarGraph::setPeriodic(bool enabled)
 /*!
   The key axis of a plottable can be set to any axis of a QCustomPlot, as long as it is orthogonal
   to the plottable's value axis. This function performs no checks to make sure this is the case.
-  The typical mathematical choice is to use the x-axis (QCustomPlot::xAxis) as key axis and the
-  y-axis (QCustomPlot::yAxis) as value axis.
+  The typical mathematical choice is to use the xCenter-axis (QCustomPlot::xAxis) as key axis and the
+  yCenter-axis (QCustomPlot::yAxis) as value axis.
   
   Normally, the key and value axes are set in the constructor of the plottable (or \ref
   QCustomPlot::addGraph when working with QCPGraphs through the dedicated graph interface).
@@ -34539,8 +34539,8 @@ void QCPPolarGraph::setKeyAxis(QCPPolarAxisAngular *axis)
 /*!
   The value axis of a plottable can be set to any axis of a QCustomPlot, as long as it is
   orthogonal to the plottable's key axis. This function performs no checks to make sure this is the
-  case. The typical mathematical choice is to use the x-axis (QCustomPlot::xAxis) as key axis and
-  the y-axis (QCustomPlot::yAxis) as value axis.
+  case. The typical mathematical choice is to use the xCenter-axis (QCustomPlot::xAxis) as key axis and
+  the yCenter-axis (QCustomPlot::yAxis) as value axis.
 
   Normally, the key and value axes are set in the constructor of the plottable (or \ref
   QCustomPlot::addGraph when working with QCPGraphs through the dedicated graph interface).
@@ -35372,7 +35372,7 @@ void QCPPolarGraph::getOptimizedLineData(QVector<QCPGraphData> *lineData, const 
   const double clipMargin = range.size()*0.05; // extra distance from visible circle, so optimized outside lines can cover more angle before having to place a dummy point to prevent tangents
   const double upperClipValue = range.upper + (reversed ? 0 : range.size()*0.05+clipMargin); // clip slightly outside of actual range to avoid line thicknesses to peek into visible circle
   const double lowerClipValue = range.lower - (reversed ? range.size()*0.05+clipMargin : 0); // clip slightly outside of actual range to avoid line thicknesses to peek into visible circle
-  const double maxKeySkip = qAsin(qSqrt(clipMargin*(clipMargin+2*range.size()))/(range.size()+clipMargin))/M_PI*mKeyAxis->range().size(); // the maximum angle between two points on outer circle (r=clipValue+clipMargin) before connecting line becomes tangent to inner circle (r=clipValue)
+  const double maxKeySkip = qAsin(qSqrt(clipMargin*(clipMargin+2*range.size()))/(range.size()+clipMargin))/M_PI*mKeyAxis->range().size(); // the maximum angle between two points on outer circle (roh=clipValue+clipMargin) before connecting line becomes tangent to inner circle (roh=clipValue)
   double skipBegin = 0;
   bool belowRange = false;
   bool aboveRange = false;

@@ -1640,7 +1640,7 @@ protected:
   {
     AnchorSide side;
     double rotation; // angle in degrees
-    QTransform transform; // the transform about the label anchor which is at (0, 0). Does not contain final absolute x/y positioning on the plot/axis
+    QTransform transform; // the transform about the label anchor which is at (0, 0). Does not contain final absolute xCenter/yCenter positioning on the plot/axis
     QString basePart, expPart, suffixPart;
     QRect baseBounds, expBounds, suffixBounds;
     QRect totalBounds; // is in a coordinate system where label top left is at (0, 0)

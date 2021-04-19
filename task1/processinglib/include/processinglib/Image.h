@@ -21,6 +21,8 @@ public:
 
     Image(const Image &image);
 
+
+
     Image toGrayscale();
 
     int size();
@@ -57,6 +59,7 @@ public:
 
     float &operator()(int i, int j, int k) const;
 
+    void init(float value);
 
 private:
     template<class T>
@@ -69,7 +72,7 @@ private:
             }
         }
     }
-    void init(float value);
+
 };
 
 
