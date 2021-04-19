@@ -39,7 +39,7 @@ Image cannyEdgeDetector(Image &image, float sigma, float thHigh, float thLow) {
     Image direction = getDirection(imgX, imgY);
     Image nonMax = cannyNonMaxSuppression(magnitude, direction);
 //    float medianVal = median(image);
-    return edgeLink(255. * thHigh, 255 * thLow, nonMax);
+    return cannyEdgeLink(255. * thHigh, 255 * thLow, nonMax);
 }
 
 void dirToCoordinates(float dir, char coordinates[]) {
@@ -85,7 +85,7 @@ Image cannyNonMaxSuppression(Image &mag, Image &dir) {
     return outImage;
 }
 
-Image edgeLink(int tHigh, int tLow, Image &image) {
+Image cannyEdgeLink(int tHigh, int tLow, Image &image) {
     Image outImage{image.width - 2, image.height - 2, 1};
     for (int i = 1; i < image.height - 1; ++i) {
         for (int j = 1; j < image.width - 1; ++j) {

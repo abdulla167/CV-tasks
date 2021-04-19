@@ -92,38 +92,39 @@ void MainWindow::on_filterSelect_currentIndexChanged(QString filterName) {
     } else if (filterName == "Canny") {
         auto grayImage = inputImage->toGrayscale();
         auto input = Image(inputImage);
+        auto cannyImage = cannyEdgeDetector(grayImage);
+        displayGrayscaleImage(&cannyImage, ui->outputImageLabel);
+
+        ui->sigmaCannySlider->setValue(30);
+        ui->thLowCannySlider->setValue(0.05 * 255 + 1);
+        ui->thHighCannySlider->setValue(0.5 * 255 + 1);
+    } else if (filterName == "Hough Lines") {
+        auto grayImage = inputImage->toGrayscale();
+        auto input = Image(inputImage);
         auto cannyImage = cannyEdgeDetector(grayImage, 3, 0.5, 0.1);
-        displayGrayscaleImage(&cannyImage, ui->inputImageLabel);
         // house -> thLow= 0.1, maxGap =7
         // forest -> thLow=0.16, sigma = 2.7, maxGap=1
-        // circles -> thLow = 0.10
-//        ui->sigmaCannySlider->setValue(30);
-//        ui->thLowCannySlider->setValue(0.05 * 255 + 1);
-//        ui->thHighCannySlider->setValue(0.5 * 255 + 1);
 
-//        auto im2 = houghLineTransform(cannyImage, 1, 1);
-//        auto ps = linePeaks(im2.houghImage, 200);
-//        auto lines = houghLines(cannyImage, ps, im2.theta, im2.roh, 7);
-//        auto im3 = drawLines(lines, input,cannyImage);
-//        displayRGBImage(&im3, ui->outputImageLabel);
+        auto houghData = houghLineTransform(cannyImage, 1, 1);
+        auto ps = linePeaks(houghData.houghImage, 200);
+        auto lines = houghLines(cannyImage, ps, houghData.theta, houghData.roh, 7);
+        auto image = drawLines(lines, input, cannyImage);
+        displayRGBImage(&image, ui->outputImageLabel);
+
+    } else if (filterName == "Hough Circles") {
+        auto grayImage = inputImage->toGrayscale();
+        auto input = Image(inputImage);
+        auto cannyImage = cannyEdgeDetector(grayImage, 3, 0.5, 0.1);
+        // circles-image -> thLow = 0.10
 
         auto range = std::pair<int, int>(20, 100);
         auto circles = houghCircles(cannyImage, range, 1);
-
-//        Image image {images->width, images->height, 1};
-//        for (int i = 0; i < image.height; ++i) {
-//            for (int j = 0; j < image.width; ++j) {
-//                image(i, j) = (*images)(i, j, 0);
-//            }
-//        }
-//        Image image1 = image.toScale();
-//        displayGrayscaleImage(&image1, ui->outputImageLabel);
-//        auto peaks = circlePeaks(images, 1);
+//        auto houghImages = houghCircleTransform(cannyImage, range);
+//        auto peaks = circlePeaks(houghImages, 1);
 //        auto circles = houghCircles(input, cannyImage, peaks,range);
-         auto image = drawCircles(circles, input,cannyImage);
+        auto image = drawCircles(circles, input, cannyImage);
         displayRGBImage(&image, ui->outputImageLabel);
-
-//        delete images;
+//        delete houghImages;
     }
 }
 
