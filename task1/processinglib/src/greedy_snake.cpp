@@ -8,7 +8,6 @@
 #include "iostream"
 using namespace std;
 int pointsCount = 70;
-bool stop_it[70] = {false};
 void currentPrevNextPointIndex(int iteration , int numberOfPoints, int * pointsIndexArray) {
     int prevIndex = iteration - 1;
     int nextIndex = iteration + 1;
@@ -78,11 +77,9 @@ void greedySnake(Image&image,int iteration, int numberOfPoints, int* arrayOfPoin
     };
     for (int i = 0; i<numberOfPoints;i++){
         arrayOfAlpha[i] = alpha;
-        if(stop_it[i] == false) {
+
             arrayOfBeta[i] = beta;
-        }else{
-            arrayOfBeta[i] = 0;
-        }
+
         arrayOfgamma[i] = gamma;
 
     }
@@ -126,9 +123,7 @@ void greedySnake(Image&image,int iteration, int numberOfPoints, int* arrayOfPoin
                 energyCountinuty[k] = energyCountinuty[k]/maxcountinuty;
                 energyImage[k] = (minImage - energyImage[k])/(maxImage - minImage);
                 float beta = arrayOfBeta[i];
-//                if (stop_it[i] == true){
-//                    beta = 0;
-//                }
+
                 eSnake[k] = energyCountinuty[k]*arrayOfAlpha[i] + energyCurvature[k]*beta + energyImage[k]*arrayOfgamma[i] ;
                 if (k>0) {
                     if (eSnake[k] < minSnake){
@@ -172,12 +167,9 @@ void greedySnake(Image&image,int iteration, int numberOfPoints, int* arrayOfPoin
                 curvature>curvatureThreshold &&
                 pointsImageEnergy[i]> imgEnergyThreshold &&
                 arrayOfBeta[i]!=0){
-                arrayOfBeta[i] = 0;
-                stop_it[i] = true;
+                arrayOfBeta[i] = 0
             }
-//            if( pointsImageEnergy[i]> imgEnergyThreshold ){
-//                stop_it[i] = true;
-//            }
+
         }
         counter++;
         if (counter == iteration || countMovedPoints <3)
