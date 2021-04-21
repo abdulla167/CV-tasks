@@ -167,7 +167,7 @@ void greedySnake(Image&image,int iteration, int numberOfPoints, int* arrayOfPoin
                 curvature>curvatureThreshold &&
                 pointsImageEnergy[i]> imgEnergyThreshold &&
                 arrayOfBeta[i]!=0){
-                arrayOfBeta[i] = 0
+                arrayOfBeta[i] = 0;
             }
 
         }
