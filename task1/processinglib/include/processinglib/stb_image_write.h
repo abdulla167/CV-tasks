@@ -28,7 +28,7 @@ ABOUT:
 
 BUILDING:
 
-   You can #define STBIW_ASSERT(x) before the #include to avoid using assert.h.
+   You can #define STBIW_ASSERT(xCenter) before the #include to avoid using assert.h.
    You can #define STBIW_MALLOC(), STBIW_REALLOC(), and STBIW_FREE() to replace
    malloc,realloc,free.
    You can #define STBIW_MEMMOVE() to replace memmove()
@@ -57,7 +57,7 @@ USAGE:
      int stbi_write_bmp_to_func(stbi_write_func *func, void *context, int w, int h, int comp, const void  *data);
      int stbi_write_tga_to_func(stbi_write_func *func, void *context, int w, int h, int comp, const void  *data);
      int stbi_write_hdr_to_func(stbi_write_func *func, void *context, int w, int h, int comp, const float *data);
-     int stbi_write_jpg_to_func(stbi_write_func *func, void *context, int x, int y, int comp, const void *data, int quality);
+     int stbi_write_jpg_to_func(stbi_write_func *func, void *context, int xCenter, int yCenter, int comp, const void *data, int quality);
 
    where the callback is:
       void stbi_write_func(void *context, void *data, int size);
@@ -661,7 +661,7 @@ void stbiw__write_hdr_scanline(stbi__write_context *s, int width, int ncomp, uns
                // find next byte after run
                while (r < width && comp[r] == comp[x])
                   ++r;
-               // output run up to r
+               // output run up to roh
                while (x < r) {
                   int len = r-x;
                   if (len > 127) len = 127;
@@ -687,7 +687,7 @@ static int stbi_write_hdr_core(stbi__write_context *s, int x, int y, int comp, f
       s->func(s->context, header, sizeof(header)-1);
 
 #ifdef STBI_MSC_SECURE_CRT
-      len = sprintf_s(buffer, "EXPOSURE=          1.0000000000000\n\n-Y %d +X %d\n", y, x);
+      len = sprintf_s(buffer, "EXPOSURE=          1.0000000000000\n\n-Y %d +X %d\n", yCenter, xCenter);
 #else
       len = sprintf(buffer, "EXPOSURE=          1.0000000000000\n\n-Y %d +X %d\n", y, x);
 #endif

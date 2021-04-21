@@ -7,6 +7,7 @@
 #include "processinglib/filters.h"
 #include "processinglib/utilities.h"
 #include "processinglib/canny.h"
+#include "processinglib/hough.h"
 #include <iostream>
 
 void MainWindow::on_loadImageBtn_clicked() {
@@ -15,7 +16,7 @@ void MainWindow::on_loadImageBtn_clicked() {
     auto filename = filepathStd.substr(filepathStd.find_last_of("/") + 1);
     ui->imageName->setText(QString(filename.c_str()));
     loadImage(filepathStd, inputImage);
-    auto grayImage = inputImage->toGrayscale();
+    auto grayImage = Image(inputImage);
     displayGrayscaleImage(&grayImage, ui->inputImageLabel);
     std::string imageSize = std::to_string(inputImage->size());
     ui->imageSize->setText(QString(imageSize.c_str()));
@@ -88,33 +89,67 @@ void MainWindow::on_filterSelect_currentIndexChanged(QString filterName) {
         auto im = localThresholding(grayImage, 0, 128, 15);
         displayGrayscaleImage(&im, ui->outputImageLabel);
 //        im.saveJPG("out_local_thresholding");
-    } else if(filterName == "Canny"){
+    } else if (filterName == "Canny") {
         auto grayImage = inputImage->toGrayscale();
-        auto im = cannyEdgeDetector(grayImage);
-        displayGrayscaleImage(&im, ui->outputImageLabel);
+        auto input = Image(inputImage);
+        auto cannyImage = cannyEdgeDetector(grayImage);
+        displayGrayscaleImage(&cannyImage, ui->outputImageLabel);
+
         ui->sigmaCannySlider->setValue(30);
-        ui->thLowCannySlider->setValue(0.05 * 255 +1);
+        ui->thLowCannySlider->setValue(0.05 * 255 + 1);
         ui->thHighCannySlider->setValue(0.5 * 255 + 1);
+    } else if (filterName == "Hough Lines") {
+        auto grayImage = inputImage->toGrayscale();
+        auto input = Image(inputImage);
+        auto cannyImage = cannyEdgeDetector(grayImage, 3, 0.5, 0.1);
+        // house -> thLow= 0.1, maxGap =7
+        // forest -> thLow=0.16, sigma = 2.7, maxGap=1
+
+        auto houghData = houghLineTransform(cannyImage, 1, 1);
+        auto ps = linePeaks(houghData.houghImage, 200);
+        auto lines = houghLines(cannyImage, ps, houghData.theta, houghData.roh, 7);
+        auto image = drawLines(lines, input, cannyImage);
+        displayRGBImage(&image, ui->outputImageLabel);
+
+    } else if (filterName == "Hough Circles") {
+        auto grayImage = inputImage->toGrayscale();
+        auto input = Image(inputImage);
+        auto cannyImage = cannyEdgeDetector(grayImage, 3, 0.5, 0.1);
+        // circles-image -> thLow = 0.10
+
+        auto range = std::pair<int, int>(20, 100);
+        auto circles = houghCircles(cannyImage, range, 1);
+//        auto houghImages = houghCircleTransform(cannyImage, range);
+//        auto peaks = circlePeaks(houghImages, 1);
+//        auto circles = houghCircles(input, cannyImage, peaks,range);
+        auto image = drawCircles(circles, input, cannyImage);
+        displayRGBImage(&image, ui->outputImageLabel);
+//        delete houghImages;
     }
 }
 
+
 void MainWindow::on_thHighCannySlider_valueChanged(int val) {
-    ui->thHighCannyValLabel->setNum((int)(val / 255. * 100));
+    ui->thHighCannyValLabel->setNum((int) (val / 255. * 100));
     auto grayImage = Image(inputImage);
-    auto im = cannyEdgeDetector(grayImage, ui->sigmaCannySlider->value()/10., val / 255., ui->thLowCannySlider->value()/255.);
+    auto im = cannyEdgeDetector(grayImage, ui->sigmaCannySlider->value() / 10., val / 255.,
+                                ui->thLowCannySlider->value() / 255.);
     displayGrayscaleImage(&im, ui->outputImageLabel);
 }
 
 void MainWindow::on_thLowCannySlider_valueChanged(int val) {
-    ui->thLowCannyValLabel->setNum((int)(val / 255. * 100));
+    ui->thLowCannyValLabel->setNum((int) (val / 255. * 100));
     auto grayImage = Image(inputImage);
-    auto im = cannyEdgeDetector(grayImage, ui->sigmaCannySlider->value()/10.,ui->thHighCannySlider->value()/255. , val / 255.);
+    auto im = cannyEdgeDetector(grayImage, ui->sigmaCannySlider->value() / 10., ui->thHighCannySlider->value() / 255.,
+                                val / 255.);
     displayGrayscaleImage(&im, ui->outputImageLabel);
 }
+
 void MainWindow::on_sigmaCannySlider_valueChanged(int val) {
-    ui->sigmaCannyValLabel->setNum(val/10.);
+    ui->sigmaCannyValLabel->setNum(val / 10.);
     auto grayImage = Image(inputImage);
-    auto im = cannyEdgeDetector(grayImage, val/10, ui->thHighCannySlider->value()/255., ui->thLowCannySlider->value()/255.);
+    auto im = cannyEdgeDetector(grayImage, val / 10, ui->thHighCannySlider->value() / 255.,
+                                ui->thLowCannySlider->value() / 255.);
     displayGrayscaleImage(&im, ui->outputImageLabel);
 }
 

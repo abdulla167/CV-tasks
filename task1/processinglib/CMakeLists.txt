@@ -1,7 +1,9 @@
 include(export_header.cmake)
 SET(LIB_NAME processinglib)
 include_directories(include/processinglib)
-add_library(${LIB_NAME} src/Image.cpp src/filters.cpp src/utilities.cpp src/histogram.cpp src/fourier_transform.cpp src/canny.cpp include/processinglib/greedy_snake.h src/greedy_snake.cpp)
+
+add_library(${LIB_NAME} src/Image.cpp src/filters.cpp src/utilities.cpp src/histogram.cpp src/fourier_transform.cpp src/canny.cpp src/hough.cpp src/greedy_snake.cpp)
+
 find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
 find_library(FFTW NAMES libfftw3.so.3) # kimo

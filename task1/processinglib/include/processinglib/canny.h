@@ -11,6 +11,6 @@ Image cannyNonMaxSuppression(Image &mag, Image& dir);
 
 Image cannyEdgeDetector(Image &image, float sigma = 3, float thHigh = 0.5, float thLow=0.05);
 
-Image edgeLink(int tHigh, int tLow, Image& image);
+Image cannyEdgeLink(int tHigh, int tLow, Image& image);
 
 #endif //CV_CANNY_H
