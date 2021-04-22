@@ -4,7 +4,7 @@
 
 #include "processinglib/fourier_transform.h"
 #include "processinglib/utilities.h"
-#include "fftw3.h"
+#include <fftw3.h>
 #include <cmath>
 #include <complex>
 

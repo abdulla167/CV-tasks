@@ -137,7 +137,7 @@ Image localThresholding(Image &inputImg, float k, int r, int dim) {
             for (int z = 0; z < inputImg.channels; z++) {
                 mean = 0, std = 0;
                 sauvolaTechnique(inputImg, x, y, dim, mean, std);
-                int threshold = mean * (1 + (k * ((std / r) - 1)));
+                int threshold = mean + (k * ((std / r) - 1));
                 if (inputImg(y, x, z) >= threshold) {
                     outputImg(y, x, z) = 255;
                 } else {

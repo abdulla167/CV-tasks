@@ -15,7 +15,9 @@ HoughLineTransformData houghLineTransform(Image &bw, float thetaStep, float rohS
     Image houghImg{width, halfHeight * 2, 1};
     float roh = 0, theta;
     std::vector<double> thetaV;
+    thetaV.reserve(width);
     std::vector<double> rohV;
+    rohV.reserve(halfHeight * 2);
     for (int iTheta = 0; iTheta < houghImg.width; ++iTheta) {
         theta = (-90 + iTheta * thetaStep) * M_PI / 180;
         thetaV.push_back(theta);
@@ -96,15 +98,15 @@ houghLines(Image &bw, std::vector<_Point> &peaks, std::vector<double> &thetaV, s
     for (auto &peak: peaks) {
         theta = thetaV[peak.x];
         roh = rohV[peak.y];
-        fullLines.push_back(std::vector<_Point>{});
+        fullLines.emplace_back(std::vector<_Point>{});
         for (int i = 0; i < bw.height; ++i) {
             for (int j = 0; j < bw.width; ++j) {
                 if ((int) roh == (int) ((j) * cos(theta) + (i) * sin(theta))) {
-                    fullLines.back().push_back(_Point(j, i));
+                    fullLines.back().emplace_back(j, i);
                 }
             }
         }
-        partialLines.push_back(std::vector<_Point>{});
+        partialLines.emplace_back(std::vector<_Point>{});
         partialLine(bw, fullLines, partialLines, maxGap);
     }
 
@@ -152,7 +154,8 @@ int accumulate(int yCenter, int xCenter, int roh, Image &bw, std::vector<Circle>
     }
     for (int i = iStart; i < iEnd; ++i) {
         for (int j = jStart; j < jEnd; ++j) {
-            if ((roh * roh) == ((xCenter - j) * (xCenter - j) + (yCenter - i) * (yCenter - i))) {
+            if ((roh * roh) > ((xCenter - j) * (xCenter - j) + (yCenter - i) * (yCenter - i)) &&
+                ((roh-1) * (roh-1)) < ((xCenter - j) * (xCenter - j) + (yCenter - i) * (yCenter - i))) {
                 accV[j + i * bw.width].first++;
                 accV[j + i * bw.width].second.radius = roh;
                 accV[j + i * bw.width].second.xCenter = j;

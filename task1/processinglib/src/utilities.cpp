@@ -237,7 +237,7 @@ void sauvolaTechnique(Image &inputImg, int x, int y, int filterDim, double &mean
             std += pow(inputImg(i + startY, j + startX) - mean, 2);
         }
     }
-    std = sqrt(std / N);
+    std = sqrt(std / (N - 1));
 }
 
 int otsuAlgorithm(Image &inputImg, int histSize) {
@@ -245,13 +245,13 @@ int otsuAlgorithm(Image &inputImg, int histSize) {
     double normalizedHist[256];
     int pixelsNo = inputImg.width * inputImg.height;
     int threshold = 0;
-    double allProbabilitySum = 0, firstProbabilitySum = 0;
+    double globalMean = 0, firstProbabilitySum = 0;
     double firstClassProbability = 0, secondClassProbability = 0, firstClassMean = 0, secondClassMean = 0;
     double variance = 0, maxVariance = 0;
     im_hist(inputImg, hist, 1);
     getNormalizedHist(hist, normalizedHist, histSize, pixelsNo);
     for (int i = 0; i < 256; i++) {
-        allProbabilitySum += i * normalizedHist[i];
+        globalMean += i * normalizedHist[i];
     }
     for (int t = 0; t < 256; t++) {
         firstClassProbability += normalizedHist[t];
@@ -260,7 +260,7 @@ int otsuAlgorithm(Image &inputImg, int histSize) {
         secondClassProbability = 1 - firstClassProbability;
         firstProbabilitySum += t * normalizedHist[t];
         firstClassMean = (double) firstProbabilitySum / (double) firstClassProbability;
-        secondClassMean = (double) (allProbabilitySum - firstProbabilitySum) / (double) secondClassProbability;
+        secondClassMean = (double) (globalMean - firstProbabilitySum) / (double) secondClassProbability;
         variance = firstClassProbability * secondClassProbability * pow((firstClassMean - secondClassMean), 2);
         if (variance > maxVariance) {
             threshold = t;

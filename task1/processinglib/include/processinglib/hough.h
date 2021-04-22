@@ -24,7 +24,8 @@ struct HoughLineTransformData {
 
 struct _Point {
     int x, y;
-    _Point(){}
+
+    _Point() {}
 
     _Point(int x, int y) : x{x}, y{y} {}
 };
@@ -55,7 +56,7 @@ std::vector<_Point> linePeaks(Image &houghImage, int peaksNum = 1);
 
 
 std::vector<std::vector<_Point>>
-houghLines(Image &bw, std::vector<_Point> &peaks, std::vector<double>& thetaV, std::vector<double>& rohV,
+houghLines(Image &bw, std::vector<_Point> &peaks, std::vector<double> &thetaV, std::vector<double> &rohV,
            int maxGap);
 
 Image drawLines(std::vector<std::vector<_Point>> &lines, Image &origin, Image &bw);

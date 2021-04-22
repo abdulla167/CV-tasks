@@ -118,7 +118,7 @@ void MainWindow::on_filterSelect_currentIndexChanged(QString filterName) {
         // circles-image -> thLow = 0.10
 
         auto range = std::pair<int, int>(20, 100);
-        auto circles = houghCircles(cannyImage, range, 1);
+        auto circles = houghCircles(cannyImage, range, 50);
 //        auto houghImages = houghCircleTransform(cannyImage, range);
 //        auto peaks = circlePeaks(houghImages, 1);
 //        auto circles = houghCircles(input, cannyImage, peaks,range);

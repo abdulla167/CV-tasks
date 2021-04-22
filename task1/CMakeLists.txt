@@ -11,8 +11,6 @@ set(QT_VERSION 5)
 set(REQUIRED_LIBS Core Gui Widgets Charts)
 set(REQUIRED_LIBS_QUALIFIED Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Charts)
 
-include_directories(plotlib)
-
 add_executable(${PROJECT_NAME} main.cpp  MainWindow.cpp MainWindow.h MainWindow.ui Pages/FiltersPage.cpp Pages/HistogramPage.cpp Pages/HybridPage.cpp Pages/FreqPage.cpp Pages/SnakePage.cpp)
 if (NOT CMAKE_PREFIX_PATH)
     message(WARNING "CMAKE_PREFIX_PATH is not defined, you may need to set it "
@@ -20,6 +18,7 @@ if (NOT CMAKE_PREFIX_PATH)
 endif ()
 find_package(Qt${QT_VERSION} COMPONENTS ${REQUIRED_LIBS} REQUIRED)
 add_subdirectory(processinglib)
+
 add_subdirectory(plotlib)
 target_link_libraries(${PROJECT_NAME} processinglib plotlib)
 target_link_libraries(${PROJECT_NAME}  ${REQUIRED_LIBS_QUALIFIED})

@@ -1,4 +1,3 @@
-include(export_header.cmake)
 SET(LIB_NAME processinglib)
 include_directories(include/processinglib)
 
@@ -6,7 +5,6 @@ add_library(${LIB_NAME} src/Image.cpp src/filters.cpp src/utilities.cpp src/hist
 
 find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
-find_library(FFTW NAMES libfftw3.so.3) # kimo
-#find_library(FFTW NAMES libfftw3.a)
+find_library(FFTW NAMES libfftw3.so.3 libfftw3.a REQUIRED)
 target_link_libraries(${LIB_NAME} ${OpenCV_LIBS} ${FFTW})
 target_include_directories(${LIB_NAME} PUBLIC include)

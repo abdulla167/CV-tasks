@@ -1,5 +1,5 @@
 //
-// Created by mohamedkamal on ١٤‏/٤‏/٢٠٢١.
+// Created by mohamedkamal on ١٤/٤/٢٠٢١.
 //
 #include "greedy_snake.h"
 #include <cmath>
