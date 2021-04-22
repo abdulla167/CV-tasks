@@ -18,9 +18,9 @@ void MainWindow::on_start_clicked(){
         int blurred = ui->checkBlurr->isChecked();
 
         for (int count = 0; count < (8 - blurred * 7); count++) {
-            for (int k = 0; k < 4; k++) {
-                for (int j = 0; j < 5 - k; j++) {
-                    float alpha = 1.5, beta = 1.7, gamma = 2.5, sigma = 9 - 2 * j - 2 * k - 2 * blurred, maxIt = 200;
+            for (int k = 0; k < 4 - 2*blurred; k++) {
+                for (int j = 0; j < 5 - k ; j++) {
+                    float alpha = 1.5, beta = 1.7, gamma = 2.5, sigma = 9 - 2 * j - 2 * k - 2 * blurred, maxIt = 30;
 
                     for (int i = 0; i < 5 - j - k - blurred; i++) {
                         Image image = snakeImage->toGrayscale();

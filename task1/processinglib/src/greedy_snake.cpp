@@ -8,7 +8,6 @@
 #include "iostream"
 using namespace std;
 int pointsCount = 70;
-bool stop_it[70] = {false};
 void currentPrevNextPointIndex(int iteration , int numberOfPoints, int * pointsIndexArray) {
     int prevIndex = iteration - 1;
     int nextIndex = iteration + 1;
@@ -31,7 +30,7 @@ double averageDistance(int* arrayOfPointsX , int* arrayOfPointsY  , int numberOf
         if ( i == (numberOfPOints - 1)){
             nextIndex = 0;
         }
-        sum += diatance(arrayOfPointsX[i], arrayOfPointsY[i], arrayOfPointsX[nextIndex], arrayOfPointsY[nextIndex]);
+        sum += distance(arrayOfPointsX[i], arrayOfPointsY[i], arrayOfPointsX[nextIndex], arrayOfPointsY[nextIndex]);
     }
     return sum/numberOfPOints;
 }
@@ -41,7 +40,7 @@ Image imageEnergy(Image &image, char dim,float  mean,float sima) {
     return sobelEdgeDetector(gausImage);
 }
 
-double diatance(int x1, int y1, int x2, int y2){
+double distance(int x1, int y1, int x2, int y2){
     double temp = pow((double )(x1 - x2),2) + pow((double )(y1 - y2),2);
    return sqrt(temp);
 }
@@ -78,11 +77,9 @@ void greedySnake(Image&image,int iteration, int numberOfPoints, int* arrayOfPoin
     };
     for (int i = 0; i<numberOfPoints;i++){
         arrayOfAlpha[i] = alpha;
-        if(stop_it[i] == false) {
+
             arrayOfBeta[i] = beta;
-        }else{
-            arrayOfBeta[i] = 0;
-        }
+
         arrayOfgamma[i] = gamma;
 
     }
@@ -102,11 +99,11 @@ void greedySnake(Image&image,int iteration, int numberOfPoints, int* arrayOfPoin
                 double temp = 0;
                 x = arrayOfPointsX[i] + neighbourCoordinate[j][0];
                 y = arrayOfPointsY[i] + neighbourCoordinate[j][1];
-                temp = diatance(x, y, arrayOfPointsX[pointIndexArray[1]], arrayOfPointsY[pointIndexArray[1]]);
+                temp = distance(x, y, arrayOfPointsX[pointIndexArray[1]], arrayOfPointsY[pointIndexArray[1]]);
                 energyCountinuty[j] = abs(avgDist - temp);
-                temp =  diatance(arrayOfPointsX[pointIndexArray[1]] + arrayOfPointsX[pointIndexArray[2]],
-                                            arrayOfPointsY[pointIndexArray[1]] + arrayOfPointsY[pointIndexArray[2]],
-                                            2*x, 2*y);
+                temp = distance(arrayOfPointsX[pointIndexArray[1]] + arrayOfPointsX[pointIndexArray[2]],
+                                arrayOfPointsY[pointIndexArray[1]] + arrayOfPointsY[pointIndexArray[2]],
+                                2 * x, 2 * y);
                 energyCurvature[j] = pow(temp,2);
                 energyImage[j] = energyOfImage(y,x );
             }
@@ -126,9 +123,7 @@ void greedySnake(Image&image,int iteration, int numberOfPoints, int* arrayOfPoin
                 energyCountinuty[k] = energyCountinuty[k]/maxcountinuty;
                 energyImage[k] = (minImage - energyImage[k])/(maxImage - minImage);
                 float beta = arrayOfBeta[i];
-//                if (stop_it[i] == true){
-//                    beta = 0;
-//                }
+
                 eSnake[k] = energyCountinuty[k]*arrayOfAlpha[i] + energyCurvature[k]*beta + energyImage[k]*arrayOfgamma[i] ;
                 if (k>0) {
                     if (eSnake[k] < minSnake){
@@ -160,7 +155,7 @@ void greedySnake(Image&image,int iteration, int numberOfPoints, int* arrayOfPoin
 
             float norm = sqrt(pow((double )uX,2)+ pow((double)uY,2));
             float norm1 = sqrt(pow((double )uX1,2)+ pow((double)uY1,2));
-            pointsCurvature[i] = pow(diatance(uX/norm, uY/norm, uX1/norm1, uY1/norm1),2);
+            pointsCurvature[i] = pow(distance(uX / norm, uY / norm, uX1 / norm1, uY1 / norm1), 2);
         }
         // iterate over snake points to find where to relax beta
         for (int i=0; i<numberOfPoints; i++) {
@@ -173,11 +168,8 @@ void greedySnake(Image&image,int iteration, int numberOfPoints, int* arrayOfPoin
                 pointsImageEnergy[i]> imgEnergyThreshold &&
                 arrayOfBeta[i]!=0){
                 arrayOfBeta[i] = 0;
-                stop_it[i] = true;
             }
-//            if( pointsImageEnergy[i]> imgEnergyThreshold ){
-//                stop_it[i] = true;
-//            }
+
         }
         counter++;
         if (counter == iteration || countMovedPoints <3)

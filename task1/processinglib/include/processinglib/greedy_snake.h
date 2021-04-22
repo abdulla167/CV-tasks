@@ -11,5 +11,5 @@
 void currentPrevNextPointIndex(int iteration , int numberOfPoints, int * pointsIndexArray);
 double averageDistance(int* arrayOfPointsX , int* arrayOfPointsY , int numberOfPOints);
 Image imageEnergy(Image &image, char dim,float  mean =0,float sima=3);
-double diatance(int x1, int y1, int x2, int y2);
+double distance(int x1, int y1, int x2, int y2);
 void greedySnake(Image&image,int iteration, int numberOfPoints, int* arrayOfPointsX, int* arrayOfPointsY, float sigma, float alpha, float beta, float gamma);
