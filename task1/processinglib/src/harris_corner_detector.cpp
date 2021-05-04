@@ -132,7 +132,7 @@ std::vector<std::vector<double>> getSIFTDescriptor(Image &inputImg) {
             }
             for (int i = -8; i < 8; i += 4) {
                 for (int j = -8; j < 8; j += 4) {
-                    gradHistogram(directions, magnitude, {i, i + 4}, {j, j + 4}, features.back());
+                    gradHistogram(directions, magnitude, {point.y + i, point.y + i + 4}, {point.x +j, point.x +j + 4}, features.back());
                 }
             }
             // remove guessing multiplication
