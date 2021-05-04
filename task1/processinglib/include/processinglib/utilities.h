@@ -25,6 +25,8 @@ void arrayToScale(double *data, int size);
 
 void arrayToScale(float *data, int size);
 
+double imageMax(Image& img);
+
 Image saltPepper(Image & image, int count, int pixelSize);
 
 Image minMaxNormalize(Image & image);

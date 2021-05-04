@@ -17,6 +17,8 @@ public:
 
     Image(const Image* image);
 
+    Image();
+
     Image(std::string filename, int num_channels = 1);
 
     Image(const Image &image);

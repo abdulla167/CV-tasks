@@ -9,6 +9,7 @@
 #include "processinglib/canny.h"
 #include "processinglib/hough.h"
 #include <iostream>
+#include "processinglib/harris_corner_detector.h"
 
 void MainWindow::on_loadImageBtn_clicked() {
     QString filePath = QFileDialog::getOpenFileName(this, "load image", "../");
@@ -104,19 +105,16 @@ void MainWindow::on_filterSelect_currentIndexChanged(QString filterName) {
         auto cannyImage = cannyEdgeDetector(grayImage, 3, 0.5, 0.1);
         // house -> thLow= 0.1, maxGap =7
         // forest -> thLow=0.16, sigma = 2.7, maxGap=1
-
         auto houghData = houghLineTransform(cannyImage, 1, 1);
         auto ps = linePeaks(houghData.houghImage, 200);
         auto lines = houghLines(cannyImage, ps, houghData.theta, houghData.roh, 7);
         auto image = drawLines(lines, input, cannyImage);
-        displayRGBImage(&image, ui->outputImageLabel);
-
+        displayRGBImage(&input, ui->outputImageLabel);
     } else if (filterName == "Hough Circles") {
         auto grayImage = inputImage->toGrayscale();
         auto input = Image(inputImage);
         auto cannyImage = cannyEdgeDetector(grayImage, 3, 0.5, 0.1);
         // circles-image -> thLow = 0.10
-
         auto range = std::pair<int, int>(20, 100);
         auto circles = houghCircles(cannyImage, range, 50);
 //        auto houghImages = houghCircleTransform(cannyImage, range);
@@ -125,6 +123,19 @@ void MainWindow::on_filterSelect_currentIndexChanged(QString filterName) {
         auto image = drawCircles(circles, input, cannyImage);
         displayRGBImage(&image, ui->outputImageLabel);
 //        delete houghImages;
+    }else if(filterName == "Harris Corner"){
+        auto grayImage = inputImage->toGrayscale();
+        Image colorImg{grayImage.width, grayImage.height, 3};
+        for (int y =0 ; y < grayImage.height; y++){
+            for (int x=0; x < grayImage.width; x++){
+                for (int z=0; z < 3; z++){
+                    colorImg(y, x, z) = grayImage(y, x);
+                }
+            }
+        }
+        std::vector<_Point> corners = cornerHarris(grayImage, 0.8, 3);
+        drawCornerPoints(colorImg, corners);
+        displayRGBImage(&colorImg, ui->outputImageLabel);
     }
 }
 
