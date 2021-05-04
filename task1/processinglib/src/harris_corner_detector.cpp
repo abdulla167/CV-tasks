@@ -90,7 +90,7 @@ void gradHistogram(Image &dir, Image &magnitude, std::pair<int, int> iRange, std
     for (int i = iRange.first; i < iRange.second; ++i) {
         for (int j = iRange.first; j < jRange.second; ++j) {
             index = dir(i, j) > 0 ? dir(i, j) / step : (dir(i, j) + 360) / step;
-            hist[index] += magnitude(i, j);
+            hist[index] += 1 * magnitude(i, j);
         }
     }
     for (double &i : hist) {
@@ -143,9 +143,9 @@ std::vector<std::vector<double>> getSIFTDescriptor(Image &inputImg) {
                 }
             }
         }
-        for (auto &featureV: features) {
-            normalize(featureV);
-        }
+    }
+    for (auto &featureV: features) {
+        normalize(featureV);
     }
     return features;
 }
