@@ -12,6 +12,8 @@
 
 #include "processinglib/stb_image_write.h"
 
+Image::Image() {};
+
 Image::Image(int width, int height, int channel) : width{width}, height{height}, channels{channel}, data{nullptr} {
     data = new float[height * width * channels];
     init(0.0);

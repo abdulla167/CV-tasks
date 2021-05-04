@@ -70,10 +70,11 @@ Image sobelEdgeDetector(Image &inputImg) {
             1, 2, 1,
             0, 0, 0,
             -1, -2, -1};
-    Image imgX = applyFilter(inputImg, xFilter, 3);
-    Image imgY = applyFilter(inputImg, yFilter, 3);
-    return getMagnitude(imgX, imgY);
+    Image Ix = applyFilter(inputImg, xFilter, 3);
+    Image Iy = applyFilter(inputImg, yFilter, 3);
+    return getMagnitude(Ix, Iy);
 }
+
 
 Image robertsEdgeDetector(Image &inputImg) {
     Image outputImg{inputImg.width, inputImg.height, inputImg.channels};

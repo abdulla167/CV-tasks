@@ -186,6 +186,17 @@ Image minMaxNormalize(Image &image) {
     return normalizedImage;
 }
 
+double imageMax(Image & img){
+    double max = 0;
+    for (int i = 0; i < img.height; ++i) {
+        for (int j = 0; j < img.width; ++j) {
+            if (img(i, j) > max)
+                max = img(i, j);
+        }
+    }
+    return max;
+}
+
 int approximateAngle(float x, float y) {
     auto angle = atan(y / x) * (180 / 3.14159265);
     if (angle > -22.5 && angle <= 22.5) {
