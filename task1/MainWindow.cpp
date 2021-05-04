@@ -6,11 +6,9 @@
 #include <QGraphicsPixmapItem>
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
-#include <QtCharts>
 #include <QChart>
 #include <QChartView>
 #include <QLineSeries>
-#include <zconf.h>
 
 MainWindow::MainWindow(QWidget *parent) :
         QMainWindow(parent), ui(new Ui::MainWindow) {
@@ -19,8 +17,8 @@ MainWindow::MainWindow(QWidget *parent) :
     points = ui->snake->addGraph();
     ui->snake->xAxis->setVisible(false);
     ui->snake->yAxis->setVisible(false);
-    ui->snake->xAxis->setRange(0.0,5.0);
-    ui->snake->yAxis->setRange(0.0,5.0);
+    ui->snake->xAxis->setRange(0.0, 5.0);
+    ui->snake->yAxis->setRange(0.0, 5.0);
     ui->snake->setAutoFillBackground(true);
     ui->snake->replot();
     ui->snake->installEventFilter(this);
@@ -65,38 +63,40 @@ void MainWindow::displayGrayscaleImage(Image *image, QLabel *label) {
     label->clear();
     label->setPixmap(QPixmap::fromImage(qImage).scaled(width, height));
 }
-bool MainWindow::eventFilter(QObject *obj, QEvent *event)
-{
 
-    if (obj == ui->snake && snakeImage!= nullptr)
-    {
+bool MainWindow::eventFilter(QObject *obj, QEvent *event) {
+
+    if (obj == ui->snake && snakeImage != nullptr) {
         if (event->type() == QEvent::MouseButtonPress) {
             QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
 
-            int  x = ceil(((float )mouseEvent->x() / ui->snake->background().rect().width() )* snakeImage->width );
-            int y = ceil(((float )mouseEvent->y() / ui->snake->background().rect().height() )* snakeImage->height); //qDebug()
-            if (centerX == 0){
+            int x = ceil(((float) mouseEvent->x() / ui->snake->background().rect().width()) * snakeImage->width);
+            int y = ceil(((float) mouseEvent->y() / ui->snake->background().rect().height()) *
+                         snakeImage->height); //qDebug()
+            if (centerX == 0) {
                 centerX = x;
                 centerY = y;
-            }else if (raduis == 0){
-                raduis = sqrt(pow(x-centerX,2) + pow(y-centerY,2));
+            } else if (raduis == 0) {
+                raduis = sqrt(pow(x - centerX, 2) + pow(y - centerY, 2));
 
             }
 
 
-            if (raduis!=0) {
+            if (raduis != 0) {
                 qDebug() << "start drawing";
-                float step =  2 *3.14 /pointsCount;
-                for (int i =0 ; i<pointsCount ; i++){
-                    arrayOfPointsX[i]= centerX + cos(step*i)*raduis;
-                    arrayOfPointsY[i]= centerY + sin(step*i)*raduis;
-                    int xCoordinate = ceil((arrayOfPointsX[i]/(float )snakeImage->width)*ui->snake->background().rect().width());
-                    int yCoordinate = ceil((arrayOfPointsY[i]/(float )snakeImage->height)*ui->snake->background().rect().height());
-                    xData->append(ui->snake->xAxis->pixelToCoord( xCoordinate) );
-                    yData->append(ui->snake->yAxis->pixelToCoord( yCoordinate) );
+                float step = 2 * 3.14 / pointsCount;
+                for (int i = 0; i < pointsCount; i++) {
+                    arrayOfPointsX[i] = centerX + cos(step * i) * raduis;
+                    arrayOfPointsY[i] = centerY + sin(step * i) * raduis;
+                    int xCoordinate = ceil(
+                            (arrayOfPointsX[i] / (float) snakeImage->width) * ui->snake->background().rect().width());
+                    int yCoordinate = ceil(
+                            (arrayOfPointsY[i] / (float) snakeImage->height) * ui->snake->background().rect().height());
+                    xData->append(ui->snake->xAxis->pixelToCoord(xCoordinate));
+                    yData->append(ui->snake->yAxis->pixelToCoord(yCoordinate));
                 }
                 qDebug() << "start drawing";
-                points->setData(*xData,*yData);
+                points->setData(*xData, *yData);
                 qDebug() << "start drawing";
                 points->setLineStyle((QCPGraph::LineStyle) QCPGraph::lsNone);
                 points->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssDisc, 3));
@@ -108,8 +108,9 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
             return QObject::eventFilter(obj, event);
         }
     }
-    return QObject::eventFilter(obj,event);
+    return QObject::eventFilter(obj, event);
 }
+
 MainWindow::~MainWindow() {
     delete ui;
     delete inputImage;

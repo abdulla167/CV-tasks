@@ -5,7 +5,7 @@
 #include <cmath>
 #include "algorithm"
 #include "filters.h"
-#include "iostream"
+
 using namespace std;
 int pointsCount = 70;
 void currentPrevNextPointIndex(int iteration , int numberOfPoints, int * pointsIndexArray) {

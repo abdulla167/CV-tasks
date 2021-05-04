@@ -47,15 +47,9 @@ public:
 
     ~Image();
 
-    float &operator[](int index);
-
     float &operator[](int index) const;
 
-    float &operator()(int i, int j);
-
     float &operator()(int i, int j) const;
-
-    float &operator()(int i, int j, int k);
 
     float &operator()(int i, int j, int k) const;
 

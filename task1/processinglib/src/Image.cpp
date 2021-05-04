@@ -140,20 +140,11 @@ void Image::saveJPG(std::string filename) {
     free(data_out);
 }
 
-float &Image::operator[](int index) {
-    return data[index];
-}
 
 float &Image::operator[](int index) const {
     return data[index];
 }
 
-
-float &Image::operator()(int i, int j) {
-    if (channels > 1)
-        throw "Image is three channels";
-    return data[i * width + j];
-}
 
 float &Image::operator()(int i, int j) const {
     if (channels > 1)
@@ -161,11 +152,6 @@ float &Image::operator()(int i, int j) const {
     return data[i * width + j];
 }
 
-float &Image::operator()(int i, int j, int k) {
-    if (channels == 1 && k > 0)
-        throw "Image is one channel";
-    return data[k * height * width + i * width + j];
-}
 
 float &Image::operator()(int i, int j, int k) const {
     if (channels == 1 && k > 0)
