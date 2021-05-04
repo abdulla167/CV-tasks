@@ -133,7 +133,7 @@ void MainWindow::on_filterSelect_currentIndexChanged(QString filterName) {
                 }
             }
         }
-        std::vector<_Point> corners = cornerHarris(grayImage, 0.8, 3);
+        std::vector<_Point> corners = cornerHarris(grayImage, 0.01, 3);
         drawCornerPoints(colorImg, corners);
         displayRGBImage(&colorImg, ui->outputImageLabel);
     }

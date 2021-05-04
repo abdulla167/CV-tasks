@@ -256,6 +256,11 @@
               <string>Hough Circles</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>Harris Corner</string>
+             </property>
+            </item>
            </widget>
           </item>
          </layout>

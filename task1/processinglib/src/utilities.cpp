@@ -186,7 +186,7 @@ Image minMaxNormalize(Image &image) {
     return normalizedImage;
 }
 
-double imageMax(Image & img){
+double imageMax(Image &img) {
     double max = 0;
     for (int i = 0; i < img.height; ++i) {
         for (int j = 0; j < img.width; ++j) {
@@ -197,8 +197,7 @@ double imageMax(Image & img){
     return max;
 }
 
-int approximateAngle(float x, float y) {
-    auto angle = atan(y / x) * (180 / 3.14159265);
+int approximateAngle(float angle) {
     if (angle > -22.5 && angle <= 22.5) {
         return 0;
     } else if (angle > 22.5 && angle <= 67.5) {
@@ -221,11 +220,13 @@ Image getMagnitude(Image &imgX, Image &imgY) {
     return outImage;
 }
 
-Image getDirection(Image &imgX, Image &imgY) {
+Image getDirection(Image &imgX, Image &imgY, bool approximateFour) {
     Image outImage{imgX.width, imgX.height, 1};
+    float angel = 0;
     for (int i = 0; i < imgX.height; ++i) {
         for (int j = 0; j < imgX.width; ++j) {
-            outImage(i, j) = approximateAngle(imgX(i, j), imgY(i, j));
+            angel = atan(imgX(i, j) / imgY(i, j)) * (180 / 3.14159265);
+            outImage(i, j) = approximateFour ? approximateAngle(angel) : angel;
         }
     }
     return outImage;
