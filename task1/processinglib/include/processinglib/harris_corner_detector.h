@@ -11,5 +11,5 @@ std::vector<_Point> cornerHarris(Image& grayImg, double threshold, int patchDim)
 
 void drawCornerPoints(Image& img, std::vector<_Point>& cornerPoints);
 
-std::vector<std::vector<double>> getSIFTDescriptor(Image& inputImg);
+std::vector<std::pair<std::vector<double>, _Point>> getSIFTDescriptor(Image& inputImg);
 #endif //CV_HARRIS_CORNER_DETECTOR_H

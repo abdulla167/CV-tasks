@@ -139,8 +139,8 @@ getMainOrientation(Image &dir, Image &magnitude, std::pair<int, int> iRange, std
     return orientations;
 }
 
-std::vector<std::vector<double>> getSIFTDescriptor(Image &inputImg) {
-    std::vector<std::vector<double>> features;
+std::vector<std::pair<std::vector<double>, _Point>> getSIFTDescriptor(Image &inputImg) {
+    std::vector<std::pair<std::vector<double>, _Point>> features;
     auto cornerPoints = cornerHarris(inputImg, 0.01);
     float xFilter[9] = {-1, 0, 1, -2, 0, 2, -1, 0, 1};
     float yFilter[9] = {1, 2, 1, 0, 0, 0, -1, -2, -1};
@@ -171,7 +171,7 @@ std::vector<std::vector<double>> getSIFTDescriptor(Image &inputImg) {
                 }
             }
             for (auto &orientation: orientations) {
-                features.emplace_back(128);
+                features.emplace_back(std::vector<double>(128), point);
                 // multiply by Gaussian
                 for (int i = -8; i < 8; i++) {
                     for (int j = -8; j < 8; j++) {
@@ -183,7 +183,7 @@ std::vector<std::vector<double>> getSIFTDescriptor(Image &inputImg) {
                     for (int j = -8; j < 8; j += 4) {
                         featureHistogram(directions, magnitude,orientation , {point.y + i, point.y + i + 4},
                                          {point.x + j, point.x + j + 4},
-                                         features.back());
+                                         features.back().first);
                     }
                 }
                 // remove guessing multiplication
