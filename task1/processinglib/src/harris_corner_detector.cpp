@@ -82,14 +82,18 @@ void drawCornerPoints(Image &img, std::vector<_Point> &cornerPoints) {
     }
 }
 
-void gradHistogram(Image &dir, Image &magnitude, std::pair<int, int> iRange, std::pair<int, int> jRange,
-                   std::vector<double> &v) {
+void featureHistogram(Image &dir, Image &magnitude, double mainOrientation, std::pair<int, int> iRange, std::pair<int, int> jRange,
+                      std::vector<double> &v) {
     double hist[8] = {0};
     double step = 180 / 4;
     int index = 0;
+    double absoluteDir = 0,relativeDir = 0;
     for (int i = iRange.first; i < iRange.second; ++i) {
         for (int j = iRange.first; j < jRange.second; ++j) {
-            index = dir(i, j) > 0 ? dir(i, j) / step : (dir(i, j) + 360) / step;
+            absoluteDir = dir(i, j) > 0 ? dir(i, j): (dir(i, j) + 360);
+            mainOrientation = mainOrientation - 90 > 0 ? mainOrientation - 90 : mainOrientation - 90 + 360;
+            relativeDir = absoluteDir > mainOrientation ? absoluteDir - mainOrientation : 360 - (absoluteDir - mainOrientation);
+            index = relativeDir / step;
             hist[index] += 1 * magnitude(i, j);
         }
     }
@@ -109,37 +113,85 @@ void normalize(std::vector<double> &vector) {
     }
 }
 
+std::vector<double>
+getMainOrientation(Image &dir, Image &magnitude, std::pair<int, int> iRange, std::pair<int, int> jRange) {
+    std::vector<double> orientations;
+    double orientationHistogram[36] = {0};
+    float step = 360 / 36;
+    int index = 0;
+    for (int i = iRange.first; i < iRange.second; ++i) {
+        for (int j = iRange.first; j < jRange.second; ++j) {
+            index = dir(i, j) > 0 ? dir(i, j) / step : (dir(i, j) + 360) / step;
+            orientationHistogram[index] += 1 * magnitude(i, j);
+        }
+    }
+    double max = 0;
+    for (double &val: orientationHistogram) {
+        if (val > max) {
+            max = val;
+        }
+    }
+    for (int i = 0; i < 36; i++) {
+        if (orientationHistogram[i] > 0.8 * max) {
+            orientations.push_back(i * step + step / 2);
+        }
+    }
+    return orientations;
+}
+
 std::vector<std::vector<double>> getSIFTDescriptor(Image &inputImg) {
     std::vector<std::vector<double>> features;
     auto cornerPoints = cornerHarris(inputImg, 0.01);
     float xFilter[9] = {-1, 0, 1, -2, 0, 2, -1, 0, 1};
     float yFilter[9] = {1, 2, 1, 0, 0, 0, -1, -2, -1};
-    float kernel[16 * 16] = {0};
-    gaussianGeneration(kernel, 16, 1.5, 1);
+    float kernel16[16 * 16] = {0};
+    float kernel4[4 * 4] = {0};
+    gaussianGeneration(kernel16, 16, 1.5, 1);
+    gaussianGeneration(kernel4, 4, 1.5, 0);
     Image Ix = applyFilter(inputImg, xFilter, 3);
     Image Iy = applyFilter(inputImg, yFilter, 3);
     auto magnitude = getMagnitude(Ix, Iy);
     auto directions = getDirection(Ix, Iy, false);
     for (auto &point: cornerPoints) {
         if (!(point.x - 8 < 0 || point.x + 7 > magnitude.width || point.y - 8 < 0 || point.y + 7 > magnitude.height)) {
-            features.emplace_back(128);
             // multiply by Gaussian
-            for (int i = -8; i < 8; i++) {
-                for (int j = -8; j < 8; j++) {
+            for (int i = -2; i < 2; i++) {
+                for (int j = -2; j < 2; j++) {
                     magnitude(point.y + i, point.x + j) =
-                            magnitude(point.y + i, point.x + j) * kernel[(j + 8) + (i + 8) * 16];
+                            magnitude(point.y + i, point.x + j) * kernel4[(j + 2) + (i + 2) * 4];
                 }
             }
-            for (int i = -8; i < 8; i += 4) {
-                for (int j = -8; j < 8; j += 4) {
-                    gradHistogram(directions, magnitude, {point.y + i, point.y + i + 4}, {point.x +j, point.x +j + 4}, features.back());
-                }
-            }
+            auto orientations = getMainOrientation(directions, magnitude, {point.y - 2, point.y + 2},
+                                                   {point.x - 2, point.x + 2});
             // remove guessing multiplication
-            for (int i = -8; i < 8; i++) {
-                for (int j = -8; j < 8; j++) {
+            for (int i = -2; i < 2; i++) {
+                for (int j = -2; j < 2; j++) {
                     magnitude(point.y + i, point.x + j) =
-                            magnitude(point.y + i, point.x + j) / kernel[(j + 8) + (i + 8) * 16];
+                            magnitude(point.y + i, point.x + j) / kernel4[(j + 2) + (i + 2) * 4];
+                }
+            }
+            for (auto &orientation: orientations) {
+                features.emplace_back(128);
+                // multiply by Gaussian
+                for (int i = -8; i < 8; i++) {
+                    for (int j = -8; j < 8; j++) {
+                        magnitude(point.y + i, point.x + j) =
+                                magnitude(point.y + i, point.x + j) * kernel16[(j + 8) + (i + 8) * 16];
+                    }
+                }
+                for (int i = -8; i < 8; i += 4) {
+                    for (int j = -8; j < 8; j += 4) {
+                        featureHistogram(directions, magnitude,orientation , {point.y + i, point.y + i + 4},
+                                         {point.x + j, point.x + j + 4},
+                                         features.back());
+                    }
+                }
+                // remove guessing multiplication
+                for (int i = -8; i < 8; i++) {
+                    for (int j = -8; j < 8; j++) {
+                        magnitude(point.y + i, point.x + j) =
+                                magnitude(point.y + i, point.x + j) / kernel16[(j + 8) + (i + 8) * 16];
+                    }
                 }
             }
         }
