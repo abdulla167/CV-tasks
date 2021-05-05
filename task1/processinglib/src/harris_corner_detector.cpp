@@ -197,7 +197,7 @@ std::vector<std::pair<std::vector<double>, _Point>> getSIFTDescriptor(Image &inp
         }
     }
     for (auto &featureV: features) {
-        normalize(featureV);
+        normalize(featureV.first);
     }
     return features;
 }
