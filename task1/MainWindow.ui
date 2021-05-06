@@ -21,7 +21,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>5</number>
       </property>
       <widget class="QWidget" name="filters">
        <attribute name="title">
@@ -1412,6 +1412,77 @@
         </property>
         <property name="wordWrap">
          <bool>true</bool>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>Matching</string>
+       </attribute>
+       <widget class="QPushButton" name="loadImageMatchBtn_1">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>80</y>
+          <width>121</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>load image 1</string>
+        </property>
+       </widget>
+       <widget class="QComboBox" name="comboBox">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>270</y>
+          <width>86</width>
+          <height>25</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QWidget" name="widget_3" native="true">
+        <property name="geometry">
+         <rect>
+          <x>260</x>
+          <y>300</y>
+          <width>120</width>
+          <height>80</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QCustomPlot" name="imageMatch_1" native="true">
+        <property name="geometry">
+         <rect>
+          <x>190</x>
+          <y>40</y>
+          <width>491</width>
+          <height>391</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QCustomPlot" name="imageMatch_2" native="true">
+        <property name="geometry">
+         <rect>
+          <x>710</x>
+          <y>40</y>
+          <width>491</width>
+          <height>391</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="loadImageMatchBtn_2">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>170</y>
+          <width>121</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>load image 2</string>
         </property>
        </widget>
       </widget>

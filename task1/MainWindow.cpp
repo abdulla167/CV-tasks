@@ -122,6 +122,8 @@ MainWindow::~MainWindow() {
     delete outputImage_1;
     delete inputFreqImage;
     delete snakeImage;
+    delete imageMatch_1;
+    delete imageMatch_2;
     delete ImageDisplay;
     delete points;
     delete xData;

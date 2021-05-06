@@ -38,6 +38,9 @@ Q_OBJECT
 
     Image *snakeImage = nullptr;
 
+    Image* imageMatch_1 = nullptr;
+    Image* imageMatch_2 = nullptr;
+
     QCPItemPixmap *ImageDisplay;
     QCPGraph *points;
     QVector<double> *xData = new QVector<double>();
@@ -74,6 +77,10 @@ private slots:
     void on_start_clicked();
 
     void on_clearBtn_clicked();
+
+    void on_loadImageMatchBtn_1_clicked();
+
+    void on_loadImageMatchBtn_2_clicked();
 
     void on_filterFreqSelect_currentIndexChanged(QString);
 

@@ -142,10 +142,12 @@ getMainOrientation(Image &dir, Image &magnitude, std::pair<int, int> iRange, std
 std::vector<std::vector<double>> getSIFTDescriptor(Image &inputImg) {
     std::vector<std::vector<double>> features;
     auto cornerPoints = cornerHarris(inputImg, 0.01);
+
     float xFilter[9] = {-1, 0, 1, -2, 0, 2, -1, 0, 1};
     float yFilter[9] = {1, 2, 1, 0, 0, 0, -1, -2, -1};
     float kernel16[16 * 16] = {0};
     float kernel4[4 * 4] = {0};
+
     gaussianGeneration(kernel16, 16, 1.5, 1);
     gaussianGeneration(kernel4, 4, 1.5, 0);
     Image Ix = applyFilter(inputImg, xFilter, 3);
