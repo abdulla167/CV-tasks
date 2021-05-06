@@ -227,7 +227,12 @@ Image getDirection(Image &imgX, Image &imgY, bool approximateFour) {
     for (int i = 0; i < imgX.height; ++i) {
         for (int j = 0; j < imgX.width; ++j) {
             if(imgX(i, j) == 0){
-                angel = imgY(i, j)> 0? 90: -90;
+                if (imgY(i, j) == 0){
+                    angel = 0;
+                } else {
+                    angel = imgY(i, j) > 0? 90: -90;
+                }
+
             } else{
                 angel = atan(imgY(i, j) /imgX(i, j)) * (180 / 3.14159265);
             }
