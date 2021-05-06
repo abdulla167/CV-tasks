@@ -26,7 +26,7 @@ struct _Point {
     int x, y;
 
     _Point() {}
-
+    _Point(const _Point & point): _Point(point.x, point.y){}
     _Point(int x, int y) : x{x}, y{y} {}
 };
 
