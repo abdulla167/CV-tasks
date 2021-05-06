@@ -136,6 +136,13 @@ void MainWindow::on_filterSelect_currentIndexChanged(QString filterName) {
         std::vector<_Point> corners = cornerHarris(grayImage, 0.01, 3);
         drawCornerPoints(colorImg, corners);
         displayRGBImage(&colorImg, ui->outputImageLabel);
+        auto des = getSIFTDescriptor(grayImage, 0.01);
+        for (auto &featureV: des) {
+            for (auto val: featureV.first) {
+                std::cout << val << ", ";
+            }
+            std::cout << std::endl;
+        }
     }
 }
 

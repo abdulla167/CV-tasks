@@ -3,13 +3,12 @@
 //
 #include "Image.h"
 #include "filters.h"
-#include <math.h>
+#include <cmath>
 #include <iostream>
 #include <utilities.h>
 #include "hough.h"
 #include "vector"
-#include "utilities.h"
-
+#include "harris_corner_detector.h"
 void getHarrisCorner(Image &pointsStrength, std::vector<_Point> &cornerPoints, double threshold) {
     for (int y = 4; y < pointsStrength.height - 4; ++y) {
         for (int x = 4; x < pointsStrength.width - 4; ++x) {
@@ -108,9 +107,12 @@ void normalize(std::vector<double> &vector) {
         sumSquare += val * val;
     }
     sumSquare = sqrt(sumSquare);
-    for (auto &val: vector) {
-        val = val / sumSquare;
+    if(sumSquare != 0){
+        for (auto &val: vector) {
+            val = val / sumSquare;
+        }
     }
+
 }
 
 std::vector<double>
@@ -139,16 +141,14 @@ getMainOrientation(Image &dir, Image &magnitude, std::pair<int, int> iRange, std
     return orientations;
 }
 
-std::vector<std::vector<double>> getSIFTDescriptor(Image &inputImg) {
-    std::vector<std::vector<double>> features;
-    auto cornerPoints = cornerHarris(inputImg, 0.01);
-
+std::vector<std::pair<std::vector<double>, _Point>> getSIFTDescriptor(Image &inputImg, float threshold) {
+    std::vector<std::pair<std::vector<double>, _Point>> features;
+    auto cornerPoints = cornerHarris(inputImg, threshold);
     float xFilter[9] = {-1, 0, 1, -2, 0, 2, -1, 0, 1};
     float yFilter[9] = {1, 2, 1, 0, 0, 0, -1, -2, -1};
     float kernel16[16 * 16] = {0};
     float kernel4[4 * 4] = {0};
-
-    gaussianGeneration(kernel16, 16, 1.5, 1);
+    gaussianGeneration(kernel16, 16, 1.5, 0);
     gaussianGeneration(kernel4, 4, 1.5, 0);
     Image Ix = applyFilter(inputImg, xFilter, 3);
     Image Iy = applyFilter(inputImg, yFilter, 3);
@@ -173,7 +173,7 @@ std::vector<std::vector<double>> getSIFTDescriptor(Image &inputImg) {
                 }
             }
             for (auto &orientation: orientations) {
-                features.emplace_back(128);
+                features.emplace_back(std::vector<double>(), point);
                 // multiply by Gaussian
                 for (int i = -8; i < 8; i++) {
                     for (int j = -8; j < 8; j++) {
@@ -185,7 +185,7 @@ std::vector<std::vector<double>> getSIFTDescriptor(Image &inputImg) {
                     for (int j = -8; j < 8; j += 4) {
                         featureHistogram(directions, magnitude,orientation , {point.y + i, point.y + i + 4},
                                          {point.x + j, point.x + j + 4},
-                                         features.back());
+                                         features.back().first);
                     }
                 }
                 // remove guessing multiplication
@@ -199,8 +199,7 @@ std::vector<std::vector<double>> getSIFTDescriptor(Image &inputImg) {
         }
     }
     for (auto &featureV: features) {
-        normalize(featureV);
+        normalize(featureV.first);
     }
     return features;
 }
-

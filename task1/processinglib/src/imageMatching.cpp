@@ -5,21 +5,25 @@
 #include "imageMatching.h"
 #include "Image.h"
 #include "processinglib/harris_corner_detector.h"
+#include "processinglib/hough.h"
 #include "vector"
 
 using namespace std;
-void SSDMatching(Image& image_1, Image& image_2){
+void SSDMatching(Image& image_1, Image& image_2, int* finalPoints){
     Image gray_1 = image_1.toGrayscale();
     Image gray_2 = image_2.toGrayscale();
-    vector<vector<double>> imageDescriptor_1 = getSIFTDescriptor(gray_1);
-    vector<vector<double>> imageDescriptor_2 = getSIFTDescriptor(gray_2);
-    for(vector<double> keyPoint_1: imageDescriptor_1){
+    vector<pair<vector<double>, _Point>> imageDescriptor_1 = getSIFTDescriptor(gray_1);
+    vector<pair<vector<double>, _Point>> imageDescriptor_2 = getSIFTDescriptor(gray_2);
+    int pointCounter=0;
+    finalPoints = new int[imageDescriptor_1.size()*4];
+
+    for(pair<vector<double>, _Point> keyPoint_1: imageDescriptor_1){
         double *result ;
         result = new double [imageDescriptor_2.size()];
         int keyPointCount = 0;
-        for(vector<double> keyPoint_2: imageDescriptor_2){
+        for(pair<vector<double>, _Point> keyPoint_2: imageDescriptor_2){
             for(int count = 0; count< 128; count++){
-                result[keyPointCount] += ((keyPoint_1[count] - keyPoint_2[count]) * (keyPoint_1[count] - keyPoint_2[count]));
+                result[keyPointCount] += ((keyPoint_1.first[count] - keyPoint_2.first[count]) * (keyPoint_1.first[count] - keyPoint_2.first[count]));
             }
             keyPointCount++;
         }
@@ -31,13 +35,19 @@ void SSDMatching(Image& image_1, Image& image_2){
                 smallestSSDIndex = loop;
             }
         }
-        int xCoordinate_1 = ceil(
-                (imageDescriptor_1[0] / (float) snakeImage->width) * ui->snake->background().rect().width());
-        int yCoordinate = ceil(
-                (arrayOfPointsY[i] / (float) snakeImage->height) * ui->snake->background().rect().height());
+        int xCoordinate_1 = (imageDescriptor_1[pointCounter].second.x / (float) image_1.width);
+        int yCoordinate_1 =  (imageDescriptor_1[pointCounter].second.y / (float) image_1.height) ;
+
+        int xCoordinate_2 = (imageDescriptor_2[smallestSSDIndex].second.x / (float) image_2.width) ;
+        int yCoordinate_2 =  (imageDescriptor_2[smallestSSDIndex].second.y / (float) image_2.height) ;
+        finalPoints[pointCounter*4] = xCoordinate_1;
+        finalPoints[pointCounter*4 + 1] = yCoordinate_1;
+        finalPoints[pointCounter*4 + 2] = xCoordinate_2;
+        finalPoints[pointCounter*4 + 3] = yCoordinate_2;
+
+        pointCounter++;
 
     }
-
 
 }
 

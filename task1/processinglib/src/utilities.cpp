@@ -12,10 +12,11 @@
 void gaussianGeneration(float *kernel, char dim, float sigma, float mean) {
     double r, s = 2.0 * sigma * sigma;
     int t = dim / 2;
+    int t2 = dim % 2 == 0? t: t + 1;
     float diff_x = 0;
     float diff_y = 0;
-    for (int x = -t; x <= t; x++) {
-        for (int y = -t; y <= t; y++) {
+    for (int x = -t; x < t2; x++) {
+        for (int y = -t; y < t2; y++) {
             diff_x = x - mean;
             diff_y = y - mean;
             r = std::sqrt(diff_x * diff_x + diff_y * diff_y);
@@ -225,9 +226,14 @@ Image getDirection(Image &imgX, Image &imgY, bool approximateFour) {
     float angel = 0;
     for (int i = 0; i < imgX.height; ++i) {
         for (int j = 0; j < imgX.width; ++j) {
-            angel = atan(imgX(i, j) / imgY(i, j)) * (180 / 3.14159265);
+            if(imgX(i, j) == 0){
+                angel = imgY(i, j)> 0? 90: -90;
+            } else{
+                angel = atan(imgY(i, j) /imgX(i, j)) * (180 / 3.14159265);
+            }
             outImage(i, j) = approximateFour ? approximateAngle(angel) : angel;
         }
+//        printf("\n");
     }
     return outImage;
 }

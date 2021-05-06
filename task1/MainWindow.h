@@ -43,8 +43,14 @@ Q_OBJECT
 
     QCPItemPixmap *ImageDisplay;
     QCPGraph *points;
+    QCPGraph *imageMatchPoints1;
+    QCPGraph *imageMatchPoints2;
     QVector<double> *xData = new QVector<double>();
     QVector<double> *yData = new QVector<double>();
+    QVector<double> *xDataMatching_1 = new QVector<double>();
+    QVector<double> *yDataMatching_1 = new QVector<double>();
+    QVector<double> *xDataMatching_2 = new QVector<double>();
+    QVector<double> *yDataMatching_2 = new QVector<double>();
     int arrayOfPointsX [pointsCount] ;
     int arrayOfPointsY [pointsCount] ;
 
