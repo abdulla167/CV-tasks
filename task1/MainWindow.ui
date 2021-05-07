@@ -1432,7 +1432,7 @@
          <string>load image 1</string>
         </property>
        </widget>
-       <widget class="QComboBox" name="comboBox">
+       <widget class="QComboBox" name="matchSelect">
         <property name="geometry">
          <rect>
           <x>50</x>
@@ -1441,6 +1441,16 @@
           <height>25</height>
          </rect>
         </property>
+        <item>
+         <property name="text">
+          <string>SSD</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Correlation</string>
+         </property>
+        </item>
        </widget>
        <widget class="QWidget" name="widget_3" native="true">
         <property name="geometry">
@@ -1506,6 +1516,19 @@
         </property>
         <property name="text">
          <string>start</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="matchClearBtn">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>410</y>
+          <width>89</width>
+          <height>25</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>clear</string>
         </property>
        </widget>
       </widget>

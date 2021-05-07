@@ -89,8 +89,15 @@ void MainWindow::on_startMatchingBtn_clicked() {
     if (imageMatch_1->height > imageMatch_2->height){
         resultHeight = imageMatch_1->height;
     }
-    std::vector<double> result = SSDMatching(*imageMatch_1,*imageMatch_2);
-    std::cout<< "fiinished " << result[0]<<  std::endl;
+    std::vector<double> result;
+    if (ui->matchSelect->currentIndex() == 0){
+        result = SSDMatching(*imageMatch_1, *imageMatch_2);
+        std::cout<< "ssd " <<  std::endl;
+    }else {
+        result = normalizedCorrelation(*imageMatch_1, *imageMatch_2);
+        std::cout<< "corrl " <<  std::endl;
+    }
+
 
     xDataMatching_1->clear();
     xDataMatching_2->clear();
@@ -144,6 +151,20 @@ void MainWindow::on_startMatchingBtn_clicked() {
     imageMatchPoints1->setData(*xDataMatching_1,*yDataMatching_1);
     imageMatchPoints2->setData(*xDataMatching_2,*yDataMatching_2);
     qDebug()<< "number "<<xDataMatching_1->count();
+    ui->imageMatch_1->replot();
+    ui->imageMatch_2->replot();
+}
+
+void MainWindow::on_matchClearBtn_clicked() {
+
+    xDataMatching_1->clear();
+    yDataMatching_1->clear();
+    xDataMatching_2->clear();
+    yDataMatching_2->clear();
+    ui->resultMatch->clearGraphs();
+    imageMatchPoints1->data()->clear();
+    imageMatchPoints2->data()->clear();
+    ui->resultMatch->replot();
     ui->imageMatch_1->replot();
     ui->imageMatch_2->replot();
 }

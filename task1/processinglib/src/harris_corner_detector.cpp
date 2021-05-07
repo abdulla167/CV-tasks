@@ -204,7 +204,7 @@ std::vector<std::pair<std::vector<double>, _Point>> getSIFTDescriptor(Image &inp
     }
     for (auto &featureV: features) {
         for (double & val : featureV.first){
-            if(val < 0.2){
+            if(val > 0.2){
                 val = 0;
             }
         }

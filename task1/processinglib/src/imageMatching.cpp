@@ -14,9 +14,12 @@ vector<double> SSDMatching(Image& image_1, Image& image_2){
     Image gray_1 = image_1.toGrayscale();
     Image gray_2 = image_2.toGrayscale();
 
-    vector<pair<vector<double>, _Point>> imageDescriptor_1 = getSIFTDescriptor(gray_1,0.001);
-    vector<pair<vector<double>, _Point>> imageDescriptor_2 = getSIFTDescriptor(gray_2,0.001);
+    vector<pair<vector<double>, _Point>> imageDescriptor_1 = getSIFTDescriptor(gray_1,0.0008);
+    vector<pair<vector<double>, _Point>> imageDescriptor_2 = getSIFTDescriptor(gray_2,0.0008);
 
+//    for(pair<vector<double>, _Point> p:imageDescriptor_2){
+//        cout<< p.second.x << " "<<p.second.y <<endl;
+//    }
     int pointCounter=0;
     vector<double> finalPoints = vector<double>(imageDescriptor_1.size()*4) ;
     vector<int> exclude = vector<int>(imageDescriptor_2.size());
@@ -34,14 +37,23 @@ vector<double> SSDMatching(Image& image_1, Image& image_2){
         }
         int smallestSSDIndex = 0;
         double smallestValue = result[0];
+        int smallestSSDIndex_2 = -1;
+        double smallestValue_2 = result[0] + (double )1;
         for(int loop=1; loop< result.size(); loop++){
-            if (result[loop] < smallestValue){
+            if (result[loop] < smallestValue ){
+                smallestValue_2 = smallestValue;
+                smallestSSDIndex_2 = smallestSSDIndex;
                 smallestValue = result[loop];
                 smallestSSDIndex = loop;
+            }else if (result[loop] <  smallestValue_2 && result[loop]> smallestValue){
+                smallestValue_2 = result[loop];
+                smallestSSDIndex_2 = loop;
             }
         }
 
-        if ( smallestValue <(double ) 0.09) {
+        double temp = (smallestValue/smallestValue_2);
+        if ( temp <= 0.8 && smallestValue <(double) 0.2) {
+            cout<< smallestValue << " "<< smallestValue_2 <<endl;
             double xCoordinate_1 = (imageDescriptor_1[pointCounter].second.x / (double) image_1.width);
             double yCoordinate_1 = (imageDescriptor_1[pointCounter].second.y / (double) image_1.height);
 
@@ -91,7 +103,6 @@ vector<double> normalizedCorrelation(Image& image_1, Image& image_2){
     }
 
     vector<double> finalPoints = vector<double>(imageDescriptor_1.size()*4) ;
-    cout<< "start ttt"<< endl;
     for(int descriptorCount_1 = 0; descriptorCount_1 < imageDescriptor_1.size(); descriptorCount_1++){
 
         vector<double> result = vector<double>(imageDescriptor_2.size());
@@ -116,14 +127,21 @@ vector<double> normalizedCorrelation(Image& image_1, Image& image_2){
 
         int largetCorrIndex = 0;
         double largestValue = result[0];
+        int largetCorrIndex_2 = 0;
+        double largestValue_2 = result[0] - 0.1;
         for(int loop=1; loop< result.size(); loop++){
             if (result[loop] > largestValue){
+                largestValue_2 = largestValue;
+                largetCorrIndex_2 = largetCorrIndex;
                 largestValue = result[loop];
                 largetCorrIndex = loop;
+            } else if (result[loop] > largestValue_2 && result[loop] < largestValue){
+                largestValue_2 = result[loop];
+                largetCorrIndex_2 = loop;
             }
         }
-        cout<< "largest " << largestValue <<  endl;
-        if (largestValue> (double ) 0.85) {
+        double temp = largestValue_2/largestValue;
+        if (largestValue> (double ) 0.8) {
 
             double xCoordinate_1 = (imageDescriptor_1[descriptorCount_1].second.x / (double) image_1.width);
             double yCoordinate_1 = (imageDescriptor_1[descriptorCount_1].second.y / (double) image_1.height);
