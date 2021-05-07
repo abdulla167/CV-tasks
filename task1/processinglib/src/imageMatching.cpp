@@ -14,8 +14,8 @@ vector<double> SSDMatching(Image& image_1, Image& image_2){
     Image gray_1 = image_1.toGrayscale();
     Image gray_2 = image_2.toGrayscale();
 
-    vector<pair<vector<double>, _Point>> imageDescriptor_1 = getSIFTDescriptor(gray_1,0.0008);
-    vector<pair<vector<double>, _Point>> imageDescriptor_2 = getSIFTDescriptor(gray_2,0.0008);
+    vector<pair<vector<double>, _Point>> imageDescriptor_1 = getSIFTDescriptor(gray_1,0.01);
+    vector<pair<vector<double>, _Point>> imageDescriptor_2 = getSIFTDescriptor(gray_2,0.01);
 
 //    for(pair<vector<double>, _Point> p:imageDescriptor_2){
 //        cout<< p.second.x << " "<<p.second.y <<endl;
@@ -52,10 +52,10 @@ vector<double> SSDMatching(Image& image_1, Image& image_2){
         }
 
         double temp = (smallestValue/smallestValue_2);
-        if ( temp <= 0.8 && smallestValue <(double) 0.2) {
+        if ( smallestValue < 0.1) {
             cout<< smallestValue << " "<< smallestValue_2 <<endl;
-            double xCoordinate_1 = (imageDescriptor_1[pointCounter].second.x / (double) image_1.width);
-            double yCoordinate_1 = (imageDescriptor_1[pointCounter].second.y / (double) image_1.height);
+            double xCoordinate_1 = (keyPoint_1.second.x / (double) image_1.width);
+            double yCoordinate_1 = (keyPoint_1.second.y / (double) image_1.height);
 
             double xCoordinate_2 = (imageDescriptor_2[smallestSSDIndex].second.x / (double) image_2.width);
             double yCoordinate_2 = (imageDescriptor_2[smallestSSDIndex].second.y / (double) image_2.height);
