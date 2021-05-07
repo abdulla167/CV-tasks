@@ -12,7 +12,7 @@
 void gaussianGeneration(float *kernel, char dim, float sigma, float mean) {
     double r, s = 2.0 * sigma * sigma;
     int t = dim / 2;
-    int t2 = dim % 2 == 0? t: t + 1;
+    int t2 = dim % 2 == 0 ? t : t + 1;
     float diff_x = 0;
     float diff_y = 0;
     for (int x = -t; x < t2; x++) {
@@ -226,30 +226,36 @@ Image getDirection(Image &imgX, Image &imgY, bool approximateFour) {
     float angel = 0;
     for (int i = 0; i < imgX.height; ++i) {
         for (int j = 0; j < imgX.width; ++j) {
-            if(imgX(i, j) == 0){
-                if (imgY(i, j) == 0){
+            if (imgX(i, j) == 0) {
+                if (imgY(i, j) == 0) {
                     angel = 0;
                 } else {
-                    angel = imgY(i, j) > 0? 90: 270;
+                    if (!approximateFour) {
+                        angel = imgY(i, j) > 0 ? 90 : 270;
+                    } else {
+                        angel = imgY(i, j) > 0 ? 90 : -90;
+                    }
                 }
 
-            } else{
-                angel = atan(imgY(i, j) /imgX(i, j)) * (180 / 3.14159265);
-                if(angel > 0 ){
-                    if(imgY(i, j) < 0){
-                        angel = angel  + 180;
-                    }
-                } else {
-                    if(imgY(i, j) < 0){
-                        angel = 360 + angel;
+            } else {
+                angel = atan(imgY(i, j) / imgX(i, j)) * (180 / 3.14159265);
+                if (!approximateFour) {
+                    if (angel > 0) {
+                        if (imgY(i, j) < 0) {
+                            angel = angel + 180;
+                        }
                     } else {
-                        angel = 180 + angel;
+                        if (imgY(i, j) < 0) {
+                            angel = 360 + angel;
+                        } else {
+                            angel = 180 + angel;
+                        }
                     }
                 }
+
             }
-            outImage(i, j) = approximateFour ? approximateAngle(angel) : angel;
+            outImage(i, j) = angel;
         }
-//        printf("\n");
     }
     return outImage;
 }
