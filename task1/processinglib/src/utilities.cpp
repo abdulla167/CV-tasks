@@ -230,11 +230,22 @@ Image getDirection(Image &imgX, Image &imgY, bool approximateFour) {
                 if (imgY(i, j) == 0){
                     angel = 0;
                 } else {
-                    angel = imgY(i, j) > 0? 90: -90;
+                    angel = imgY(i, j) > 0? 90: 270;
                 }
 
             } else{
                 angel = atan(imgY(i, j) /imgX(i, j)) * (180 / 3.14159265);
+                if(angel > 0 ){
+                    if(imgY(i, j) < 0){
+                        angel = angel  + 180;
+                    }
+                } else {
+                    if(imgY(i, j) < 0){
+                        angel = 360 + angel;
+                    } else {
+                        angel = 180 + angel;
+                    }
+                }
             }
             outImage(i, j) = approximateFour ? approximateAngle(angel) : angel;
         }

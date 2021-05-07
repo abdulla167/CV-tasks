@@ -90,10 +90,8 @@ void featureHistogram(Image &dir, Image &magnitude, double mainOrientation, std:
     int index = 0;
     double absoluteDir = 0, relativeDir = 0;
     for (int i = iRange.first; i < iRange.second; ++i) {
-        for (int j = iRange.first; j < jRange.second; ++j) {
-            absoluteDir = dir(i, j) >= 0 ? dir(i, j) : (dir(i, j) + 360); // 0 -> 360
-            relativeDir = absoluteDir >= mainOrientation ? absoluteDir - mainOrientation : 360 - (mainOrientation -
-                                                                                                  absoluteDir);
+        for (int j = jRange.first; j < jRange.second; ++j) {
+            relativeDir = absoluteDir >= mainOrientation ? absoluteDir - mainOrientation : 360 - (mainOrientation -absoluteDir);
             index = relativeDir / step;
             hist[index] += 1 * magnitude(i, j);
         }
@@ -124,8 +122,8 @@ getMainOrientation(Image &dir, Image &magnitude, std::pair<int, int> iRange, std
     float step = 360 / 36;
     int index = 0;
     for (int i = iRange.first; i < iRange.second; ++i) {
-        for (int j = iRange.first; j < jRange.second; ++j) {
-            index = dir(i, j) >= 0 ? dir(i, j) / step : (dir(i, j) + 360) / step;
+        for (int j = jRange.first; j < jRange.second; ++j) {
+            index = dir(i, j) / step;
             orientationHistogram[index] += 1 * magnitude(i, j);
         }
     }
@@ -137,7 +135,7 @@ getMainOrientation(Image &dir, Image &magnitude, std::pair<int, int> iRange, std
     }
     for (int i = 0; i < 36; i++) {
         if (orientationHistogram[i] > 0.8 * max) {
-            orientations.push_back(i * step + step / 2);
+            orientations.push_back(i * step);
         }
     }
     return orientations;
@@ -149,29 +147,29 @@ std::vector<std::pair<std::vector<double>, _Point>> getSIFTDescriptor(Image &inp
     float xFilter[9] = {-1, 0, 1, -2, 0, 2, -1, 0, 1};
     float yFilter[9] = {1, 2, 1, 0, 0, 0, -1, -2, -1};
     float kernel16[16 * 16] = {0};
-    float kernel4[4 * 4] = {0};
+    float kernel5[5 * 5] = {0};
     gaussianGeneration(kernel16, 16, 1.5, 0);
-    gaussianGeneration(kernel4, 4, 1.5, 0);
+    gaussianGeneration(kernel5, 5, 1.5, 0);
     Image Ix = applyFilter(inputImg, xFilter, 3);
     Image Iy = applyFilter(inputImg, yFilter, 3);
     auto magnitude = getMagnitude(Ix, Iy);
     auto directions = getDirection(Ix, Iy, false);
     for (auto &point: cornerPoints) {
-        if (!(point.x - 8 < 0 || point.x + 7 > magnitude.width || point.y - 8 < 0 || point.y + 7 > magnitude.height)) {
+        if (true) {
             // multiply by Gaussian
-            for (int i = -2; i < 2; i++) {
-                for (int j = -2; j < 2; j++) {
+            for (int i = -2; i < 3; i++) {
+                for (int j = -2; j < 3; j++) {
                     magnitude(point.y + i, point.x + j) =
-                            magnitude(point.y + i, point.x + j) * kernel4[(j + 2) + (i + 2) * 4];
+                            magnitude(point.y + i, point.x + j) * kernel5[(j + 2) + (i + 2) * 5];
                 }
             }
-            auto mainOrientations = getMainOrientation(directions, magnitude, {point.y - 2, point.y + 2},
-                                                       {point.x - 2, point.x + 2});
+            auto mainOrientations = getMainOrientation(directions, magnitude, {point.y - 2, point.y + 3},
+                                                       {point.x - 2, point.x + 3});
             // remove guessing multiplication
-            for (int i = -2; i < 2; i++) {
-                for (int j = -2; j < 2; j++) {
+            for (int i = -2; i < 3; i++) {
+                for (int j = -2; j < 3; j++) {
                     magnitude(point.y + i, point.x + j) =
-                            magnitude(point.y + i, point.x + j) / kernel4[(j + 2) + (i + 2) * 4];
+                            magnitude(point.y + i, point.x + j) / kernel5[(j + 2) + (i + 2) * 5];
                 }
             }
             for (auto &mainOrientation: mainOrientations) {
