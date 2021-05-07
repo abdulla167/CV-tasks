@@ -49,8 +49,9 @@ void MainWindow::on_filterSelect_currentIndexChanged(QString filterName) {
     } else if (filterName == "Roberts") {
         auto grayImage = inputImage->toGrayscale();
         displayGrayscaleImage(&grayImage, ui->inputImageLabel);
-        auto im = robertsEdgeDetector(grayImage).toScale();
-//        im.saveJPG("out_robot");
+//        auto im = robertsEdgeDetector(grayImage).toScale();
+auto im = translate(grayImage);
+        im.saveJPG("out_robot");
         displayGrayscaleImage(&im, ui->outputImageLabel);
     } else if (filterName == "Sobel") {
         auto grayImage = inputImage->toGrayscale();

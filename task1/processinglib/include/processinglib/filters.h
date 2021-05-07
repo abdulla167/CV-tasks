@@ -29,4 +29,6 @@ Image lowPassFilter(Image &inputImg, float *kernel);
 
 Image highPassFilter(Image &inputImg, float *kernel);
 
+Image translate(Image &inputImg);
+
 #endif //CV_FILTERS_H

@@ -7,6 +7,17 @@
 #include <cmath>
 #include "processinglib/fourier_transform.h"
 
+Image translate(Image &inputImg){
+    Image out{inputImg.width, inputImg.height, inputImg.channels};
+    for (int i = 0; i < inputImg.height; ++i) {
+        for (int j = 100; j < inputImg.width; ++j) {
+            for (int k = 0; k < inputImg.channels; ++k) {
+                out(i, j- 100 , k) = inputImg(i, j, k);
+            }
+        }
+    }
+    return out;
+}
 
 Image avgFilter(Image &inputImg, char dim) {
     auto *kernel = new float[dim * dim];
