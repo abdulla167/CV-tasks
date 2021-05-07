@@ -8,7 +8,7 @@
 #include <utilities.h>
 #include "hough.h"
 #include "vector"
-#include "harris_corner_detector.h"
+
 void getHarrisCorner(Image &pointsStrength, std::vector<_Point> &cornerPoints, double threshold) {
     for (int y = 4; y < pointsStrength.height - 4; ++y) {
         for (int x = 4; x < pointsStrength.width - 4; ++x) {
@@ -81,16 +81,17 @@ void drawCornerPoints(Image &img, std::vector<_Point> &cornerPoints) {
     }
 }
 
-void featureHistogram(Image &dir, Image &magnitude, double mainOrientation, std::pair<int, int> iRange, std::pair<int, int> jRange,
+void featureHistogram(Image &dir, Image &magnitude, double mainOrientation, std::pair<int, int> iRange,
+                      std::pair<int, int> jRange,
                       std::vector<double> &v) {
     double hist[8] = {0};
     double step = 180 / 4;
     int index = 0;
-    double absoluteDir = 0,relativeDir = 0;
+    double absoluteDir = 0, relativeDir = 0;
     for (int i = iRange.first; i < iRange.second; ++i) {
         for (int j = iRange.first; j < jRange.second; ++j) {
-            absoluteDir = dir(i, j) >= 0 ? dir(i, j): (dir(i, j) + 360); // 0 -> 360
-            mainOrientation = (mainOrientation - 90) >= 0 ? mainOrientation - 90 : mainOrientation - 90 + 360;
+            absoluteDir = dir(i, j) >= 0 ? dir(i, j) : (dir(i, j) + 360); // 0 -> 360
+            mainOrientation = mainOrientation >= 0 ? mainOrientation : mainOrientation + 360;
             relativeDir = absoluteDir >= mainOrientation ? absoluteDir - mainOrientation : 360 - (mainOrientation - absoluteDir);
             index = relativeDir / step;
             hist[index] += 1 * magnitude(i, j);
@@ -107,7 +108,7 @@ void normalize(std::vector<double> &vector) {
         sumSquare += val * val;
     }
     sumSquare = sqrt(sumSquare);
-    if(sumSquare != 0){
+    if (sumSquare != 0) {
         for (auto &val: vector) {
             val = val / sumSquare;
         }
@@ -123,7 +124,7 @@ getMainOrientation(Image &dir, Image &magnitude, std::pair<int, int> iRange, std
     int index = 0;
     for (int i = iRange.first; i < iRange.second; ++i) {
         for (int j = iRange.first; j < jRange.second; ++j) {
-            index = dir(i, j) > 0 ? dir(i, j) / step : (dir(i, j) + 360) / step;
+            index = dir(i, j) >= 0 ? dir(i, j) / step : (dir(i, j) + 360) / step;
             orientationHistogram[index] += 1 * magnitude(i, j);
         }
     }
@@ -173,6 +174,7 @@ std::vector<std::pair<std::vector<double>, _Point>> getSIFTDescriptor(Image &inp
                 }
             }
             for (auto &orientation: orientations) {
+                printf("orientation: %f, point(%i, %i)\n", orientation, point.x, point.y);
                 features.emplace_back(std::vector<double>(), point);
                 // multiply by Gaussian
                 for (int i = -8; i < 8; i++) {
@@ -183,7 +185,7 @@ std::vector<std::pair<std::vector<double>, _Point>> getSIFTDescriptor(Image &inp
                 }
                 for (int i = -8; i < 8; i += 4) {
                     for (int j = -8; j < 8; j += 4) {
-                        featureHistogram(directions, magnitude,orientation , {point.y + i, point.y + i + 4},
+                        featureHistogram(directions, magnitude, orientation, {point.y + i, point.y + i + 4},
                                          {point.x + j, point.x + j + 4},
                                          features.back().first);
                     }
