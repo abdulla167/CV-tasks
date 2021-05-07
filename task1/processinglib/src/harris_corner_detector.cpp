@@ -89,9 +89,9 @@ void featureHistogram(Image &dir, Image &magnitude, double mainOrientation, std:
     double absoluteDir = 0,relativeDir = 0;
     for (int i = iRange.first; i < iRange.second; ++i) {
         for (int j = iRange.first; j < jRange.second; ++j) {
-            absoluteDir = dir(i, j) > 0 ? dir(i, j): (dir(i, j) + 360); // 0 -> 360
-            mainOrientation = mainOrientation - 90 > 0 ? mainOrientation - 90 : mainOrientation - 90 + 360;
-            relativeDir = absoluteDir > mainOrientation ? absoluteDir - mainOrientation : 360 - (mainOrientation - absoluteDir);
+            absoluteDir = dir(i, j) >= 0 ? dir(i, j): (dir(i, j) + 360); // 0 -> 360
+            mainOrientation = mainOrientation >= 0 ? mainOrientation: mainOrientation + 360;
+            relativeDir = absoluteDir >= mainOrientation ? absoluteDir - mainOrientation : 360 - (mainOrientation - absoluteDir);
             index = relativeDir / step;
             hist[index] += 1 * magnitude(i, j);
         }
@@ -123,7 +123,7 @@ getMainOrientation(Image &dir, Image &magnitude, std::pair<int, int> iRange, std
     int index = 0;
     for (int i = iRange.first; i < iRange.second; ++i) {
         for (int j = iRange.first; j < jRange.second; ++j) {
-            index = dir(i, j) > 0 ? dir(i, j) / step : (dir(i, j) + 360) / step;
+            index = dir(i, j) >= 0 ? dir(i, j) / step : (dir(i, j) + 360) / step;
             orientationHistogram[index] += 1 * magnitude(i, j);
         }
     }
@@ -173,6 +173,7 @@ std::vector<std::pair<std::vector<double>, _Point>> getSIFTDescriptor(Image &inp
                 }
             }
             for (auto &orientation: orientations) {
+                printf("orientation: %f, point(%i, %i)\n", orientation, point.x, point.y);
                 features.emplace_back(std::vector<double>(), point);
                 // multiply by Gaussian
                 for (int i = -8; i < 8; i++) {
