@@ -216,4 +216,3 @@ std::vector<std::pair<std::vector<double>, _Point>> getSIFTDescriptor(Image &inp
     }
     return features;
 }
-

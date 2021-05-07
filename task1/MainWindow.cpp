@@ -22,6 +22,30 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->snake->setAutoFillBackground(true);
     ui->snake->replot();
     ui->snake->installEventFilter(this);
+
+    imageMatchPoints1 = ui->imageMatch_1->addGraph();
+    ui->imageMatch_1->xAxis->setVisible(false);
+    ui->imageMatch_1->yAxis->setVisible(false);
+    ui->imageMatch_1->xAxis->setRange(0.0, 5.0);
+    ui->imageMatch_1->yAxis->setRange(0.0, 5.0);
+    ui->imageMatch_1->setAutoFillBackground(true);
+    ui->imageMatch_1->replot();
+
+    imageMatchPoints2 = ui->imageMatch_2->addGraph();
+    ui->imageMatch_2->xAxis->setVisible(false);
+    ui->imageMatch_2->yAxis->setVisible(false);
+    ui->imageMatch_2->xAxis->setRange(0.0, 5.0);
+    ui->imageMatch_2->yAxis->setRange(0.0, 5.0);
+    ui->imageMatch_2->setAutoFillBackground(true);
+    ui->imageMatch_2->replot();
+
+//    imageMatchPoints2 = ui->imageMatch_2->addGraph();
+    ui->resultMatch->xAxis->setVisible(false);
+    ui->resultMatch->yAxis->setVisible(false);
+    ui->resultMatch->xAxis->setRange(0.0, 5.0);
+    ui->resultMatch->yAxis->setRange(0.0, 5.0);
+    ui->resultMatch->setAutoFillBackground(true);
+    ui->resultMatch->replot();
 }
 
 
@@ -122,9 +146,16 @@ MainWindow::~MainWindow() {
     delete outputImage_1;
     delete inputFreqImage;
     delete snakeImage;
+    delete imageMatch_1;
+    delete imageMatch_2;
     delete ImageDisplay;
     delete points;
     delete xData;
     delete yData;
-
+    delete xDataMatching_1;
+    delete xDataMatching_2;
+    delete yDataMatching_1;
+    delete yDataMatching_2;
+    delete imageMatchPoints1;
+    delete imageMatchPoints2;
 }
