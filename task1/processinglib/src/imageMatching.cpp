@@ -14,17 +14,18 @@ vector<double> SSDMatching(Image& image_1, Image& image_2){
     Image gray_1 = image_1.toGrayscale();
     Image gray_2 = image_2.toGrayscale();
 
-    vector<pair<vector<double>, _Point>> imageDescriptor_1 = getSIFTDescriptor(gray_1,0.1);
-    vector<pair<vector<double>, _Point>> imageDescriptor_2 = getSIFTDescriptor(gray_2,0.1);
+    vector<pair<vector<double>, _Point>> imageDescriptor_1 = getSIFTDescriptor(gray_1,0.2);
+    vector<pair<vector<double>, _Point>> imageDescriptor_2 = getSIFTDescriptor(gray_2,0.2);
+
 
 
     int pointCounter=0;
     vector<double> finalPoints = vector<double>(imageDescriptor_1.size()*4) ;
-//    vector<int> exclude = vector<int>(imageDescriptor_2.size());
-//
-//    for (int loop = 0; loop< imageDescriptor_2.size(); loop++){
-//        exclude[loop] = 0;
-//    }
+    vector<int> exclude = vector<int>(imageDescriptor_2.size());
+
+    for (int loop = 0; loop< imageDescriptor_2.size(); loop++){
+        exclude[loop] = 0;
+    }
     for(pair<vector<double>, _Point> keyPoint_1: imageDescriptor_1){
 
         vector<double> result = vector<double>(imageDescriptor_2.size());
@@ -35,17 +36,17 @@ vector<double> SSDMatching(Image& image_1, Image& image_2){
             result[keyPointCount] = 0;
             for(int count = 0; count< 128; count++){
 
-                result[keyPointCount] += (( keyPoint_1.first[count] - keyPoint_2.first[count]) * (keyPoint_1.first[count] - keyPoint_2.first[count]));
+                result[keyPointCount] = result[keyPointCount] + (( keyPoint_1.first[count] - keyPoint_2.first[count]) * (keyPoint_1.first[count] - keyPoint_2.first[count]));
             }
             keyPointCount++;
         }
 
         int smallestSSDIndex = 0;
-        double smallestValue = 100;
-        int smallestSSDIndex_2 = -1;
-        double smallestValue_2 = 100 + (double )1;
+        double smallestValue = 10000;
+//        double smallestValue_2 = 100 + (double )1;
         for(int loop=0; loop< result.size(); loop++){
-            if (result[loop] < smallestValue ){
+
+            if (result[loop] < smallestValue && exclude[loop]!= 100 ){
 //                smallestValue_2 = smallestValue;
 //                smallestSSDIndex_2 = smallestSSDIndex;
                 smallestValue = result[loop];
@@ -57,10 +58,11 @@ vector<double> SSDMatching(Image& image_1, Image& image_2){
 //            }
         }
 
-        double temp = (smallestValue/smallestValue_2);
+//        double temp = (smallestValue/smallestValue_2);
         if ( true) {
-//            exclude[smallestSSDIndex] = 100;
-            cout<< smallestValue << " "<< smallestValue_2 <<endl;
+            exclude[smallestSSDIndex] = 100;
+
+//            cout<< smallestValue << " "<< smallestValue_2 <<endl;
             double xCoordinate_1 = (keyPoint_1.second.x / (double) image_1.width);
             double yCoordinate_1 = (keyPoint_1.second.y / (double) image_1.height);
 
