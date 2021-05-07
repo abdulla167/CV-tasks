@@ -89,9 +89,9 @@ void featureHistogram(Image &dir, Image &magnitude, double mainOrientation, std:
     double absoluteDir = 0,relativeDir = 0;
     for (int i = iRange.first; i < iRange.second; ++i) {
         for (int j = iRange.first; j < jRange.second; ++j) {
-            absoluteDir = dir(i, j) > 0 ? dir(i, j): (dir(i, j) + 360); // 0 -> 360
-            mainOrientation = mainOrientation - 90 > 0 ? mainOrientation - 90 : mainOrientation - 90 + 360;
-            relativeDir = absoluteDir > mainOrientation ? absoluteDir - mainOrientation : 360 - (mainOrientation - absoluteDir);
+            absoluteDir = dir(i, j) >= 0 ? dir(i, j): (dir(i, j) + 360); // 0 -> 360
+            mainOrientation = (mainOrientation - 90) >= 0 ? mainOrientation - 90 : mainOrientation - 90 + 360;
+            relativeDir = absoluteDir >= mainOrientation ? absoluteDir - mainOrientation : 360 - (mainOrientation - absoluteDir);
             index = relativeDir / step;
             hist[index] += 1 * magnitude(i, j);
         }

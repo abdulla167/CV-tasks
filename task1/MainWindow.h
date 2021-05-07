@@ -88,6 +88,8 @@ private slots:
 
     void on_loadImageMatchBtn_2_clicked();
 
+    void on_startMatchingBtn_clicked();
+
     void on_filterFreqSelect_currentIndexChanged(QString);
 
     void on_thHighCannySlider_valueChanged(int);

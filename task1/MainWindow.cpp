@@ -26,14 +26,26 @@ MainWindow::MainWindow(QWidget *parent) :
     imageMatchPoints1 = ui->imageMatch_1->addGraph();
     ui->imageMatch_1->xAxis->setVisible(false);
     ui->imageMatch_1->yAxis->setVisible(false);
+    ui->imageMatch_1->xAxis->setRange(0.0, 5.0);
+    ui->imageMatch_1->yAxis->setRange(0.0, 5.0);
     ui->imageMatch_1->setAutoFillBackground(true);
     ui->imageMatch_1->replot();
 
     imageMatchPoints2 = ui->imageMatch_2->addGraph();
     ui->imageMatch_2->xAxis->setVisible(false);
     ui->imageMatch_2->yAxis->setVisible(false);
+    ui->imageMatch_2->xAxis->setRange(0.0, 5.0);
+    ui->imageMatch_2->yAxis->setRange(0.0, 5.0);
     ui->imageMatch_2->setAutoFillBackground(true);
     ui->imageMatch_2->replot();
+
+//    imageMatchPoints2 = ui->imageMatch_2->addGraph();
+    ui->resultMatch->xAxis->setVisible(false);
+    ui->resultMatch->yAxis->setVisible(false);
+    ui->resultMatch->xAxis->setRange(0.0, 5.0);
+    ui->resultMatch->yAxis->setRange(0.0, 5.0);
+    ui->resultMatch->setAutoFillBackground(true);
+    ui->resultMatch->replot();
 }
 
 

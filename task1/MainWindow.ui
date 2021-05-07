@@ -1485,6 +1485,29 @@
          <string>load image 2</string>
         </property>
        </widget>
+       <widget class="QCustomPlot" name="resultMatch" native="true">
+        <property name="geometry">
+         <rect>
+          <x>210</x>
+          <y>450</y>
+          <width>982</width>
+          <height>391</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="startMatchingBtn">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>340</y>
+          <width>89</width>
+          <height>25</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>start</string>
+        </property>
+       </widget>
       </widget>
      </widget>
     </item>

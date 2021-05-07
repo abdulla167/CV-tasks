@@ -5,7 +5,8 @@
 #ifndef CV_IMAGEMATCHING_H
 #define CV_IMAGEMATCHING_H
 #include "Image.h"
-void SSDMatching(Image&, Image&, int*);
-void normalizedCorrelation(Image&, Image&);
+#include "vector"
+std::vector<double> SSDMatching(Image&, Image&);
+std::vector<double> normalizedCorrelation(Image&, Image&);
 
 #endif //CV_IMAGEMATCHING_H
