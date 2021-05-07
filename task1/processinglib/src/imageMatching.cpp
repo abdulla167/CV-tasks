@@ -14,48 +14,55 @@ vector<double> SSDMatching(Image& image_1, Image& image_2){
     Image gray_1 = image_1.toGrayscale();
     Image gray_2 = image_2.toGrayscale();
 
-    vector<pair<vector<double>, _Point>> imageDescriptor_1 = getSIFTDescriptor(gray_1,0.0008);
-    vector<pair<vector<double>, _Point>> imageDescriptor_2 = getSIFTDescriptor(gray_2,0.0008);
+    vector<pair<vector<double>, _Point>> imageDescriptor_1 = getSIFTDescriptor(gray_1,0.1);
+    vector<pair<vector<double>, _Point>> imageDescriptor_2 = getSIFTDescriptor(gray_2,0.1);
 
-//    for(pair<vector<double>, _Point> p:imageDescriptor_2){
-//        cout<< p.second.x << " "<<p.second.y <<endl;
-//    }
+
     int pointCounter=0;
     vector<double> finalPoints = vector<double>(imageDescriptor_1.size()*4) ;
-    vector<int> exclude = vector<int>(imageDescriptor_2.size());
+//    vector<int> exclude = vector<int>(imageDescriptor_2.size());
+//
+//    for (int loop = 0; loop< imageDescriptor_2.size(); loop++){
+//        exclude[loop] = 0;
+//    }
     for(pair<vector<double>, _Point> keyPoint_1: imageDescriptor_1){
 
         vector<double> result = vector<double>(imageDescriptor_2.size());
         int keyPointCount = 0;
+
         for(pair<vector<double>, _Point> keyPoint_2: imageDescriptor_2){
 
             result[keyPointCount] = 0;
             for(int count = 0; count< 128; count++){
+
                 result[keyPointCount] += (( keyPoint_1.first[count] - keyPoint_2.first[count]) * (keyPoint_1.first[count] - keyPoint_2.first[count]));
             }
             keyPointCount++;
         }
+
         int smallestSSDIndex = 0;
-        double smallestValue = result[0];
+        double smallestValue = 100;
         int smallestSSDIndex_2 = -1;
-        double smallestValue_2 = result[0] + (double )1;
-        for(int loop=1; loop< result.size(); loop++){
+        double smallestValue_2 = 100 + (double )1;
+        for(int loop=0; loop< result.size(); loop++){
             if (result[loop] < smallestValue ){
-                smallestValue_2 = smallestValue;
-                smallestSSDIndex_2 = smallestSSDIndex;
+//                smallestValue_2 = smallestValue;
+//                smallestSSDIndex_2 = smallestSSDIndex;
                 smallestValue = result[loop];
                 smallestSSDIndex = loop;
-            }else if (result[loop] <  smallestValue_2 && result[loop]> smallestValue){
-                smallestValue_2 = result[loop];
-                smallestSSDIndex_2 = loop;
             }
+//            else if (result[loop] <  smallestValue_2 && result[loop]> smallestValue ){
+//                smallestValue_2 = result[loop];
+//                smallestSSDIndex_2 = loop;
+//            }
         }
 
         double temp = (smallestValue/smallestValue_2);
-        if ( temp <= 0.8 && smallestValue <(double) 0.2) {
+        if ( true) {
+//            exclude[smallestSSDIndex] = 100;
             cout<< smallestValue << " "<< smallestValue_2 <<endl;
-            double xCoordinate_1 = (imageDescriptor_1[pointCounter].second.x / (double) image_1.width);
-            double yCoordinate_1 = (imageDescriptor_1[pointCounter].second.y / (double) image_1.height);
+            double xCoordinate_1 = (keyPoint_1.second.x / (double) image_1.width);
+            double yCoordinate_1 = (keyPoint_1.second.y / (double) image_1.height);
 
             double xCoordinate_2 = (imageDescriptor_2[smallestSSDIndex].second.x / (double) image_2.width);
             double yCoordinate_2 = (imageDescriptor_2[smallestSSDIndex].second.y / (double) image_2.height);
@@ -81,8 +88,8 @@ vector<double> normalizedCorrelation(Image& image_1, Image& image_2){
     Image gray_1 = image_1.toGrayscale();
     Image gray_2 = image_2.toGrayscale();
 
-    vector<pair<vector<double>, _Point>> imageDescriptor_1 = getSIFTDescriptor(gray_1);
-    vector<pair<vector<double>, _Point>> imageDescriptor_2 = getSIFTDescriptor(gray_2);
+    vector<pair<vector<double>, _Point>> imageDescriptor_1 = getSIFTDescriptor(gray_1,0.0001);
+    vector<pair<vector<double>, _Point>> imageDescriptor_2 = getSIFTDescriptor(gray_2,0.0001);
 
     vector<double> descriptorAverage_1 =vector<double>(imageDescriptor_1.size());
     for(int imageDescriptorLoop_1 = 0; imageDescriptorLoop_1 < imageDescriptor_1.size(); imageDescriptorLoop_1++){

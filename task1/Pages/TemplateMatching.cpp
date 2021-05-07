@@ -8,6 +8,10 @@
 #include "processinglib/imageMatching.h"
 #include "vector"
 #include "iostream"
+#include<unistd.h>
+unsigned int microsecond = 1000000;
+//sleeps for 3 second
+using namespace std;
 void MainWindow::on_loadImageMatchBtn_1_clicked() {
 
     QString filePath = QFileDialog::getOpenFileName(this, "load image", "../");
@@ -85,6 +89,10 @@ void MainWindow::on_loadImageMatchBtn_2_clicked() {
 
 void MainWindow::on_startMatchingBtn_clicked() {
 
+    Image gray_1 = imageMatch_1->toGrayscale();
+    Image gray_2 = imageMatch_2->toGrayscale();
+
+
     int resultHeight = imageMatch_2->height;
     if (imageMatch_1->height > imageMatch_2->height){
         resultHeight = imageMatch_1->height;
@@ -100,12 +108,30 @@ void MainWindow::on_startMatchingBtn_clicked() {
 
 
     xDataMatching_1->clear();
-    xDataMatching_2->clear();
+    xDataMatching_1->clear();
     int grapNo = 0;
     QVector<double> *x = new QVector<double>();
     QVector<double> *y = new QVector<double>();
     qDebug()<< "the last "<<resultHeight<<" "<< ui->resultMatch->background().rect().height();
-    for(int loop = 0 ; loop < result.size()/4; loop++) {
+//    xDataMatching_1->clear();
+//    yDataMatching_1->clear();
+//    for(pair<vector<double>, _Point> ketPoint : imageDescriptor_1) {
+//            double xCoord_1 = (ketPoint.second.x/ (double)imageMatch_1->width) * ui->imageMatch_1->background().rect().width();
+//            double yCoord_1 = (ketPoint.second.y / (double)imageMatch_1->height) * ui->imageMatch_1->background().rect().height();
+//            xDataMatching_1->append(ui->imageMatch_1->xAxis->pixelToCoord(xCoord_1));
+//            yDataMatching_1->append(ui->imageMatch_1->yAxis->pixelToCoord(yCoord_1));
+//    }
+//
+//    xDataMatching_2->clear();
+//    yDataMatching_2->clear();
+//    for(pair<vector<double>, _Point> ketPoint : imageDescriptor_2) {
+//            double xCoord_1 = (ketPoint.second.x/ (double)imageMatch_2->width) * ui->imageMatch_2->background().rect().width();
+//            double yCoord_1 = (ketPoint.second.y / (double)imageMatch_2->height) * ui->imageMatch_2->background().rect().height();
+//            xDataMatching_2->append(ui->imageMatch_2->xAxis->pixelToCoord(xCoord_1));
+//            yDataMatching_2->append(ui->imageMatch_2->yAxis->pixelToCoord(yCoord_1));
+//    }
+
+    for(int loop = 0 ; loop < (result.size()/4); loop++) {
         if (result[loop*4 ] != -1 ) {
             double xCoord_1 = result[loop * 4] * (imageMatch_1->width / (double )(imageMatch_1->width + imageMatch_2->width));;
             double yCoord_1 = result[loop * 4 + 1];
@@ -132,22 +158,23 @@ void MainWindow::on_startMatchingBtn_clicked() {
 
 
             QCPItemLine *arrow = new QCPItemLine(ui->resultMatch);
+            lines->append(arrow);
             arrow->start->setCoords(ui->resultMatch->xAxis->pixelToCoord(xCoord_2 ), ui->resultMatch->yAxis->pixelToCoord(yCoord_2));
             arrow->end->setCoords(ui->resultMatch->xAxis->pixelToCoord(xCoord_1), ui->resultMatch->yAxis->pixelToCoord(yCoord_1));
             arrow->setPen(QPen(Qt::yellow));
             ui->resultMatch->replot();
-
+            usleep(3 * microsecond);
             grapNo++;
 
         }
     }
 
     imageMatchPoints1->setLineStyle((QCPGraph::LineStyle) QCPGraph::lsNone);
-    imageMatchPoints1->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssDisc, 2));
-    imageMatchPoints1->setPen(QPen(QColor(0, 0, 255), 2));
+    imageMatchPoints1->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssDisc, 5));
+    imageMatchPoints1->setPen(QPen(QColor(0, 255, 0), 2));
     imageMatchPoints2->setLineStyle((QCPGraph::LineStyle) QCPGraph::lsNone);
-    imageMatchPoints2->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssDisc, 2));
-    imageMatchPoints2->setPen(QPen(QColor(0, 0, 255), 2));
+    imageMatchPoints2->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssDisc, 5));
+    imageMatchPoints2->setPen(QPen(QColor(0, 255, 0), 2));
     imageMatchPoints1->setData(*xDataMatching_1,*yDataMatching_1);
     imageMatchPoints2->setData(*xDataMatching_2,*yDataMatching_2);
     qDebug()<< "number "<<xDataMatching_1->count();
@@ -161,6 +188,7 @@ void MainWindow::on_matchClearBtn_clicked() {
     yDataMatching_1->clear();
     xDataMatching_2->clear();
     yDataMatching_2->clear();
+
     ui->resultMatch->clearGraphs();
     imageMatchPoints1->data()->clear();
     imageMatchPoints2->data()->clear();

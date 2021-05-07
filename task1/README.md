@@ -34,6 +34,52 @@ Steps:
 
 Complexity: O(n^2)
 
+### SSD Matching
+```c++
+std::vector<double> SSDMatching(Image& inputImage_1, Image& inputImage_2);
+```
+Parameters:
+* Grayscale image (first image)
+* Grayscale image (second image)
+
+Returns:
+vector of points that match
+
+Steps:
+* get FIST descriptor of both images
+* loop over the descriptor of the first image and  inside this loop 
+  , loop over the descriptor of the second image
+* calculate the SSD between the key point of the first image and all the key points 
+  of the second image
+* get the 2 least SSD points and make sure that the least point is less than 0.8 * the second least point 
+* put the points in the vector
+* return the vector holding the points
+
+Complexity: O(n^2)
+
+### Normalized Correlation Matching
+```c++
+std::vector<double> normalizedCorrelation(Image& inputImage_1, Image&inputImage_2);
+```
+Parameters:
+* Grayscale image (first image)
+* Grayscale image (second image)
+
+Returns:
+vector of points that match
+
+Steps:
+* get FIST descriptor of the 2 images
+* loop over the FIST descriptor of the 2 images and get the average of the vector of each key point 128 vector and store it
+* loop over the descriptor of the first image and  inside this loop
+  , loop over the descriptor of the second image
+* calculate the Normalized Correlation between the key point of the first image and all the key points
+  of the second image
+* put the points in the vector
+* return the vector holding the points
+
+Complexity: O(n^2)
+
 ## Requirement packages 
 * fftw3
 * qt5
