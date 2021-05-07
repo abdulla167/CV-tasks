@@ -7,7 +7,7 @@
 
 void getHarrisCorner(Image& pointsStrength, std::vector<_Point>& cornerPoints, int threshold);
 
-std::vector<_Point> cornerHarris(Image& grayImg, double threshold, int patchDim);
+std::vector<_Point> cornerHarris(Image& grayImg, double threshold, int patchDim = 3);
 
 void drawCornerPoints(Image& img, std::vector<_Point>& cornerPoints);
 
