@@ -14,8 +14,8 @@ vector<double> SSDMatching(Image& image_1, Image& image_2){
     Image gray_1 = image_1.toGrayscale();
     Image gray_2 = image_2.toGrayscale();
 
-    vector<pair<vector<double>, _Point>> imageDescriptor_1 = getSIFTDescriptor(gray_1);
-    vector<pair<vector<double>, _Point>> imageDescriptor_2 = getSIFTDescriptor(gray_2);
+    vector<pair<vector<double>, _Point>> imageDescriptor_1 = getSIFTDescriptor(gray_1,0.001);
+    vector<pair<vector<double>, _Point>> imageDescriptor_2 = getSIFTDescriptor(gray_2,0.001);
 
     int pointCounter=0;
     vector<double> finalPoints = vector<double>(imageDescriptor_1.size()*4) ;
@@ -41,7 +41,7 @@ vector<double> SSDMatching(Image& image_1, Image& image_2){
             }
         }
 
-        if ( smallestValue <(double ) 0.1) {
+        if ( smallestValue <(double ) 0.09) {
             double xCoordinate_1 = (imageDescriptor_1[pointCounter].second.x / (double) image_1.width);
             double yCoordinate_1 = (imageDescriptor_1[pointCounter].second.y / (double) image_1.height);
 
@@ -57,7 +57,6 @@ vector<double> SSDMatching(Image& image_1, Image& image_2){
             finalPoints[pointCounter * 4 + 2] = -1;
             finalPoints[pointCounter * 4 + 3] = -1;
         }
-//        std::cout<< finalPoints[pointCounter]<< std::endl;
         pointCounter++;
 
     }
@@ -125,8 +124,7 @@ vector<double> normalizedCorrelation(Image& image_1, Image& image_2){
         }
         cout<< "largest " << largestValue <<  endl;
         if (largestValue> (double ) 0.85) {
-//            std::cout<< "first image" <<keyPoint_1.second.x<<"  " <<keyPoint_1.second.y  <<std::endl;
-//            std::cout<< "second image" <<imageDescriptor_2[smallestSSDIndex].second.x << "  "<<imageDescriptor_2[smallestSSDIndex].second.y  <<std::endl;
+
             double xCoordinate_1 = (imageDescriptor_1[descriptorCount_1].second.x / (double) image_1.width);
             double yCoordinate_1 = (imageDescriptor_1[descriptorCount_1].second.y / (double) image_1.height);
 
