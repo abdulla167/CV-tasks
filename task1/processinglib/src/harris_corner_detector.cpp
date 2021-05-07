@@ -155,7 +155,7 @@ std::vector<std::pair<std::vector<double>, _Point>> getSIFTDescriptor(Image &inp
     auto magnitude = getMagnitude(Ix, Iy);
     auto directions = getDirection(Ix, Iy, false);
     for (auto &point: cornerPoints) {
-        if (true) {
+        if (!(point.x - 8 < 0 || point.x + 7 > magnitude.width || point.y - 8 < 0 || point.y + 7 > magnitude.height)) {
             // multiply by Gaussian
             for (int i = -2; i < 3; i++) {
                 for (int j = -2; j < 3; j++) {
