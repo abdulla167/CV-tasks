@@ -11,7 +11,7 @@ it uses internally ```void getHarrisCorner(Image &pointsStrength, std::vector<_P
 which get the points that greater than threshold
 <br>
 Complexity: O(imgWidth x imgHeight)
-![](images/harris_image.png)
+![](images/image1.png)
 
 ### SIFT Descriptor
 ```c++
@@ -81,9 +81,9 @@ Steps:
 Complexity: O(n^2)
 
 ## Result
-![](images/Screenshot from 2021-05-08 01-12-15.png)
-![](images/Screenshot from 2021-05-08 01-41-10.png)
-![](images/Screenshot from 2021-05-08 02-05-27.png)
+![](images/image2.png)
+![](images/image3.png)
+![](images/image4.png)
 ## Requirement packages git
 * fftw3
 * qt5
