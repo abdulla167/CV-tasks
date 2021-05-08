@@ -11,7 +11,7 @@ it uses internally ```void getHarrisCorner(Image &pointsStrength, std::vector<_P
 which get the points that greater than threshold
 <br>
 Complexity: O(imgWidth x imgHeight)
-![](images/harris_image.png)
+![](./images/harris_image.png)
 
 ### SIFT Descriptor
 ```c++
