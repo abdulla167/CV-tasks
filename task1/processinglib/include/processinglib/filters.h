@@ -31,4 +31,5 @@ Image highPassFilter(Image &inputImg, float *kernel);
 
 void translate(Image *&inputImg);
 
+
 #endif //CV_FILTERS_H

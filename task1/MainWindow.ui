@@ -1443,12 +1443,12 @@
         </property>
         <item>
          <property name="text">
-          <string>SSD</string>
+          <string>Correlation</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>Correlation</string>
+          <string>SSD</string>
          </property>
         </item>
        </widget>

@@ -7,16 +7,18 @@
 #include <cmath>
 #include "processinglib/fourier_transform.h"
 
-void translate(Image *&inputImg){
+void translate(Image* &inputImg) {
+    Image out{inputImg->width, inputImg->height, inputImg->channels};
     for (int i = 0; i < inputImg->height; ++i) {
-        for (int j = 100; j < inputImg->width; ++j) {
+        for (int j = 60; j < inputImg->width; ++j) {
             for (int k = 0; k < inputImg->channels; ++k) {
-                (*inputImg)(i, j, k) = (*inputImg)(i, j, k);
+                (*inputImg)(i, j - 60, k) = (*inputImg)(i, j, k);
             }
         }
     }
+
     for (int i = 0; i < inputImg->height; ++i) {
-        for (int j = inputImg->width - 100; j < inputImg->width; ++j) {
+        for (int j = (inputImg->width - 60); j < inputImg->width; ++j) {
             for (int k = 0; k < inputImg->channels; ++k) {
                 (*inputImg)(i, j, k) = 0;
             }

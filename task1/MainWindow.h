@@ -28,6 +28,7 @@ Q_OBJECT
     Image *outputImage = nullptr;
     Image *noiseImage = nullptr;
 
+
     Image *imageA = nullptr;
     Image *imageB = nullptr;
 
@@ -51,6 +52,8 @@ Q_OBJECT
     QVector<double> *yDataMatching_1 = new QVector<double>();
     QVector<double> *xDataMatching_2 = new QVector<double>();
     QVector<double> *yDataMatching_2 = new QVector<double>();
+//    QCPItemLine** lines;
+    QVector<QCPItemLine*> *lines = new QVector<QCPItemLine*>();
     int arrayOfPointsX [pointsCount] ;
     int arrayOfPointsY [pointsCount] ;
 
