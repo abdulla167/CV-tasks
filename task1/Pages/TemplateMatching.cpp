@@ -8,10 +8,14 @@
 #include "processinglib/imageMatching.h"
 #include "vector"
 #include "iostream"
-#include<unistd.h>
-unsigned int microsecond = 1000000;
-//sleeps for 3 second
-using namespace std;
+#include "processinglib/filters.h"
+#include <chrono>
+#include <thread>
+
+    using namespace std::this_thread; // sleep_for, sleep_until
+    using namespace std::chrono; // nanoseconds, system_clock, seconds
+
+
 void MainWindow::on_loadImageMatchBtn_1_clicked() {
 
     QString filePath = QFileDialog::getOpenFileName(this, "load image", "../");
@@ -47,6 +51,7 @@ void MainWindow::on_loadImageMatchBtn_2_clicked() {
     QPixmap pixmap{filePath};
 
     imageMatch_2 = new Image(filepathStd,3);
+//    translate(imageMatch_2);
     int resultHeight = imageMatch_2->height;
     if (imageMatch_1->height > imageMatch_2->height){
         resultHeight = imageMatch_1->height;
@@ -98,7 +103,7 @@ void MainWindow::on_startMatchingBtn_clicked() {
         resultHeight = imageMatch_1->height;
     }
     std::vector<double> result;
-    if (ui->matchSelect->currentIndex() == 0){
+    if (ui->matchSelect->currentIndex() == 1){
         result = SSDMatching(*imageMatch_1, *imageMatch_2);
         std::cout<< "ssd " <<  std::endl;
     }else {
@@ -113,23 +118,6 @@ void MainWindow::on_startMatchingBtn_clicked() {
     QVector<double> *x = new QVector<double>();
     QVector<double> *y = new QVector<double>();
     qDebug()<< "the last "<<resultHeight<<" "<< ui->resultMatch->background().rect().height() << " "<< result.size();
-//    xDataMatching_1->clear();
-//    yDataMatching_1->clear();
-//    for(pair<vector<double>, _Point> ketPoint : imageDescriptor_1) {
-//            double xCoord_1 = (ketPoint.second.x/ (double)imageMatch_1->width) * ui->imageMatch_1->background().rect().width();
-//            double yCoord_1 = (ketPoint.second.y / (double)imageMatch_1->height) * ui->imageMatch_1->background().rect().height();
-//            xDataMatching_1->append(ui->imageMatch_1->xAxis->pixelToCoord(xCoord_1));
-//            yDataMatching_1->append(ui->imageMatch_1->yAxis->pixelToCoord(yCoord_1));
-//    }
-//
-//    xDataMatching_2->clear();
-//    yDataMatching_2->clear();
-//    for(pair<vector<double>, _Point> ketPoint : imageDescriptor_2) {
-//            double xCoord_1 = (ketPoint.second.x/ (double)imageMatch_2->width) * ui->imageMatch_2->background().rect().width();
-//            double yCoord_1 = (ketPoint.second.y / (double)imageMatch_2->height) * ui->imageMatch_2->background().rect().height();
-//            xDataMatching_2->append(ui->imageMatch_2->xAxis->pixelToCoord(xCoord_1));
-//            yDataMatching_2->append(ui->imageMatch_2->yAxis->pixelToCoord(yCoord_1));
-//    }
 
     imageMatchPoints1->setLineStyle((QCPGraph::LineStyle) QCPGraph::lsNone);
     imageMatchPoints1->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssDisc, 5));
@@ -151,17 +139,12 @@ void MainWindow::on_startMatchingBtn_clicked() {
 
 
 //
-//            xDataMatching_1->append(ui->imageMatch_1->xAxis->pixelToCoord());
-//            yDataMatching_1->append(ui->imageMatch_1->yAxis->pixelToCoord());
-//            xDataMatching_2->append(ui->imageMatch_2->xAxis->pixelToCoord(result[loop * 4 + 2] * ui->imageMatch_2->background().rect().width()));
-//            yDataMatching_2->append(ui->imageMatch_2->yAxis->pixelToCoord(result[loop * 4 + 3] * ui->imageMatch_2->background().rect().height()));
+            xDataMatching_1->append(ui->imageMatch_1->xAxis->pixelToCoord(result[loop * 4 ] * ui->imageMatch_1->background().rect().width()));
+            yDataMatching_1->append(ui->imageMatch_1->yAxis->pixelToCoord(result[loop * 4 + 1] * ui->imageMatch_1->background().rect().height()));
+            xDataMatching_2->append(ui->imageMatch_2->xAxis->pixelToCoord(result[loop * 4 + 2] * ui->imageMatch_2->background().rect().width()));
+            yDataMatching_2->append(ui->imageMatch_2->yAxis->pixelToCoord(result[loop * 4 + 3] * ui->imageMatch_2->background().rect().height()));
 
 
-            imageMatchPoints1->addData(result[loop * 4] * ui->imageMatch_1->background().rect().width(),result[loop * 4 + 1] * ui->imageMatch_1->background().rect().height());
-            imageMatchPoints2->addData(result[loop * 4 + 2] * ui->imageMatch_2->background().rect().width(),result[loop * 4 + 3] * ui->imageMatch_2->background().rect().height());
-            qDebug()<< "number "<<xDataMatching_1->count();
-            ui->imageMatch_1->replot();
-            ui->imageMatch_2->replot();
 
 
             QCPItemLine *arrow = new QCPItemLine(ui->resultMatch);
@@ -170,11 +153,18 @@ void MainWindow::on_startMatchingBtn_clicked() {
             arrow->end->setCoords(ui->resultMatch->xAxis->pixelToCoord(xCoord_1), ui->resultMatch->yAxis->pixelToCoord(yCoord_1));
             arrow->setPen(QPen(Qt::yellow));
             ui->resultMatch->replot();
-            usleep(1 * microsecond);
+            sleep_for(nanoseconds(7));
+            sleep_until(system_clock::now() + seconds(1));
             grapNo++;
 
         }
     }
+
+    imageMatchPoints1->setData(*xDataMatching_1, *yDataMatching_1);
+    imageMatchPoints2->setData(*xDataMatching_2, *yDataMatching_2);
+    qDebug()<< "number "<<xDataMatching_1->count();
+    ui->imageMatch_1->replot();
+    ui->imageMatch_2->replot();
 
 
 }

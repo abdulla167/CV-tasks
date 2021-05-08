@@ -14,6 +14,8 @@ vector<double> SSDMatching(Image& image_1, Image& image_2){
     Image gray_1 = image_1.toGrayscale();
     Image gray_2 = image_2.toGrayscale();
 
+
+
     vector<pair<vector<double>, _Point>> imageDescriptor_1 = getSIFTDescriptor(gray_1,0.2);
     vector<pair<vector<double>, _Point>> imageDescriptor_2 = getSIFTDescriptor(gray_2,0.2);
 
@@ -43,26 +45,18 @@ vector<double> SSDMatching(Image& image_1, Image& image_2){
 
         int smallestSSDIndex = 0;
         double smallestValue = 10000;
-//        double smallestValue_2 = 100 + (double )1;
         for(int loop=0; loop< result.size(); loop++){
 
             if (result[loop] < smallestValue && exclude[loop]!= 100 ){
-//                smallestValue_2 = smallestValue;
-//                smallestSSDIndex_2 = smallestSSDIndex;
+
                 smallestValue = result[loop];
                 smallestSSDIndex = loop;
             }
-//            else if (result[loop] <  smallestValue_2 && result[loop]> smallestValue ){
-//                smallestValue_2 = result[loop];
-//                smallestSSDIndex_2 = loop;
-//            }
         }
 
-//        double temp = (smallestValue/smallestValue_2);
         if ( true) {
             exclude[smallestSSDIndex] = 100;
 
-//            cout<< smallestValue << " "<< smallestValue_2 <<endl;
             double xCoordinate_1 = (keyPoint_1.second.x / (double) image_1.width);
             double yCoordinate_1 = (keyPoint_1.second.y / (double) image_1.height);
 
@@ -90,8 +84,8 @@ vector<double> normalizedCorrelation(Image& image_1, Image& image_2){
     Image gray_1 = image_1.toGrayscale();
     Image gray_2 = image_2.toGrayscale();
 
-    vector<pair<vector<double>, _Point>> imageDescriptor_1 = getSIFTDescriptor(gray_1,0.0001);
-    vector<pair<vector<double>, _Point>> imageDescriptor_2 = getSIFTDescriptor(gray_2,0.0001);
+    vector<pair<vector<double>, _Point>> imageDescriptor_1 = getSIFTDescriptor(gray_1,0.01);
+    vector<pair<vector<double>, _Point>> imageDescriptor_2 = getSIFTDescriptor(gray_2,0.01);
 
     vector<double> descriptorAverage_1 =vector<double>(imageDescriptor_1.size());
     for(int imageDescriptorLoop_1 = 0; imageDescriptorLoop_1 < imageDescriptor_1.size(); imageDescriptorLoop_1++){
@@ -109,6 +103,11 @@ vector<double> normalizedCorrelation(Image& image_1, Image& image_2){
             average += pointInVector;
         }
         descriptorAverage_2[imageDescriptorLoop_2] = average/128;
+    }
+    vector<int> exclude = vector<int>(imageDescriptor_2.size());
+
+    for (int loop = 0; loop< imageDescriptor_2.size(); loop++){
+        exclude[loop] = 0;
     }
 
     vector<double> finalPoints = vector<double>(imageDescriptor_1.size()*4) ;
@@ -136,22 +135,15 @@ vector<double> normalizedCorrelation(Image& image_1, Image& image_2){
 
         int largetCorrIndex = 0;
         double largestValue = result[0];
-        int largetCorrIndex_2 = 0;
-        double largestValue_2 = result[0] - 0.1;
+
         for(int loop=1; loop< result.size(); loop++){
-            if (result[loop] > largestValue){
-                largestValue_2 = largestValue;
-                largetCorrIndex_2 = largetCorrIndex;
+            if (result[loop] > largestValue && exclude[loop] != 100){
                 largestValue = result[loop];
                 largetCorrIndex = loop;
-            } else if (result[loop] > largestValue_2 && result[loop] < largestValue){
-                largestValue_2 = result[loop];
-                largetCorrIndex_2 = loop;
             }
         }
-        double temp = largestValue_2/largestValue;
         if (largestValue> (double ) 0.8) {
-
+            exclude[largestValue] = 100;
             double xCoordinate_1 = (imageDescriptor_1[descriptorCount_1].second.x / (double) image_1.width);
             double yCoordinate_1 = (imageDescriptor_1[descriptorCount_1].second.y / (double) image_1.height);
 

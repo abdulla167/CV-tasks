@@ -80,6 +80,10 @@ Steps:
 
 Complexity: O(n^2)
 
+## Result
+![](images/Screenshot from 2021-05-08 01-12-15.png)
+![](images/Screenshot from 2021-05-08 01-41-10.png)
+![](images/Screenshot from 2021-05-08 02-05-27.png)
 ## Requirement packages 
 * fftw3
 * qt5
