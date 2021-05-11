@@ -50,7 +50,7 @@ void MainWindow::on_filterSelect_currentIndexChanged(QString filterName) {
         auto grayImage = inputImage->toGrayscale();
         displayGrayscaleImage(&grayImage, ui->inputImageLabel);
 //        auto im = robertsEdgeDetector(grayImage).toScale();
-//auto im = translate(grayImage);
+//        auto im = translate(grayImage);
 //        im.saveJPG("out_robot");
 //        displayGrayscaleImage(&im, ui->outputImageLabel);
     } else if (filterName == "Sobel") {
