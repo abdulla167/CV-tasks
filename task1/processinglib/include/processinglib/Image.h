@@ -1,4 +1,4 @@
-//
+ //
 // Created by abdallah on 3/31/21.
 //
 
@@ -44,6 +44,9 @@ public:
 
     Image toScale();
 
+    Image RGBToLUV();
+    double* XYZ();
+
     void saveJPG(std::string filename);
 
 
@@ -56,6 +59,7 @@ public:
     float &operator()(int i, int j, int k) const;
 
     void init(float value);
+
 
 private:
     template<class T>

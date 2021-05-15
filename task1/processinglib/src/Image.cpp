@@ -125,6 +125,122 @@ int Image::size() {
     return channels * width * height;
 }
 
+
+double* Image::XYZ()  {
+    float *max = new float[channels];
+    for (int k = 0; k < channels; ++k) {
+        max[k] = 0;
+    }
+    for (int i = 0; i < height; ++i) {
+        for (int j = 0; j < width; ++j) {
+            for (int k = 0; k < channels; ++k) {
+                if ((*this)(i, j, k) > max[k])
+                    max[k] = (*this)(i, j, k);
+            }
+        }
+    }
+    double *XYZ = new double[this->height * this->width * this->channels];
+    double *normalizedData = new double[this->height * this->width * this->channels];
+    for (int i = 0; i < height; ++i) {
+        for (int j = 0; j < width; ++j) {
+            for (int k = 0; k < channels; ++k) {
+
+                normalizedData[k * height * width + i * width + j] = (double) 0;
+                XYZ[k * height * width + i * width + j] = (double) 0;
+            }
+        }
+    }
+    for (int i = 0; i < height; ++i) {
+        for (int j = 0; j < width; ++j) {
+            for (int k = 0; k < channels; ++k) {
+
+                normalizedData[k * height * width + i * width + j] = (double) (*this)(i, j, k) / (double) max[k];
+            }
+        }
+    }
+    /*
+     * X = 0.412453*R + 0.35758 *G + 0.180423*B
+     * Y = 0.212671*R + 0.71516 *G + 0.072169*B
+     * Z = 0.019334*R + 0.119193*G + 0.950227*B
+     * */
+    double parameters[3][3] = {
+            {(double )0.412453,  (double )0.35758, (double )0.180423},
+            {(double )0.212671,  (double )0.71516, (double )0.072169},
+            {(double )0.019334, (double )0.019334, (double )0.019334}
+    };
+
+    for (int i = 0; i < height; ++i) {
+        for (int j = 0; j < width; ++j) {
+            for (int k = 0; k < channels; ++k) {
+                for( int loop = 0; loop < 3; loop++){
+                    XYZ[k * height * width + i * width + j] += parameters[k][loop] * normalizedData[loop * height * width + i * width + j]  ;
+                }
+
+            }
+        }
+    }
+    delete[] normalizedData;
+    delete[] max;
+    return XYZ;
+}
+
+Image Image::RGBToLUV() {
+    double * XYZ = this->XYZ();
+    /**
+     * CIE chromaticity coordinates:
+     * xn = 0.312713
+     * yn = 0.329016
+     * CIE luminance:
+     * Yn = 1.0
+     * un = 4*xn / (-2*xn + 12*yn + 3)
+     * vn = 9*yn / (-2*xn + 12*yn + 3)
+     * u = 4*X / (X + 15*Y + 3*Z)
+     * v = 9*Y / (X + 15*Y + 3*Z)
+     * L = 116 * (Y/Yn)^(1/3) - 16
+     * U = 13*L*(u-un)
+     * V = 13*L*(v-vn)
+     */
+     double xn = (double )0.312713, yn = (double )0.329016, Yn = (double )1.0;
+     double un = 4*xn / (-2*xn + 12*yn + 3);
+     double vn = 9*yn / (-2*xn + 12*yn + 3);
+
+     double * u = new double [this->height * this->width * this->channels];
+     double * v = new double [this->height * this->width * this->channels];
+    for (int i = 0; i < height; ++i) {
+        for (int j = 0; j < width; ++j) {
+            // (X + 15*Y + 3*Z)
+            double temp =  ( XYZ[0 * height * width + i * width + j] +
+                    15* XYZ[1 * height * width + i * width + j] +
+                    3 * XYZ[2 * height * width + i * width + j]);
+            // u = 4*X / (X + 15*Y + 3*Z)
+            u[0 + j * channels + i * width] =  (4 * XYZ[0 * height * width + i * width + j]) / temp;
+            u[1 + j * channels + i * width] = (4 * XYZ[0 * height * width + i * width + j]) / temp;
+            u[2 + j * channels + i * width] = (4 * XYZ[0 * height * width + i * width + j]) / temp;
+            // v = 9*Y / (X + 15*Y + 3*Z)
+            v[0 + j * channels + i * width] =  (9 * XYZ[1 * height * width + i * width + j]) / temp;
+            v[1 + j * channels + i * width] = (9 * XYZ[1 * height * width + i * width + j]) / temp;
+            v[2 + j * channels + i * width] = (9 * XYZ[1 * height * width + i * width + j]) / temp;
+        }
+    }
+     Image LUVImage(width, height, channels);
+     for (int i = 0; i < height; ++i) {
+         for (int j = 0; j < width; ++j) {
+                /**
+                 * L = 116 * (Y/Yn)^(1/3) - 16
+                 * U = 13*L*(u-un)
+                 * V = 13*L*(v-vn)
+                 */
+
+                LUVImage( i, j, 0 ) = 116 * pow( (XYZ[1 * height * width + i * width + j] / Yn), 1/3 ) - 16;
+                LUVImage( i, j, 1 ) = 13 * LUVImage(i, j, 0) * (u[1 + j * channels + i * width] - un);
+                LUVImage( i, j, 2 ) = 13 * LUVImage(i, j, 0) * (v[1 + j * channels + i * width] - vn);
+         }
+     }
+     delete[] XYZ;
+     delete[] u;
+     delete[] v;
+    return LUVImage;
+}
 void Image::saveJPG(std::string filename) {
     char buff[256];
     sprintf(buff, "%s.jpg", filename.c_str());
