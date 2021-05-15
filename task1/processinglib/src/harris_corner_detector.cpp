@@ -128,18 +128,17 @@ getMainOrientation(Image &dir, Image &magnitude, std::pair<int, int> iRange, std
             orientationHistogram[index] += 1 * magnitude(i, j);
         }
     }
-    int max = 0;
-//    for (double &val: orientationHistogram) {
-//        if (val > max) {
-//            max = val;
-//        }
-//    }
-    for (int i = 0; i < 36; i++) {
-        if (orientationHistogram[i] >  max) {
-            max = i;
+    double max = 0;
+    for (double &val: orientationHistogram) {
+        if (val > max) {
+            max = val;
         }
     }
-    orientations.push_back(orientationHistogram[max]);
+    for (int i = 0; i < 36; i++) {
+        if (orientationHistogram[i] > 0.8 * max) {
+            orientations.push_back(i * step);
+        }
+    }
     return orientations;
 }
 
