@@ -10,7 +10,7 @@ using namespace std;
 class K_mean {
     int k;
     int maxIterations;
-    Image clusters;
+    Image * clusters;
     vector<vector<float>> centroids;
     Image * image;
 
@@ -23,9 +23,7 @@ public:
     void run();
     K_mean();
     K_mean(Image *, int, int);
-    void getOutput(Image *);
-    void print(int);
-    void print(char*);
+    Image getOutput();
     ~K_mean();
 };
 #endif //CV_K_MEAN_SEGMENTATIN_H
