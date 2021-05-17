@@ -12,17 +12,18 @@ class K_mean {
     int maxIterations;
     Image clusters;
     vector<vector<float>> centroids;
-    Image *image;
-    void run();
+    Image * image;
+
     void clusterPixels();
     int closestCluster(int, int);
     void getClustersCentroid();
     bool centroidsChanged(vector<vector<float>>);
     float distance(int, int, vector<float>);
 public:
+    void run();
     K_mean();
     K_mean(Image *, int, int);
-    Image getOutput();
+    void getOutput(Image *);
     void print(int);
     void print(char*);
     ~K_mean();

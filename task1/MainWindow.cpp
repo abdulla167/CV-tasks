@@ -158,4 +158,6 @@ MainWindow::~MainWindow() {
     delete yDataMatching_2;
     delete imageMatchPoints1;
     delete imageMatchPoints2;
+    delete segmentationImage;
+    delete segmentationOutputImage;
 }

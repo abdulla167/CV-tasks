@@ -42,6 +42,7 @@ Q_OBJECT
     Image * imageMatch_1 = nullptr;
     Image * imageMatch_2 = nullptr;
     Image * segmentationImage = nullptr;
+    Image * segmentationOutputImage = nullptr;
 
     QCPItemPixmap *ImageDisplay;
     QCPGraph *points;
@@ -53,7 +54,6 @@ Q_OBJECT
     QVector<double> *yDataMatching_1 = new QVector<double>();
     QVector<double> *xDataMatching_2 = new QVector<double>();
     QVector<double> *yDataMatching_2 = new QVector<double>();
-//    QCPItemLine** lines;
     QVector<QCPItemLine*> *lines = new QVector<QCPItemLine*>();
     int arrayOfPointsX [pointsCount] ;
     int arrayOfPointsY [pointsCount] ;
