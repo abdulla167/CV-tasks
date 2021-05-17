@@ -6,7 +6,6 @@
 #include "processinglib/histogram.h"
 #include <cmath>
 #include <vector>
-#include <list>
 #include <algorithm>
 
 void gaussianGeneration(float *kernel, char dim, float sigma, float mean) {
@@ -280,41 +279,113 @@ void sauvolaTechnique(Image &inputImg, int x, int y, int filterDim, double &mean
     std = sqrt(std / (N - 1));
 }
 
-int otsuAlgorithm(Image &inputImg, int histSize) {
-    int hist[256];
-    double normalizedHist[256];
+void
+getOptimalThresholds(int intThreshold, int histSize, double normalizedHist[], double globalMean, double classMeans[],
+                     double classProb[], int numModes,
+                     std::vector<int> &thresholds, std::vector<int> &optimalThreshold, double &maxBetweenVar,
+                     int &numClasses) {
+    if (intThreshold < histSize) {
+        double betweenVar = 0;
+        // base case
+        if (numModes == 2) {
+            double tempProb = 1;
+            double tempMean = globalMean;
+            classProb[1] = 0;
+            classMeans[1] = 0;
+            for (int i = intThreshold; i < histSize; ++i) {
+                thresholds[thresholds.size() - 1] = i;
+                classProb[1] += normalizedHist[i];
+                classMeans[1] += i * normalizedHist[i];
+                if (classProb[1] != 0){
+                    for (int j = numClasses - 1; j > 0; --j) {
+                        tempProb -= classProb[j];
+                        tempMean -= classMeans[j];
+                    }
+                    classProb[0] = tempProb;
+                    classMeans[0] = tempMean;
+                }
+                for (int j = 0; j < numClasses; ++j) {
+                    if (classProb[j] != 0)
+                        betweenVar += classProb[j] * (classMeans[j] / classProb[j] - globalMean) *
+                                      (classMeans[j] / classProb[j] - globalMean);
+
+                }
+                if (betweenVar > maxBetweenVar) {
+                    maxBetweenVar = betweenVar;
+                    for (int j = 0; j < thresholds.size(); ++j) {
+                        optimalThreshold[j] = thresholds[j];
+                    }
+                }
+                }
+        } else {
+            double tempClassProb = 0;
+            double tempClassMean = 0;
+            for (int i = intThreshold; i < histSize; ++i) {
+                thresholds[thresholds.size() + 1 - numModes] = i;
+                tempClassProb += normalizedHist[i];
+                tempClassMean += i * normalizedHist[i];
+                classProb[numModes - 1] = tempClassProb;
+                classMeans[numModes - 1] = tempClassMean;
+                getOptimalThresholds(i + 1, histSize, normalizedHist, globalMean, classMeans, classProb,
+                                     numModes - 1, thresholds, optimalThreshold, maxBetweenVar, numClasses);
+
+            }
+        }
+    }
+}
+
+std::vector<int> otsuAlgorithm(Image &inputImg, int histSize, int numModes) {
+    auto hist = new int[histSize];
+    auto normalizedHist = new double[histSize];
     int pixelsNo = inputImg.width * inputImg.height;
     int threshold = 0;
-    double globalMean = 0, firstProbabilitySum = 0;
+    double globalMean = 0, globalVariance = 0, betweenClassVariance = 0, firstProbabilitySum = 0;
+    auto classProbabilities = new double[numModes];
+    auto classMeans = new double[numModes];
+    auto optimalThreshold = std::vector<int>(numModes - 1);
+    auto thresholds = std::vector<int>(numModes - 1);
+    double maxBetweenVar = 0;
+    for (int i = 0; i < numModes; ++i) {
+        classProbabilities[i] = classMeans[i] = 0;
+    }
     double firstClassProbability = 0, secondClassProbability = 0, firstClassMean = 0, secondClassMean = 0;
     double variance = 0, maxVariance = 0;
     im_hist(inputImg, hist, 1);
     getNormalizedHist(hist, normalizedHist, histSize, pixelsNo);
-    for (int i = 0; i < 256; i++) {
+    for (int i = 0; i < histSize; i++) {
         globalMean += i * normalizedHist[i];
     }
-    for (int t = 0; t < 256; t++) {
-        firstClassProbability += normalizedHist[t];
-        if (firstClassProbability == 0)
-            continue;
-        secondClassProbability = 1 - firstClassProbability;
-        firstProbabilitySum += t * normalizedHist[t];
-        firstClassMean = (double) firstProbabilitySum / (double) firstClassProbability;
-        secondClassMean = (double) (globalMean - firstProbabilitySum) / (double) secondClassProbability;
-        variance = firstClassProbability * secondClassProbability * pow((firstClassMean - secondClassMean), 2);
-        if (variance > maxVariance) {
-            threshold = t;
-            maxVariance = variance;
-        }
+    for (int i = 0; i < histSize; ++i) {
+        globalVariance += (i - globalMean) * (i - globalMean) * normalizedHist[i];
     }
-    return threshold;
+    getOptimalThresholds(0, histSize, normalizedHist, globalMean, classMeans, classProbabilities, numModes, thresholds,
+                         optimalThreshold, maxBetweenVar, numModes);
+    delete[] hist;
+    delete[] normalizedHist;
+    delete[] classProbabilities;
+    delete[] classMeans;
+    return optimalThreshold;
 }
 
-Image buildSegmentedImg(Image &inputImg, int threshold) {
+Image buildSegmentedImg(Image &inputImg, std::vector<int> thresholds) {
     Image segmentedImg{inputImg.width, inputImg.height, inputImg.channels};
     for (int y = 0; y < inputImg.height - 1; y++) {
         for (int x = 0; x < inputImg.width - 1; x++) {
-            if (inputImg(y, x) > threshold) {
+            if (inputImg(y, x) > thresholds[0]) {
+                segmentedImg(y, x) = 255;
+            } else {
+                segmentedImg(y, x) = 0;
+            }
+        }
+    }
+    return segmentedImg;
+}
+
+Image buildSegmentedImg(Image &inputImg, int thresholdVal) {
+    Image segmentedImg{inputImg.width, inputImg.height, inputImg.channels};
+    for (int y = 0; y < inputImg.height - 1; y++) {
+        for (int x = 0; x < inputImg.width - 1; x++) {
+            if (inputImg(y, x) > thresholdVal) {
                 segmentedImg(y, x) = 255;
             } else {
                 segmentedImg(y, x) = 0;

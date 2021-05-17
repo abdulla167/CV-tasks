@@ -141,7 +141,7 @@ Image globalThresholding(Image &inputImg, int thresholdVal) {
     if (thresholdVal != 0) {
         return buildSegmentedImg(inputImg, thresholdVal);
     } else {
-        int threshold = otsuAlgorithm(inputImg, 256);
+        auto threshold = otsuAlgorithm(inputImg, 256, 2);
         return buildSegmentedImg(inputImg, threshold);
     }
 }
