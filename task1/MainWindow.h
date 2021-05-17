@@ -39,8 +39,9 @@ Q_OBJECT
 
     Image *snakeImage = nullptr;
 
-    Image* imageMatch_1 = nullptr;
-    Image* imageMatch_2 = nullptr;
+    Image * imageMatch_1 = nullptr;
+    Image * imageMatch_2 = nullptr;
+    Image * segmentationImage = nullptr;
 
     QCPItemPixmap *ImageDisplay;
     QCPGraph *points;
@@ -102,6 +103,11 @@ private slots:
     void on_sigmaCannySlider_valueChanged(int);
 
     void on_thLowCannySlider_valueChanged(int);
+
+    void on_segmentImgBtn_clicked();
+
+    void on_startSegmentationBtn_clicked();
+
 
 
 protected:

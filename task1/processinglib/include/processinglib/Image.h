@@ -45,7 +45,7 @@ public:
     Image toScale();
 
     Image RGBToLUV();
-    double* XYZ();
+    Image XYZ();
 
     void saveJPG(std::string filename);
 

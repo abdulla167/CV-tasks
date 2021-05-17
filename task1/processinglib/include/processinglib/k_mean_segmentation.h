@@ -10,19 +10,21 @@ using namespace std;
 class K_mean {
     int k;
     int maxIterations;
-    vector<vector<int>> clusters;
-    vector<int> centroids;
-    Image image;
+    Image clusters;
+    vector<vector<float>> centroids;
+    Image *image;
     void run();
     void clusterPixels();
-    int closestCluster();
+    int closestCluster(int, int);
     void getClustersCentroid();
-    bool centroidsChanged();
-    double distance();
+    bool centroidsChanged(vector<vector<float>>);
+    float distance(int, int, vector<float>);
 public:
     K_mean();
-    K_mean(int, int);
+    K_mean(Image *, int, int);
     Image getOutput();
+    void print(int);
+    void print(char*);
     ~K_mean();
 };
 #endif //CV_K_MEAN_SEGMENTATIN_H
