@@ -340,7 +340,7 @@ getOptimalThresholds(int intThreshold, int histSize, double normalizedHist[], do
                      double classProb[], int numModes,
                      std::vector<int> &thresholds, std::vector<int> &optimalThreshold, double &maxBetweenVar) {
     getOptimalThresholdsRec(intThreshold, histSize, normalizedHist, globalMean, classMeans, classProb, numModes, numModes,thresholds,
-                         optimalThreshold, maxBetweenVar)
+                         optimalThreshold, maxBetweenVar);
 }
 
 std::vector<int> otsuAlgorithm(Image &inputImg, int histSize, int numModes) {
