@@ -138,18 +138,7 @@ int Image::size() {
 }
 
 Image Image::XYZ()  {
-//    float *max = new float[channels];
-//    for (int k = 0; k < channels; ++k) {
-//        max[k] = 0;
-//    }
-//    for (int i = 0; i < height; ++i) {
-//        for (int j = 0; j < width; ++j) {
-//            for (int k = 0; k < channels; ++k) {
-//                if ((*this)(i, j, k) > max[k])
-//                    max[k] = (*this)(i, j, k);
-//            }
-//        }
-//    }
+
     Image XYZ = Image(width, height, channels);
     Image temp = Image(this);
     Image normalizedData = temp.toScale();
@@ -158,7 +147,8 @@ Image Image::XYZ()  {
         for (int j = 0; j < width; ++j) {
             for (int k = 0; k < channels; ++k) {
 
-                normalizedData(i, j, k) =  (*this)(i, j, k) / (float) 255;
+                normalizedData(i, j, k) =  normalizedData(i, j, k) / (float) 255;
+
             }
         }
     }
@@ -171,6 +161,7 @@ Image Image::XYZ()  {
             {0.412453, 0.357580, 0.180423},
             {0.212671, 0.715160, 0.072169},
             {0.019334, 0.119193, 0.019334}
+
     };
 
     for (int i = 0; i < height; ++i) {
@@ -179,7 +170,6 @@ Image Image::XYZ()  {
                 for( int loop = 0; loop < 3; loop++){
                     XYZ(i, j, k) += (parameters[k][loop] * normalizedData(i, j, loop) ) ;
                 }
-
             }
         }
     }
@@ -189,6 +179,7 @@ Image Image::XYZ()  {
 
 Image Image::RGBToLUV() {
     Image XYZ = this->XYZ();
+
     /**
      * CIE chromaticity coordinates:
      * xn = 0.312713
@@ -248,6 +239,7 @@ Image Image::RGBToLUV() {
     std::cout<< v_;
     return LUVImage;
 }
+
 void Image::saveJPG(std::string filename) {
     char buff[256];
     sprintf(buff, "%s.jpg", filename.c_str());

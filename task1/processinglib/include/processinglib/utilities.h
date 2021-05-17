@@ -6,6 +6,7 @@
 #define CV_UTILITIES_H
 
 #include "Image.h"
+#include <vector>
 
 void averageGeneration(float *kernel, char dim = 3);
 
@@ -37,8 +38,10 @@ Image getDirection(Image& imgX, Image& imgY, bool approximateFour = true);
 
 void sauvolaTechnique(Image& inputImg, int x, int y, int filterDim, double & mean, double & std);
 
-int otsuAlgorithm(Image &inputImg, int histSize);
+std::vector<int> otsuAlgorithm(Image &inputImg, int histSize = 256, int numModes = 2);
 
-Image buildSegmentedImg(Image &inputImg, int threshold);
+Image buildSegmentedImg(Image &inputImg, std::vector<int> thresholds);
+
+Image buildSegmentedImg(Image &inputImg, int thresholdVal);
 
 #endif //CV_UTILITIES_H
