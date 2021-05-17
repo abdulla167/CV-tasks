@@ -281,15 +281,15 @@ void sauvolaTechnique(Image &inputImg, int x, int y, int filterDim, double &mean
 
 
 void
-getOptimalThresholdsRec(int intThreshold, int histSize, double normalizedHist[], double globalMean, double classMeans[],
-                     double classProb[], int currentNumModes,int numClasses,
-                     std::vector<int> &thresholds, std::vector<int> &optimalThreshold, double &maxBetweenVar) {
+getOptimalThresholdsRec(int intThreshold, double normalizedHist[], int histSize, double globalMean, double classMeans[],
+                        double classProb[], int currentNumModes, int numClasses,
+                        std::vector<int> &thresholds, std::vector<int> &optimalThreshold, double &maxBetweenVar) {
     if (intThreshold < histSize) {
         // base case
         if (currentNumModes == 2) {
             classProb[1] = 0;
             classMeans[1] = 0;
-            double tempProb, tempMean,  betweenVar;
+            double tempProb, tempMean, betweenVar;
             for (int i = intThreshold; i < histSize; ++i) {
                 tempProb = 1;
                 tempMean = globalMean;
@@ -327,8 +327,9 @@ getOptimalThresholdsRec(int intThreshold, int histSize, double normalizedHist[],
                 classProb[currentNumModes - 1] = tempClassProb;
                 classMeans[currentNumModes - 1] = tempClassMean;
                 if (classProb[currentNumModes - 1] != 0)
-                    getOptimalThresholdsRec(i + 1, histSize, normalizedHist, globalMean, classMeans, classProb,
-                                            currentNumModes - 1, numClasses,thresholds, optimalThreshold, maxBetweenVar);
+                    getOptimalThresholdsRec(i + 1, normalizedHist, histSize, globalMean, classMeans, classProb,
+                                            currentNumModes - 1, numClasses, thresholds, optimalThreshold,
+                                            maxBetweenVar);
 
             }
         }
@@ -336,11 +337,13 @@ getOptimalThresholdsRec(int intThreshold, int histSize, double normalizedHist[],
 }
 
 void
-getOptimalThresholds(int intThreshold, int histSize, double normalizedHist[], double globalMean, double classMeans[],
-                     double classProb[], int numModes,
-                     std::vector<int> &thresholds, std::vector<int> &optimalThreshold, double &maxBetweenVar) {
-    getOptimalThresholdsRec(intThreshold, histSize, normalizedHist, globalMean, classMeans, classProb, numModes, numModes,thresholds,
-                         optimalThreshold, maxBetweenVar);
+getOptimalThresholds(double normalizedHist[], int histSize, double globalMean, double classMeans[],
+                     double classProb[], int numModes, std::vector<int> &optimalThreshold) {
+    std::vector<int> thresholds(numModes - 1);
+    int intThreshold = 0;
+    double maxBetweenVar = 0;
+    getOptimalThresholdsRec(intThreshold, normalizedHist, histSize, globalMean, classMeans, classProb, numModes,
+                            numModes, thresholds, optimalThreshold, maxBetweenVar);
 }
 
 std::vector<int> otsuAlgorithm(Image &inputImg, int histSize, int numModes) {
@@ -350,9 +353,7 @@ std::vector<int> otsuAlgorithm(Image &inputImg, int histSize, int numModes) {
     double globalMean = 0;
     auto classProbabilities = new double[numModes];
     auto classMeans = new double[numModes];
-    auto optimalThreshold = std::vector<int>(numModes - 1);
-    auto thresholds = std::vector<int>(numModes - 1);
-    double maxBetweenVar = 0;
+    std::vector<int> optimalThreshold(numModes - 1);
     for (int i = 0; i < numModes; ++i) {
         classProbabilities[i] = classMeans[i] = 0;
     }
@@ -361,8 +362,8 @@ std::vector<int> otsuAlgorithm(Image &inputImg, int histSize, int numModes) {
     for (int i = 0; i < histSize; i++) {
         globalMean += i * normalizedHist[i];
     }
-    getOptimalThresholds(0, histSize, normalizedHist, globalMean, classMeans, classProbabilities, numModes, thresholds,
-                         optimalThreshold, maxBetweenVar);
+    getOptimalThresholds(normalizedHist, histSize, globalMean, classMeans, classProbabilities, numModes,
+                         optimalThreshold);
     delete[] hist;
     delete[] normalizedHist;
     delete[] classProbabilities;
