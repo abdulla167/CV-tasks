@@ -296,27 +296,26 @@ getOptimalThresholds(int intThreshold, int histSize, double normalizedHist[], do
                 thresholds[thresholds.size() - 1] = i;
                 classProb[1] += normalizedHist[i];
                 classMeans[1] += i * normalizedHist[i];
-                if (classProb[1] != 0){
+                if (classProb[1] != 0) {
                     for (int j = numClasses - 1; j > 0; --j) {
                         tempProb -= classProb[j];
                         tempMean -= classMeans[j];
                     }
                     classProb[0] = tempProb;
                     classMeans[0] = tempMean;
-                }
-                for (int j = 0; j < numClasses; ++j) {
-                    if (classProb[j] != 0)
-                        betweenVar += classProb[j] * (classMeans[j] / classProb[j] - globalMean) *
-                                      (classMeans[j] / classProb[j] - globalMean);
+                    for (int j = 0; j < numClasses; ++j) {
+                        betweenVar = classProb[j] * (classMeans[j] / classProb[j] - globalMean) *
+                                     (classMeans[j] / classProb[j] - globalMean);
 
-                }
-                if (betweenVar > maxBetweenVar) {
-                    maxBetweenVar = betweenVar;
-                    for (int j = 0; j < thresholds.size(); ++j) {
-                        optimalThreshold[j] = thresholds[j];
+                    }
+                    if (betweenVar > maxBetweenVar) {
+                        maxBetweenVar = betweenVar;
+                        for (int j = 0; j < thresholds.size(); ++j) {
+                            optimalThreshold[j] = thresholds[j];
+                        }
                     }
                 }
-                }
+            }
         } else {
             double tempClassProb = 0;
             double tempClassMean = 0;
@@ -326,8 +325,9 @@ getOptimalThresholds(int intThreshold, int histSize, double normalizedHist[], do
                 tempClassMean += i * normalizedHist[i];
                 classProb[numModes - 1] = tempClassProb;
                 classMeans[numModes - 1] = tempClassMean;
-                getOptimalThresholds(i + 1, histSize, normalizedHist, globalMean, classMeans, classProb,
-                                     numModes - 1, thresholds, optimalThreshold, maxBetweenVar, numClasses);
+                if (classProb[numModes - 1] != 0)
+                    getOptimalThresholds(i + 1, histSize, normalizedHist, globalMean, classMeans, classProb,
+                                         numModes - 1, thresholds, optimalThreshold, maxBetweenVar, numClasses);
 
             }
         }
@@ -338,8 +338,7 @@ std::vector<int> otsuAlgorithm(Image &inputImg, int histSize, int numModes) {
     auto hist = new int[histSize];
     auto normalizedHist = new double[histSize];
     int pixelsNo = inputImg.width * inputImg.height;
-    int threshold = 0;
-    double globalMean = 0, globalVariance = 0, betweenClassVariance = 0, firstProbabilitySum = 0;
+    double globalMean = 0;
     auto classProbabilities = new double[numModes];
     auto classMeans = new double[numModes];
     auto optimalThreshold = std::vector<int>(numModes - 1);
@@ -348,15 +347,10 @@ std::vector<int> otsuAlgorithm(Image &inputImg, int histSize, int numModes) {
     for (int i = 0; i < numModes; ++i) {
         classProbabilities[i] = classMeans[i] = 0;
     }
-    double firstClassProbability = 0, secondClassProbability = 0, firstClassMean = 0, secondClassMean = 0;
-    double variance = 0, maxVariance = 0;
     im_hist(inputImg, hist, 1);
     getNormalizedHist(hist, normalizedHist, histSize, pixelsNo);
     for (int i = 0; i < histSize; i++) {
         globalMean += i * normalizedHist[i];
-    }
-    for (int i = 0; i < histSize; ++i) {
-        globalVariance += (i - globalMean) * (i - globalMean) * normalizedHist[i];
     }
     getOptimalThresholds(0, histSize, normalizedHist, globalMean, classMeans, classProbabilities, numModes, thresholds,
                          optimalThreshold, maxBetweenVar, numModes);
@@ -369,12 +363,15 @@ std::vector<int> otsuAlgorithm(Image &inputImg, int histSize, int numModes) {
 
 Image buildSegmentedImg(Image &inputImg, std::vector<int> thresholds) {
     Image segmentedImg{inputImg.width, inputImg.height, inputImg.channels};
+    if (thresholds.size() == 1)
+        return buildSegmentedImg(inputImg, thresholds[0]);
+    int step = 255 / thresholds.size();
     for (int y = 0; y < inputImg.height - 1; y++) {
         for (int x = 0; x < inputImg.width - 1; x++) {
-            if (inputImg(y, x) > thresholds[0]) {
-                segmentedImg(y, x) = 255;
-            } else {
-                segmentedImg(y, x) = 0;
+            for (int i = 1; i < thresholds.size(); ++i) {
+                if (inputImg(y, x) >= thresholds[i - 1] && inputImg(y, x) < thresholds[i]) {
+                    segmentedImg(y, x) = (i + 1) * step;
+                }
             }
         }
     }

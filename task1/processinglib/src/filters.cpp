@@ -5,6 +5,7 @@
 #include "processinglib/filters.h"
 #include "processinglib/utilities.h"
 #include <cmath>
+#include <iostream>
 #include "processinglib/fourier_transform.h"
 
 void translate(Image* &inputImg) {
@@ -142,6 +143,9 @@ Image globalThresholding(Image &inputImg, int thresholdVal) {
         return buildSegmentedImg(inputImg, thresholdVal);
     } else {
         auto threshold = otsuAlgorithm(inputImg, 256, 2);
+        for (int i = 0; i < threshold.size(); ++i) {
+            std::cout << threshold[i] << std::endl;
+        }
         return buildSegmentedImg(inputImg, threshold);
     }
 }
