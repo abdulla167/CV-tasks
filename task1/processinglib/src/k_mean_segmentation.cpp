@@ -12,15 +12,13 @@ K_mean::K_mean() {}
 
 K_mean::K_mean(Image *image, int k, int maxIteration) {
 
-    Image temp = image->RGB2LUV();
-    this->image = new Image(temp.width, temp.height, temp.channels);
-    for (int i = 0; i < this->image->height; ++i) {
-        for (int j = 0; j < this->image->width; ++j) {
-            for (int k = 0; k < this->image->channels; k++) {
-                (*(this->image))(i, j, k) = temp(i, j, k);
-            }
-        }
+    if(image->channels == 3) {
+        Image temp = image->RGB2LUV();
+        this->image = new Image(&temp);
+    } else{
+        this->image = new Image(image);
     }
+
     this->k = k;
     this->clusters = new Image(this->image->width, this->image->height, 1);
 

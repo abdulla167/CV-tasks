@@ -8,13 +8,15 @@
 #include "processinglib/mean_shift.h"
 #include "iostream"
 void MainWindow::on_segmentImgBtn_clicked() {
-
+    bool  first = false;
+    if(segmentationImage == nullptr){
+        first = true;
+    }
     QString filePath = QFileDialog::getOpenFileName(this, "load image", "../");
     std::string filepathStd = filePath.toStdString();
     auto filename = filepathStd.substr(filepathStd.find_last_of("/") + 1);
     segmentationImage = new Image(filepathStd,3);
     displayRGBImage(segmentationImage, ui->segmentImg);
-
 
 }
 
@@ -27,6 +29,7 @@ void MainWindow::startSegmentation() {
         K_mean kMean( segmentationImage, k, 200);
         Image image = kMean.getOutput();
         displayRGBImage(&image, ui->segmentOutput);
+
     } else if (ui->filterSelect_2->currentIndex() == 2) {
 
         MeanShift meanShift(segmentationImage, 8, 16, 100);

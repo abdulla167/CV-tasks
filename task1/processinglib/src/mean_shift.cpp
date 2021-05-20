@@ -15,9 +15,12 @@ MeanShift::MeanShift() {}
 MeanShift::MeanShift(Image *image, float hs, float hr, int maxIteration) {
     this->hs = hs;
     this->hr = hr;
-    Image temp = image->RGB2LUV();
-    this->image = new Image(&temp);
-
+    if(image->channels == 3) {
+        Image temp = image->RGB2LUV();
+        this->image = new Image(&temp);
+    }else {
+        this->image = new Image(image);
+    }
     this->maxIterations = maxIteration;
 }
 
