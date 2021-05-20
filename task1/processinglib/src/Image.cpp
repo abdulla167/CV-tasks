@@ -175,7 +175,7 @@ std::vector<float> Image::XYZ2LUV(float X, float Y, float Z) {
 
     float var_Y = Y / 100.f;
     if ( var_Y > 0.008856 ) {
-        var_Y = pow(var_Y , (1 / 3.f));
+        var_Y = pow(var_Y , 0.3333334);
     }else {
         var_Y = (7.787 * var_Y) + (16 / 116.f);
     }

@@ -99,7 +99,7 @@ Image MeanShift::run() {
         }
 
     }
-    return this->image->LUV2RGB();
+    return output.LUV2RGB();
 }
 MeanShift::~MeanShift()  {
         delete image;
