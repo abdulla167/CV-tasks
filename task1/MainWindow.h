@@ -72,6 +72,8 @@ private slots:
 
     void on_filterSelect_currentIndexChanged(QString);
 
+    void on_filterSelect_2_currentIndexChanged(QString);
+
     void on_imageSelect_currentIndexChanged(QString);
 
     void on_imageABtn_clicked();
@@ -106,7 +108,7 @@ private slots:
 
     void on_segmentImgBtn_clicked();
 
-    void on_startSegmentationBtn_clicked();
+    void startSegmentation();
 
 
 

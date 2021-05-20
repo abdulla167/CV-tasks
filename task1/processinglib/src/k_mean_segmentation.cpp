@@ -154,5 +154,6 @@ Image K_mean::getOutput() {
 
 K_mean::~K_mean() {
     delete image;
+    delete clusters;
 }
 

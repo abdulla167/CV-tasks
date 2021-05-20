@@ -5,6 +5,7 @@
 #include "../ui_MainWindow.h"
 #include <QFileDialog>
 #include "processinglib/k_mean_segmentation.h"
+#include "processinglib/mean_shift.h"
 #include "iostream"
 void MainWindow::on_segmentImgBtn_clicked() {
 
@@ -17,19 +18,24 @@ void MainWindow::on_segmentImgBtn_clicked() {
 
 }
 
-void MainWindow::on_startSegmentationBtn_clicked() {
+void MainWindow::startSegmentation() {
 
-    K_mean kMean( segmentationImage, 3, 200);
-    Image image = kMean.getOutput();
+    if (ui->filterSelect_2->currentIndex() == 1){
+        int k = 3;
+        k = ui->KBox->value();
+        qDebug() << k;
+        K_mean kMean( segmentationImage, k, 200);
+        Image image = kMean.getOutput();
+        displayRGBImage(&image, ui->segmentOutput);
+    } else if (ui->filterSelect_2->currentIndex() == 2) {
 
-    for (int j = 0; j < image.width; j++) {
-        for (int i = 0; i < image.height; i++) {
-            for (int k =0; k < image.channels; k++){
-                image(i, j, k) = abs(image(i, j, k));
-            }
-        }
+        MeanShift meanShift(segmentationImage, 8, 16, 100);
+        Image image = meanShift.run();
+        displayRGBImage(&image, ui->segmentOutput);
     }
 
-    displayRGBImage(&image, ui->segmentOutput);
+}
 
+void MainWindow::on_filterSelect_2_currentIndexChanged(QString filterName) {
+    startSegmentation();
 }
