@@ -73,10 +73,8 @@ void Image::init(float value) {
 Image Image::toScale() {
     Image scaleImg(width, height, channels);
     float *max = new float[channels];
-    float *min = new float[channels];
     for (int k = 0; k < channels; ++k) {
-        max[k] = -1000;
-        min[k] = 1000;
+        max[k] = 0;
     }
     for (int i = 0; i < height; ++i) {
         for (int j = 0; j < width; ++j) {
@@ -84,8 +82,6 @@ Image Image::toScale() {
                 scaleImg(i, j, k) = std::abs((*this)(i, j, k));
                 if (scaleImg(i, j, k) > max[k]) {
                     max[k] = scaleImg(i, j, k);
-                }else if(scaleImg(i, j, k) < min[k]){
-                    min[k] = scaleImg(i, j, k);
                 }
 
             }
@@ -95,13 +91,12 @@ Image Image::toScale() {
     for (int i = 0; i < height; ++i) {
         for (int j = 0; j < width; ++j) {
             for (int k = 0; k < channels; ++k) {
-                scaleImg(i, j, k) = roundf(((scaleImg(i, j, k)  - min[k])/ max[k]) * 255);
+                scaleImg(i, j, k) = roundf((scaleImg(i, j, k) / max[k]) * 255);
             }
         }
     }
 
     delete[] max;
-    delete[] min;
     return scaleImg;
 }
 
