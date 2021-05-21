@@ -28,9 +28,7 @@ function parameters:
 * histSize: histogram size depending on the number of bits that represent each pixel in the image
 * numModes: number of modes
 
-Returns: 
-vector of pair, each pair if 128-length vector and its associated _Point
-
+function return: return the thresholded image
 
 **Results**:<br>
 * local atsu 2 modes, blockDim: 5
@@ -46,16 +44,7 @@ int globalOptimalIterativeThresholding(Image &inputImg);
 function parameters:
    * inputImg: reference to gray Image 
 
-Steps:
-* get FIST descriptor of both images
-* loop over the descriptor of the first image and  inside this loop 
-  , loop over the descriptor of the second image
-* calculate the SSD between the key _Point of the first image and all the key points 
-  of the second image
-* get the 2 least SSD points and make sure that the least _Point is less than 0.8 * the second least _Point 
-* put the points in the vector
-* return the vector holding the points
-
+function return: return threshold
 
  **Results**:<br>
 ![](images/global-optimal.png)
@@ -64,22 +53,11 @@ Steps:
 ```c++
 Image localOptimalIterativeThresholding(Image &inputImg, int blockDim);
 ```
-Parameters:
-* Grayscale image (first image)
-* Grayscale image (second image)
+function parameters:
+* inputImg: reference to gray Image
+* blockDim: block dimension (eg, 5 means 5 x 5)
 
-Returns:
-vector of points that match
-
-Steps:
-* get FIST descriptor of the 2 images
-* loop over the FIST descriptor of the 2 images and get the average of the vector of each key _Point 128 vector and store it
-* loop over the descriptor of the first image and  inside this loop
-  , loop over the descriptor of the second image
-* calculate the Normalized Correlation between the key _Point of the first image and all the key points
-  of the second image
-* put the points in the vector
-* return the vector holding the points
+function return: return threshold
 
 **Results**:<br>
 blockDim: 7
@@ -110,34 +88,29 @@ class functions:
 * ```c++ bool centroidsChanged(vector<vector<float>> oldCentroids)```
 * ```c++ float distance(int i, int j, vector<float> centroid)```
 * ```c++ void run()```
+* ```c++ K_mean()```
 * ```c++ Image getOutput()```
 
-**Results**:<br>
-blockDim: 7
-![](images/K-Mean.jpg)
-
-##### Region GRowing
+##### Region Growing
 ```c++
 Image RGSegmentation(Image & inputImg, std::vector<point> seedPoint)
 ```
-Parameters:
-* ///
-Returns:
-////
+function parameters:
+* parameter
 
+function return: return threshold
 **Results**:<br>
 blockDim: 7
-![](images/Region-Growing.jpg)
+![](images/Region-GRowing.jpg)
 
 ##### Agglomerative
 ```c++
 Image agglomerativeSeg(Image & img, int numOfClusters, unsigned long initialClustersNum)
 ```
-Parameters:
-* /////
+function parameters:
+* parameter
 
-Returns:
-///
+function return: return threshold
 **Results**:<br>
 blockDim: 7
 ![](images/Agglomerative.jpg)
