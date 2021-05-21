@@ -8,8 +8,10 @@
 #include "processinglib/utilities.h"
 #include "processinglib/canny.h"
 #include "processinglib/hough.h"
+#include "processinglib/growing_region.h"
 #include <iostream>
 #include "processinglib/harris_corner_detector.h"
+#include "processinglib/agglomerative_cluster_segmentation.h"
 
 void MainWindow::on_loadImageBtn_clicked() {
     QString filePath = QFileDialog::getOpenFileName(this, "load image", "../");

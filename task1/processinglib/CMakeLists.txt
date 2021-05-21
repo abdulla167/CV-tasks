@@ -1,7 +1,7 @@
 SET(LIB_NAME processinglib)
 include_directories(include/processinglib)
 
-add_library(${LIB_NAME} src/Image.cpp src/filters.cpp src/utilities.cpp src/histogram.cpp src/fourier_transform.cpp src/canny.cpp src/hough.cpp src/greedy_snake.cpp src/harris_corner_detector.cpp include/processinglib/harris_corner_detector.h include/processinglib/imageMatching.h src/imageMatching.cpp)
+add_library(${LIB_NAME} src/Image.cpp src/filters.cpp src/utilities.cpp src/histogram.cpp src/fourier_transform.cpp src/canny.cpp src/hough.cpp src/greedy_snake.cpp src/harris_corner_detector.cpp include/processinglib/harris_corner_detector.h include/processinglib/imageMatching.h src/imageMatching.cpp src/growing_region.cpp src/_Point.cpp include/processinglib/_Point.h include/processinglib/growing_region.h src/agglomerative_cluster_segmentation.cpp include/processinglib/agglomerative_cluster_segmentation.h)
 
 find_package(OpenCV)
 include_directories(${OpenCV_INCLUDE_DIRS})
