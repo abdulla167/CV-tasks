@@ -11,7 +11,7 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include "qcustomplot.h"
 #include "ui_MainWindow.h"
-
+#include "vector"
 using namespace cv;
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -48,8 +48,12 @@ Q_OBJECT
     QCPGraph *points;
     QCPGraph *imageMatchPoints1;
     QCPGraph *imageMatchPoints2;
+    QCPGraph *regionGrowing;
     QVector<double> *xData = new QVector<double>();
     QVector<double> *yData = new QVector<double>();
+
+    std::vector<std::pair<int, int>> DataRG;
+
     QVector<double> *xDataMatching_1 = new QVector<double>();
     QVector<double> *yDataMatching_1 = new QVector<double>();
     QVector<double> *xDataMatching_2 = new QVector<double>();
@@ -117,6 +121,9 @@ protected:
 
 private:
     Ui::MainWindow *ui;
+
+    void initializeCustomPlot(QCustomPlot * plot);
+
     void loadImage(std::string filepath, Image *&image);
 
     void displayRGBImage(Image *image, QLabel *label);

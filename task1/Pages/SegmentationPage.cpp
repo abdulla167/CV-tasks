@@ -16,12 +16,24 @@ void MainWindow::on_segmentImgBtn_clicked() {
     std::string filepathStd = filePath.toStdString();
     auto filename = filepathStd.substr(filepathStd.find_last_of("/") + 1);
     segmentationImage = new Image(filepathStd,3);
-    displayRGBImage(segmentationImage, ui->segmentImg);
+    
+    QImage qImage(segmentationImage->width, segmentationImage->height, QImage::Format_RGB16);
+    QRgb rgb;
+    for (int j = 0; j < segmentationImage->width; ++j) {
+        for (int i = 0; i < segmentationImage->height; ++i) {
+            rgb = qRgb((*segmentationImage)(i, j,0), (*segmentationImage)(i, j,1), (*segmentationImage)(i, j,2));
+            qImage.setPixel(j, i, rgb);
+        }
+    }
+    int width = ui->segmentImg->width() ;
+    int height = ui->segmentImg->height();
+    ui->segmentImg->setBackground(QPixmap::fromImage(qImage).scaled(width, height,Qt::IgnoreAspectRatio, Qt::FastTransformation));
+    ui->segmentImg->setAutoFillBackground(true);
+    ui->segmentImg->replot();
 
 }
 
 void MainWindow::startSegmentation() {
-
     if (ui->filterSelect_2->currentIndex() == 1){
         int k = 3;
         k = ui->KBox->value();
@@ -35,6 +47,16 @@ void MainWindow::startSegmentation() {
         MeanShift meanShift(segmentationImage, 8, 16, 100);
         Image image = meanShift.run();
         displayRGBImage(&image, ui->segmentOutput);
+    }  else if (ui->filterSelect_2->currentIndex() == 3) {
+        // applu image growing
+        // get output image
+
+        //displayRGBImage(&image, ui->segmentOutput);
+    }  else if (ui->filterSelect_2->currentIndex() == 4) {
+        // applu Agglomerative
+        // get output image
+
+        //displayRGBImage(&image, ui->segmentOutput);
     }
 
 }

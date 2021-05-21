@@ -1564,7 +1564,7 @@
         <property name="frameShadow">
          <enum>QFrame::Raised</enum>
         </property>
-        <widget class="QLabel" name="segmentImg">
+        <widget class="QCustomPlot" name="segmentImg" native="true">
          <property name="geometry">
           <rect>
            <x>0</x>
@@ -1572,9 +1572,6 @@
            <width>531</width>
            <height>501</height>
           </rect>
-         </property>
-         <property name="text">
-          <string/>
          </property>
         </widget>
        </widget>
@@ -1695,6 +1692,16 @@
             <item>
              <property name="text">
               <string>Mean-Shift</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Region-Growing</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Agglomerative</string>
              </property>
             </item>
            </widget>
