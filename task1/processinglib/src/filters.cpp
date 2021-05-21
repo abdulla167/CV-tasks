@@ -7,8 +7,9 @@
 #include <cmath>
 #include <iostream>
 #include "processinglib/fourier_transform.h"
+#include "thresholding.h"
 
-void translate(Image* &inputImg) {
+void translate(Image *&inputImg) {
     Image out{inputImg->width, inputImg->height, inputImg->channels};
     for (int i = 0; i < inputImg->height; ++i) {
         for (int j = 60; j < inputImg->width; ++j) {
@@ -142,10 +143,12 @@ Image globalThresholding(Image &inputImg, int thresholdVal) {
     if (thresholdVal != 0) {
         return buildSegmentedImg(inputImg, thresholdVal);
     } else {
-        auto threshold = otsuAlgorithm(inputImg, 256, 3);
+        auto threshold = globalAtsu(inputImg, 256, 3);
         for (int i = 0; i < threshold.size(); ++i) {
             std::cout << threshold[i] << std::endl;
         }
+//        auto threshold = globalOptimalIterativeThresholding(inputImg);
+//        std::cout << threshold << std::endl;
         return buildSegmentedImg(inputImg, threshold);
     }
 }

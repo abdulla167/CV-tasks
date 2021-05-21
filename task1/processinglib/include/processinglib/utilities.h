@@ -38,10 +38,4 @@ Image getDirection(Image& imgX, Image& imgY, bool approximateFour = true);
 
 void sauvolaTechnique(Image& inputImg, int x, int y, int filterDim, double & mean, double & std);
 
-std::vector<int> otsuAlgorithm(Image &inputImg, int histSize = 256, int numModes = 2);
-
-Image buildSegmentedImg(Image &inputImg, std::vector<int> thresholds);
-
-Image buildSegmentedImg(Image &inputImg, int thresholdVal);
-
 #endif //CV_UTILITIES_H
