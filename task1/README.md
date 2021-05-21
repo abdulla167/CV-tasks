@@ -80,9 +80,6 @@ Steps:
   of the second image
 * put the points in the vector
 * return the vector holding the points
-796ec1d72e5857db
-
-function return: return threshold
 
 **Results**:<br>
 blockDim: 7
@@ -118,6 +115,32 @@ class functions:
 **Results**:<br>
 blockDim: 7
 ![](images/K-Mean.jpg)
+
+##### Region GRowing
+```c++
+Image RGSegmentation(Image & inputImg, std::vector<point> seedPoint)
+```
+Parameters:
+* ///
+Returns:
+////
+
+**Results**:<br>
+blockDim: 7
+![](images/Region-Growing.jpg)
+
+##### Agglomerative
+```c++
+Image agglomerativeSeg(Image & img, int numOfClusters, unsigned long initialClustersNum)
+```
+Parameters:
+* /////
+
+Returns:
+///
+**Results**:<br>
+blockDim: 7
+![](images/Agglomerative.jpg)
 
 ## Requirement packages git
 * fftw3
