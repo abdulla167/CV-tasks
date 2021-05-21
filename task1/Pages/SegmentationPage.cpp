@@ -44,7 +44,7 @@ void MainWindow::startSegmentation() {
 
     } else if (ui->filterSelect_2->currentIndex() == 2) {
 
-        MeanShift meanShift(segmentationImage, 8, 16, 100);
+        MeanShift meanShift(segmentationImage, 8, 16);
         Image image = meanShift.run();
         displayRGBImage(&image, ui->segmentOutput);
     }  else if (ui->filterSelect_2->currentIndex() == 3) {
@@ -59,6 +59,14 @@ void MainWindow::startSegmentation() {
         //displayRGBImage(&image, ui->segmentOutput);
     }
 
+}
+void MainWindow::on_rerunSegmentBtn_clicked() {
+    startSegmentation();
+}
+void MainWindow::on_clearSegmentBtn_clicked() {
+    regionGrowing->data()->clear();
+    DataRG.clear();
+    ui->segmentImg->replot();
 }
 
 void MainWindow::on_filterSelect_2_currentIndexChanged(QString filterName) {

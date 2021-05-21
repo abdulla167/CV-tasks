@@ -62,6 +62,39 @@ function return: return threshold
 **Results**:<br>
 blockDim: 7
 ![](images/local-optimal.png)
+
+##### Means-Shift
+```c++
+MeanShift(Image *image, float hs, float hr)
+```
+class functions:
+* ```c++ float distance(int i1, int j1, int i2, int j2```
+* ```c++ float distance(vector<float> pt1, vector<float> pt2)```
+* ```c++ Image run()```
+
+
+**Results**:<br>
+blockDim: 7
+![](images/Mean-Sift.jpg)
+
+##### K-Mean
+```c++
+K_mean(Image *image, int k, int maxIteration)
+```
+class functions:
+* ```c++ void clusterPixels()```
+* ```c++ int closestCluster(int i, int j)```
+* ```c++ void getClustersCentroid()```
+* ```c++ bool centroidsChanged(vector<vector<float>> oldCentroids)```
+* ```c++ float distance(int i, int j, vector<float> centroid)```
+* ```c++ void run()```
+* ```c++ K_mean()```
+* ```c++ Image getOutput()```
+
+**Results**:<br>
+blockDim: 7
+![](images/K-Mean.jpg)
+
 ## Requirement packages git
 * fftw3
 * qt5

@@ -12,7 +12,7 @@ using namespace std;
 
 MeanShift::MeanShift() {}
 
-MeanShift::MeanShift(Image *image, float hs, float hr, int maxIteration) {
+MeanShift::MeanShift(Image *image, float hs, float hr) {
     this->hs = hs;
     this->hr = hr;
     if(image->channels == 3) {
@@ -21,7 +21,6 @@ MeanShift::MeanShift(Image *image, float hs, float hr, int maxIteration) {
     }else {
         this->image = new Image(image);
     }
-    this->maxIterations = maxIteration;
 }
 
 
