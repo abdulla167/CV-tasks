@@ -108,7 +108,7 @@ private slots:
 
     void on_clearSegmentBtn_clicked();
 
-    void on_rerunSegmentBtn_clicked();
+    void on_reRunBtn_clicked();
 
     void on_thHighCannySlider_valueChanged(int);
 

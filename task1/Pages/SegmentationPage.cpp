@@ -63,7 +63,7 @@ void MainWindow::startSegmentation() {
     }
 
 }
-void MainWindow::on_rerunSegmentBtn_clicked() {
+void MainWindow::on_reRunBtn_clicked() {
     startSegmentation();
 }
 void MainWindow::on_clearSegmentBtn_clicked() {
