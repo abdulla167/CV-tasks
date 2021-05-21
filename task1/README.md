@@ -96,7 +96,7 @@ class functions:
 Image RGSegmentation(Image & inputImg, std::vector<point> seedPoint)
 
 ```
-You should select seed points from image in gui to segment the regions of these seed points
+--> You should select seed points from image in gui to segment the regions of these seed points
 
 function parameters:
 * inputImg: reference to color image
