@@ -94,11 +94,14 @@ class functions:
 ##### Region Growing
 ```c++
 Image RGSegmentation(Image & inputImg, std::vector<point> seedPoint)
+
+You should select seed points from image in gui to segment the regions of these seed points
 ```
 function parameters:
-* parameter
+* inputImg: reference to color image
+* seedPoint: Points which are used as seeds for segmentation regions
 
-function return: return threshold
+function return: return segmented output image
 **Results**:<br>
 blockDim: 7
 ![](images/Region-GRowing.jpg)
@@ -108,7 +111,9 @@ blockDim: 7
 Image agglomerativeSeg(Image & img, int numOfClusters, unsigned long initialClustersNum)
 ```
 function parameters:
-* parameter
+* img: reference to gray image
+* numOfClusters : the number of clusters needed in the output image
+* initialClustersNum : The initial numbers of clusters which is merged until reach to the the numOfClusters
 
 function return: return threshold
 **Results**:<br>
