@@ -106,6 +106,10 @@ private slots:
 
     void on_filterFreqSelect_currentIndexChanged(QString);
 
+    void on_clearSegmentBtn_clicked();
+
+    void on_reRunBtn_clicked();
+
     void on_thHighCannySlider_valueChanged(int);
 
     void on_sigmaCannySlider_valueChanged(int);

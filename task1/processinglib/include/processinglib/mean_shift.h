@@ -10,7 +10,6 @@ using namespace std;
 class MeanShift {
     float hs;
     float hr;
-    int maxIterations;
     Image * image;
 
     float distance(int, int, int, int);
@@ -18,7 +17,7 @@ class MeanShift {
 public:
     Image run();
     MeanShift();
-    MeanShift(Image *, float, float, int);
+    MeanShift(Image *, float hs, float hr);
 //    Image getOutput();
     ~MeanShift();
 };
