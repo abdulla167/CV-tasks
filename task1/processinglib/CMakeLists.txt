@@ -13,7 +13,10 @@ add_library(${LIB_NAME}
         src/imageMatching.cpp
         src/k_mean_segmentation.cpp
         src/mean_shift.cpp
-        src/thresholding.cpp)
+        src/thresholding.cpp
+        src/growing_region.cpp
+        src/point.cpp
+        src/agglomerative_cluster_segmentation.cpp )
 
 find_package(OpenCV)
 include_directories(${OpenCV_INCLUDE_DIRS})

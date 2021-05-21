@@ -146,7 +146,7 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event) {
             int x = ceil(((double) mouseEvent->x() / ui->segmentImg->background().rect().width()) * segmentationImage->width);
             int y = ceil(((double) mouseEvent->y() / ui->segmentImg->background().rect().height()) *
                          segmentationImage->height);
-            std::pair<int, int> xy{x, y};
+            point xy{x, y};
             DataRG.push_back(xy);
             double xCoordinate = ui->segmentImg->xAxis->pixelToCoord(mouseEvent->x());
             double yCoordinate = ui->segmentImg->yAxis->pixelToCoord(mouseEvent->y());

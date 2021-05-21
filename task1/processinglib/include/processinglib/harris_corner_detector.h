@@ -6,6 +6,7 @@
 #define CV_HARRIS_CORNER_DETECTOR_H
 #include "vector"
 #include "hough.h"
+
 void getHarrisCorner(Image& pointsStrength, std::vector<_Point>& cornerPoints, int threshold);
 
 std::vector<_Point> cornerHarris(Image& grayImg, double threshold, int patchDim = 3);

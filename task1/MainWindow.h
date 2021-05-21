@@ -12,6 +12,7 @@
 #include "qcustomplot.h"
 #include "ui_MainWindow.h"
 #include "vector"
+#include "processinglib/point.h"
 using namespace cv;
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -53,7 +54,7 @@ Q_OBJECT
     QVector<double> *xData = new QVector<double>();
     QVector<double> *yData = new QVector<double>();
 
-    std::vector<std::pair<int, int>> DataRG;
+    std::vector<point> DataRG;
 
     QVector<double> *xDataMatching_1 = new QVector<double>();
     QVector<double> *yDataMatching_1 = new QVector<double>();

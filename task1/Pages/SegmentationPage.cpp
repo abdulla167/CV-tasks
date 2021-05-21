@@ -7,6 +7,11 @@
 #include "processinglib/k_mean_segmentation.h"
 #include "processinglib/mean_shift.h"
 #include "iostream"
+#include "processinglib/growing_region.h"
+#include "processinglib/agglomerative_cluster_segmentation.h"
+
+
+
 void MainWindow::on_segmentImgBtn_clicked() {
     bool  first = false;
     if(segmentationImage == nullptr){
@@ -48,15 +53,13 @@ void MainWindow::startSegmentation() {
         Image image = meanShift.run();
         displayRGBImage(&image, ui->segmentOutput);
     }  else if (ui->filterSelect_2->currentIndex() == 3) {
-        // applu image growing
-        // get output image
-
-        //displayRGBImage(&image, ui->segmentOutput);
+        auto grayImage = segmentationImage->toGrayscale();
+        auto outputImg = RGSegmentation(grayImage, DataRG);
+        displayGrayscaleImage(&outputImg, ui->segmentOutput);
     }  else if (ui->filterSelect_2->currentIndex() == 4) {
-        // applu Agglomerative
-        // get output image
-
-        //displayRGBImage(&image, ui->segmentOutput);
+        auto grayImage = segmentationImage->toGrayscale();
+        auto outputImg = agglomerativeSeg(grayImage, 8, 25);
+        displayGrayscaleImage(&outputImg, ui->segmentOutput);
     }
 
 }
