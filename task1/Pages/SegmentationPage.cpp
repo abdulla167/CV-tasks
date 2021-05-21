@@ -57,7 +57,7 @@ void MainWindow::startSegmentation() {
         displayRGBImage(&outputImg, ui->segmentOutput);
     }  else if (ui->filterSelect_2->currentIndex() == 4) {
         auto grayImage = segmentationImage->toGrayscale();
-        auto outputImg = agglomerativeSeg(grayImage, 8, 25);
+        auto outputImg = agglomerativeSeg(grayImage, 9, 25);
         displayGrayscaleImage(&outputImg, ui->segmentOutput);
     }
 
