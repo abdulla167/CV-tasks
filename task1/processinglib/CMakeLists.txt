@@ -8,11 +8,12 @@ add_library(${LIB_NAME}
         src/histogram.cpp
         src/fourier_transform.cpp
         src/canny.cpp src/hough.cpp
-        src/greedy_snake.cpp src/harris_corner_detector.cpp
-        include/processinglib/harris_corner_detector.h
-        include/processinglib/imageMatching.h src/imageMatching.cpp
-        include/processinglib/k_mean_segmentation.h src/k_mean_segmentation.cpp
-        include/processinglib/thresholding.h src/thresholding.cpp)
+        src/greedy_snake.cpp
+        src/harris_corner_detector.cpp
+        src/imageMatching.cpp
+        src/k_mean_segmentation.cpp
+        src/mean_shift.cpp
+        src/thresholding.cpp)
 
 find_package(OpenCV)
 include_directories(${OpenCV_INCLUDE_DIRS})
