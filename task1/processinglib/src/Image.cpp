@@ -71,12 +71,10 @@ void Image::init(float value) {
 
 
 Image Image::toScale() {
-    Image scaleImg{width, height, channels};
+    Image scaleImg(width, height, channels);
     float *max = new float[channels];
-    float *min = new float[channels];
     for (int k = 0; k < channels; ++k) {
-        max[k] = -1000;
-        min[k] = 1000;
+        max[k] = 0;
     }
     for (int i = 0; i < height; ++i) {
         for (int j = 0; j < width; ++j) {
@@ -84,8 +82,6 @@ Image Image::toScale() {
                 scaleImg(i, j, k) = std::abs((*this)(i, j, k));
                 if (scaleImg(i, j, k) > max[k]) {
                     max[k] = scaleImg(i, j, k);
-                }else if(scaleImg(i, j, k) < min[k]){
-                    min[k] = scaleImg(i, j, k);
                 }
 
             }
@@ -95,17 +91,12 @@ Image Image::toScale() {
     for (int i = 0; i < height; ++i) {
         for (int j = 0; j < width; ++j) {
             for (int k = 0; k < channels; ++k) {
-                scaleImg(i, j, k) = roundf(((scaleImg(i, j, k)  - min[k])/ max[k]) * 255);
+                scaleImg(i, j, k) = roundf((scaleImg(i, j, k) / max[k]) * 255);
             }
         }
     }
-    std::cout<< "scaling "<< std::endl;
-    for(int loop = 0 ; loop < 3; loop++){
-        std::cout<< max[loop] << " "<< min[loop]<< std::endl;
-    }
-    std::cout<< "scaling "<< std::endl;
+
     delete[] max;
-    delete[] min;
     return scaleImg;
 }
 
@@ -136,108 +127,121 @@ Image Image::toGrayscale() {
 int Image::size() {
     return channels * width * height;
 }
+std::vector<float> Image::RGB2XYZ(float R, float G, float B) {
 
-Image Image::XYZ()  {
-
-    Image XYZ = Image(width, height, channels);
-    Image temp = Image(this);
-    Image normalizedData = temp.toScale();
-
-    for (int i = 0; i < height; ++i) {
-        for (int j = 0; j < width; ++j) {
-            for (int k = 0; k < channels; ++k) {
-
-                normalizedData(i, j, k) =  normalizedData(i, j, k) / (float) 255;
-
-            }
+    std::vector<float> RGB {( R / 255.f), ( G / 255.f ), ( B / 255.f )};
+    for(int loop = 0; loop < 3; loop++){
+        if ( RGB[loop] > 0.04045 ) {
+            RGB[loop] = pow(((RGB[loop] + 0.055) / 1.055) , 2.4);
+        }else {
+            RGB[loop] = RGB[loop] / 12.92;
         }
-    }
-    /*
-     * X = 0.412453*R + 0.35758 *G + 0.180423*B
-     * Y = 0.212671*R + 0.71516 *G + 0.072169*B
-     * Z = 0.019334*R + 0.119193*G + 0.950227*B
-     * */
-    float parameters[3][3] = {
-            {0.412453, 0.357580, 0.180423},
-            {0.212671, 0.715160, 0.072169},
-            {0.019334, 0.119193, 0.019334}
-
-    };
-
-    for (int i = 0; i < height; ++i) {
-        for (int j = 0; j < width; ++j) {
-            for (int k = 0; k < channels; ++k) {
-                for( int loop = 0; loop < 3; loop++){
-                    XYZ(i, j, k) += (parameters[k][loop] * normalizedData(i, j, loop) ) ;
-                }
-            }
-        }
+        RGB[loop] = RGB[loop] * 100;
     }
 
+    float X = RGB[0] * 0.4124 + RGB[1] * 0.3576 + RGB[2] * 0.1805;
+    float Y = RGB[0] * 0.2126 + RGB[1] * 0.7152 + RGB[2] * 0.0722;
+    float Z = RGB[0] * 0.0193 + RGB[1] * 0.1192 + RGB[2] * 0.9505;
+    std::vector<float> XYZ {X, Y, Z };
     return XYZ;
 }
+std::vector<float> Image::XYZ2RGB(float X, float Y, float Z) {
 
-Image Image::RGBToLUV() {
-    Image XYZ = this->XYZ();
+    std::vector<float> XYZ { X/100.F, Y/100.F, Z/100};
+    std::vector<float> RGB = std::vector<float>(3);
+    RGB[0] = XYZ[0] *  3.2406 + XYZ[1] * -1.5372 + XYZ[2] * -0.4986;
+    RGB[1] = XYZ[0] * -0.9689 + XYZ[1] *  1.8758 + XYZ[2] *  0.0415;
+    RGB[2] = XYZ[0] *  0.0557 + XYZ[1] * -0.2040 + XYZ[2] *  1.0570;
 
-    /**
-     * CIE chromaticity coordinates:
-     * xn = 0.312713
-     * yn = 0.329016
-     * CIE luminance:
-     * Yn = 1.0
-     * un = 4*xn / (-2*xn + 12*yn + 3)
-     * vn = 9*yn / (-2*xn + 12*yn + 3)
-     * u = 4*X / (X + 15*Y + 3*Z)
-     * v = 9*Y / (X + 15*Y + 3*Z)
-     * L = 116 * (Y/Yn)^(1/3) - 16
-     * U = 13*L*(u-un)
-     * V = 13*L*(v-vn)
-     */
-     double Yn = (double )1.0;
-     float un =  0.19793943;
-     float vn =  0.46831096;
+    for(int loop = 0; loop < 3; loop++){
+        if ( RGB[loop] > 0.0031308 ) {
+            RGB[loop] = 1.055 * pow(RGB[loop] , (1 / 2.4)) - 0.055;
+        }else {
+            RGB[loop] = 12.92 * RGB[loop];
+        }
+        RGB[loop] = RGB[loop] * 255;
+    }
+    return RGB;
+}
 
-     Image u(width, height, channels);
-     Image v(width, height, channels);
-    for (int i = 0; i < height; ++i) {
-        for (int j = 0; j < width; ++j) {
-            // (X + 15*Y + 3*Z)
-            float temp =  ( XYZ(i, j, 0) +
-                    15* XYZ(i, j, 1) +
-                    3 * XYZ(i, j, 2));
-            // u = 4*X / (X + 15*Y + 3*Z)
-            u(i, j, 0)=  (4 * XYZ(i, j, 0)) / temp;
-            u(i, j, 1) = (4 * XYZ(i, j, 0)) / temp;
-            u(i, j, 2) = (4 * XYZ(i, j, 0)) / temp;
-            // v = 9*Y / (X + 15*Y + 3*Z)
-            v(i, j, 0) =  (9 * XYZ(i, j, 1)) / temp;
-            v(i, j, 1) = (9 * XYZ(i, j, 1)) / temp;
-            v(i, j, 2) = (9 * XYZ(i, j, 1)) / temp;
+std::vector<float> Image::XYZ2LUV(float X, float Y, float Z) {
+    float var_U = ( 4 * X ) / ( X + ( 15 * Y ) + ( 3 * Z ) );
+    float var_V = ( 9 * Y ) / ( X + ( 15 * Y ) + ( 3 * Z ) );
+
+    float var_Y = Y / 100.f;
+    if ( var_Y > 0.008856 ) {
+        var_Y = pow(var_Y , 0.3333334);
+    }else {
+        var_Y = (7.787 * var_Y) + (16 / 116.f);
+    }
+    float XR = 95.047;
+    float YR = 100;
+    float ZR = 108.883;
+    float ref_U = ( 4 * XR ) / (float ) ( XR + ( 15 * YR ) + ( 3 * ZR ) );
+    float ref_V = ( 9 * YR ) / (float )( XR + ( 15 * YR ) + ( 3 * ZR ) );
+
+    float L = ( 116 * var_Y ) - 16;
+    float U = 13 * L * ( var_U - ref_U );
+    float V = 13 * L * ( var_V - ref_V );
+
+    std::vector<float> LUV {L, U, V};
+    return LUV;
+}
+
+std::vector<float> Image::LUV2XYZ(float L, float U, float V) {
+    float var_Y = ( L+ 16 ) / 116.F;
+    if ( pow(var_Y, 3)  > 0.008856 ) {
+        var_Y = pow(var_Y , 3);
+    } else{
+        var_Y = ( (var_Y - 16) / 116.F ) / 7.787;
+    }
+
+    float XR = 95.047;
+    float YR = 100;
+    float ZR = 108.883;
+    float ref_U = ( 4 * XR ) / ( XR + ( 15 * YR ) + ( 3 * ZR ) );
+    float ref_V = ( 9 * YR ) / ( XR + ( 15 * YR ) + ( 3 * ZR ) );
+
+    float var_U = (U / ( 13.F * L)) + ref_U;
+    float var_V = (V / ( 13.F * L)) + ref_V;
+
+    float Y = var_Y * 100;
+    float X =  - ( 9 * Y * var_U ) / (float)( (( var_U - 4 ) * var_V) - (var_U * var_V) );
+    float Z = ( 9 * Y - ( 15 * var_V * Y ) - ( var_V * X ) ) / (float)( 3 * var_V );
+    std::vector<float> XYZ {X, Y, Z};
+    return XYZ;
+}
+Image Image::RGB2LUV() {
+
+    Image LUVImage = this->toScale();
+
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+
+            std::vector<float> XYZ = this->RGB2XYZ(LUVImage(i, j, 0), LUVImage(i, j, 1), LUVImage(i, j, 2));
+            std::vector<float> LUV = this->XYZ2LUV(XYZ[0], XYZ[1], XYZ[2]);
+            for(int k =0; k < 3; k++){
+                LUVImage(i, j, k) = LUV[k];
+            }
+
         }
     }
-     Image LUVImage(width, height, channels);
-     for (int i = 0; i < height; i++) {
-         for (int j = 0; j < width; j++) {
-                /**
-                 * L = 116 * (Y/Yn)^(1/3) - 16
-                 * U = 13*L*(u-un)
-                 * V = 13*L*(v-vn)
-                 */
-                if(XYZ(i, j, 1) > 0.008856){
-                    LUVImage( i, j, 0 ) = (116 * pow( XYZ(i, j, 1) , 1/3 ) )- 16;
-                }else {
-                    LUVImage( i, j, 0 ) =903.3 * XYZ(i, j, 1) ;
-                }
-
-                LUVImage( i, j, 1 ) = 13 * LUVImage(i, j, 0) * (u(i, j, 1) - un);
-                LUVImage( i, j, 2 ) = 13 * LUVImage(i, j, 0) * (v(i, j, 1) - vn);
-         }
-     }
-    std::cout<<"HELLO"<< std::endl;
-     int v_ = LUVImage(5,4,1) ;
-    std::cout<< v_;
     return LUVImage;
+}
+Image Image::LUV2RGB() {
+
+    Image RGBImgae(this);
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+            std::vector<float> XYZ = this->LUV2XYZ(RGBImgae(i, j, 0), RGBImgae(i, j, 1), RGBImgae(i, j, 2));
+            std::vector<float> RGB = this->XYZ2RGB(XYZ[0], XYZ[1], XYZ[2]);
+            for(int k =0; k < channels; k++){
+                RGBImgae(i, j, k) = RGB[k];
+            }
+        }
+    }
+
+    return RGBImgae;
 }
 
 void Image::saveJPG(std::string filename) {

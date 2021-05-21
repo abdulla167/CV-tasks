@@ -1569,19 +1569,6 @@
          <string>Load image</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="startSegmentationBtn">
-        <property name="geometry">
-         <rect>
-          <x>40</x>
-          <y>180</y>
-          <width>91</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>start</string>
-        </property>
-       </widget>
        <widget class="QFrame" name="frame_12">
         <property name="geometry">
          <rect>
@@ -1597,7 +1584,7 @@
         <property name="frameShadow">
          <enum>QFrame::Raised</enum>
         </property>
-        <widget class="QLabel" name="segmentImg">
+        <widget class="QCustomPlot" name="segmentImg" native="true">
          <property name="geometry">
           <rect>
            <x>0</x>
@@ -1605,9 +1592,6 @@
            <width>531</width>
            <height>501</height>
           </rect>
-         </property>
-         <property name="text">
-          <string/>
          </property>
         </widget>
        </widget>
@@ -1717,13 +1701,65 @@
             </property>
             <item>
              <property name="text">
+              <string>Select Method</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
               <string>K-Mean</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Mean-Shift</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Region-Growing</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Agglomerative</string>
              </property>
             </item>
            </widget>
           </item>
          </layout>
         </widget>
+       </widget>
+       <widget class="QSpinBox" name="KBox">
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>135</y>
+          <width>81</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="value">
+         <number>3</number>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_32">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>140</y>
+          <width>21</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: 18pt &quot;Ubuntu&quot;;</string>
+        </property>
+        <property name="text">
+         <string>K :</string>
+        </property>
        </widget>
       </widget>
      </widget>

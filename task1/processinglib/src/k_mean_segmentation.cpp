@@ -5,44 +5,48 @@
 #include "vector"
 #include <random>
 #include "iostream"
+
 using namespace std;
+
 K_mean::K_mean() {}
 
-K_mean::K_mean(Image * image, int k, int maxIteration) {
-    cout<< "in it"<<endl;
+K_mean::K_mean(Image *image, int k, int maxIteration) {
 
-    cout<< "in it"<<endl;
+    if(image->channels == 3) {
+        Image temp = image->RGB2LUV();
+        this->image = new Image(&temp);
+    } else{
+        this->image = new Image(image);
+    }
 
-
-    this->image = new Image(image);
-    cout<< "in it "<< this->image->channels << " "<< (*(this->image))(5,5,1)<< " end " << image->channels<<endl;
     this->k = k;
-    this->clusters = Image(this->image->width, this->image->height, 1);
-//    this->centroids = vector<vector<float>>(k);
+    this->clusters = new Image(this->image->width, this->image->height, 1);
+
     this->maxIterations = maxIteration;
     random_device dev;
     mt19937 rng(dev());
-    uniform_int_distribution<std::mt19937::result_type> distForI(0, (this->image->height - 1)); // distribution in range [1, 6]
-    uniform_int_distribution<std::mt19937::result_type> distForJ(0, (this->image->width - 1)); // distribution in range [1, 6]
-    for(int loop = 0; loop < k; loop++){
-        int i = (int)distForI(rng);
-        int j = (int)distForJ(rng);
+    uniform_int_distribution<std::mt19937::result_type> distForI(0, (this->image->height - 1));
+    uniform_int_distribution<std::mt19937::result_type> distForJ(0, (this->image->width - 1));
+    for (int loop = 0; loop < k; loop++) {
+
+        int i = (int) distForI(rng);
+        int j = (int) distForJ(rng);
+
         vector<float> temp;
-        for(int k_ = 0; k_ < this->image->channels; k_++){
-            cout<< "in it v "<<(*(this->image))(i, j, k_)<<endl;
+        for (int k_ = 0; k_ < this->image->channels; k_++) {
             temp.push_back((*(this->image))(i, j, k_));
         }
         this->centroids.push_back(temp);
     }
 
 }
+
 void K_mean::clusterPixels() {
-    cout<<"in cluster" <<endl;
+
     for (int i = 0; i < this->image->height; ++i) {
         for (int j = 0; j < this->image->width; ++j) {
-
-           int closestCluster = this->closestCluster(i, j);
-           this->clusters(i,j) = closestCluster;
+            int closestCluster = this->closestCluster(i, j);
+            (*(this->clusters))(i, j) = closestCluster;
         }
     }
 }
@@ -50,18 +54,19 @@ void K_mean::clusterPixels() {
 int K_mean::closestCluster(int i, int j) {
     float closestDistance = 9000;
     int closestClusterIdnex = -1;
-    for(int loop = 0 ; loop < this->k; loop++){
+    for (int loop = 0; loop < this->k; loop++) {
         float distance_ = distance(i, j, this->centroids[loop]);
-        if( distance_< closestDistance){
+        if (distance_ < closestDistance) {
             closestDistance = distance_;
             closestClusterIdnex = loop;
         }
     }
     return closestClusterIdnex;
 }
+
 float K_mean::distance(int i, int j, vector<float> centroid) {
     float sum = 0;
-    for(int k = 0; k < this->image->channels; k++) {
+    for (int k = 0; k < this->image->channels; k++) {
         float difference = (*(this->image))(i, j, k) - centroid[k];
         sum += (difference * difference);
     }
@@ -70,105 +75,83 @@ float K_mean::distance(int i, int j, vector<float> centroid) {
 }
 
 void K_mean::getClustersCentroid() {
-    cout<<"in clustercentroid" <<endl;
-    vector<vector<double>> sum = vector<vector<double>>(this->k);
 
-    for(int loop=0; loop < this->k; loop++){
-        sum[loop] = vector<double>(this->image->channels);
-        for(int k =0; k < this->image->channels; k++){
-           sum[loop][k] = 0;
-        }
+    vector<vector<double>> sum = vector<vector<double>>(this->k);
+    for (int loop = 0; loop < this->k; loop++) {
+        sum[loop] = vector<double>(this->image->channels, 0.0);
     }
     vector<int> count = vector<int>(this->k);
     for (int i = 0; i < this->image->height; ++i) {
         for (int j = 0; j < this->image->width; ++j) {
-            int cluster = this->clusters(i, j);
-                for(int k=0; k < this->image->channels; k++) {
-                    sum[cluster][k] += (*(this->image))(i, j, k);
-//                    cout<< (*(this->image))(i, j, k) <<endl;
-
-                }
+            int cluster = (*(this->clusters))(i, j);
+            for (int k = 0; k < this->image->channels; k++) {
+                sum[cluster][k] += (*(this->image))(i, j, k);
+            }
             count[cluster] += 1;
         }
     }
-    for(int loop = 0 ; loop < this->k; loop++){
-       for(int k =0; k < this->image->channels; k++){
-           centroids[loop][k] = (sum[loop][k] / (double ) count[loop]);
-//           cout<< sum[loop][k] / (double ) count[loop] <<endl;
-       }
+    for (int loop = 0; loop < this->k; loop++) {
+        for (int k = 0; k < this->image->channels; k++) {
+            centroids[loop][k] = (sum[loop][k] / (double) count[loop]);
+        }
     }
 
 }
-bool K_mean::centroidsChanged(vector<vector<float>> oldCentroids) {
-    cout<< "centroidsChanged "<<endl;
-    double sum = 0;
-    for(int loop = 0; loop < this->k; loop++){
-        for(int k = 0; k < this->image->channels; k++){
 
-            double temp = (double )oldCentroids[loop][k] - (double) centroids[loop][k];
-//            cout<< temp << " " << oldCentroids[loop][k] << " " << centroids[loop][k] << endl;
-            if (temp < (double) 0){
-                sum += (- temp);
-            }else {
+bool K_mean::centroidsChanged(vector<vector<float>> oldCentroids) {
+
+    float sum = 0;
+    for (int loop = 0; loop < this->k; loop++) {
+        for (int k = 0; k < this->image->channels; k++) {
+            float temp = oldCentroids[loop][k] - this->centroids[loop][k];
+            if (temp < 0.0) {
+                sum += (-temp);
+            } else {
                 sum += temp;
             }
-
         }
     }
-    cout<< "sum "<<sum<<endl;
-    if (sum == (double ) 0.0) {
+    if (sum == 0.0) {
         return false;
-    }else {
+    } else {
         return true;
     }
 }
+
 void K_mean::run() {
-    cout<<"in run" <<endl;
-    for(int loop = 0 ; loop < this->maxIterations; loop++){
+    for (int loop = 0; loop < this->maxIterations; loop++) {
         this->clusterPixels();
         vector<vector<float>> oldCentroids = vector<vector<float>>(this->k);
-        for (int loop1 = 0; loop1 < this->k; loop1++ ){
+        for (int loop1 = 0; loop1 < this->k; loop1++) {
             oldCentroids[loop1] = vector<float>(this->image->channels);
-            for (int loop2 = 0; loop2 < this->image->channels; loop2++ ){
+            for (int loop2 = 0; loop2 < this->image->channels; loop2++) {
                 oldCentroids[loop1][loop2] = this->centroids[loop1][loop2];
             }
         }
         this->getClustersCentroid();
-        cout<<"in run" <<endl;
         bool changed = this->centroidsChanged(oldCentroids);
-        cout<<"in run" <<endl;
-        if (changed == false){
+        if (changed == false) {
             loop = this->maxIterations;
         }
     }
 }
 
-void K_mean::getOutput(Image* output) {
-    cout<<"in out" <<endl;
-//    Image output(this->image->width, this->image->height, this->image->channels);
-    output  = new Image(this->image->width, this->image->height, this->image->channels);
+Image K_mean::getOutput() {
+    Image output = Image(this->image->width, this->image->height, this->image->channels);
     this->run();
-
-    for (int i = 0; i < this->clusters.height; i++) {
-        for (int j = 0; j < this->clusters.width; j++) {
-            int cluster = this->clusters(i, j);
-            for(int k=0; k < this->image->channels; k++) {
-                (*output)(i, j, k) = centroids[cluster][k];
+    for (int i = 0; i < this->image->height; i++) {
+        for (int j = 0; j < this->image->width; j++) {
+            int cluster = (*(this->clusters))(i, j);
+            for (int k = 0; k < this->image->channels; k++) {
+                output(i, j, k) = centroids[cluster][k];
             }
         }
     }
-    cout<<"in out" <<endl;
-    cout<<this->clusters.width << " " << this->clusters.height <<endl;
-    cout<<this->image->width << " " << this->image->height <<endl;
-//    return output;
-}
-K_mean::~K_mean() {
-    delete  image;
+    return output.LUV2RGB();
 }
 
-void K_mean::print(char * a){
-    cout<< "print" << a << endl;
+K_mean::~K_mean() {
+    delete image;
+    delete clusters;
 }
-void K_mean::print(int a){
-    cout<< "print" << a << endl;
-}
+
