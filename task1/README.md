@@ -28,12 +28,9 @@ function parameters:
 * histSize: histogram size depending on the number of bits that represent each pixel in the image
 * numModes: number of modes
 
-<<<<<<< HEAD
 Returns: 
 vector of pair, each pair if 128-length vector and its associated _Point
-=======
-function return: return the thresholded image
->>>>>>> ba9f55b7f878d97767fbdd6b796ec1d72e5857db
+
 
 **Results**:<br>
 * local atsu 2 modes, blockDim: 5
@@ -49,7 +46,6 @@ int globalOptimalIterativeThresholding(Image &inputImg);
 function parameters:
    * inputImg: reference to gray Image 
 
-<<<<<<< HEAD
 Steps:
 * get FIST descriptor of both images
 * loop over the descriptor of the first image and  inside this loop 
@@ -59,9 +55,7 @@ Steps:
 * get the 2 least SSD points and make sure that the least _Point is less than 0.8 * the second least _Point 
 * put the points in the vector
 * return the vector holding the points
-=======
-function return: return threshold
->>>>>>> ba9f55b7f878d97767fbdd6b796ec1d72e5857db
+
 
  **Results**:<br>
 ![](images/global-optimal.png)
@@ -70,7 +64,6 @@ function return: return threshold
 ```c++
 Image localOptimalIterativeThresholding(Image &inputImg, int blockDim);
 ```
-<<<<<<< HEAD
 Parameters:
 * Grayscale image (first image)
 * Grayscale image (second image)
@@ -87,11 +80,7 @@ Steps:
   of the second image
 * put the points in the vector
 * return the vector holding the points
-=======
-function parameters:
-* inputImg: reference to gray Image
-* blockDim: block dimension (eg, 5 means 5 x 5)
->>>>>>> ba9f55b7f878d97767fbdd6b796ec1d72e5857db
+796ec1d72e5857db
 
 function return: return threshold
 
@@ -124,7 +113,6 @@ class functions:
 * ```c++ bool centroidsChanged(vector<vector<float>> oldCentroids)```
 * ```c++ float distance(int i, int j, vector<float> centroid)```
 * ```c++ void run()```
-* ```c++ K_mean()```
 * ```c++ Image getOutput()```
 
 **Results**:<br>
