@@ -1,4 +1,4 @@
-//
+ //
 // Created by abdallah on 3/31/21.
 //
 
@@ -6,7 +6,7 @@
 #define IMAGE_PROCESSING_IMAGE_H
 
 #include "string"
-
+#include "vector"
 class Image {
     float *data;
 
@@ -22,8 +22,6 @@ public:
     Image(std::string filename, int num_channels = 1);
 
     Image(const Image &image);
-
-
 
     Image toGrayscale();
 
@@ -44,8 +42,11 @@ public:
 
     Image toScale();
 
-    void saveJPG(std::string filename);
+    Image RGB2LUV();
 
+    Image LUV2RGB();
+
+    void saveJPG(std::string filename);
 
     ~Image();
 
@@ -57,7 +58,15 @@ public:
 
     void init(float value);
 
+
 private:
+    std::vector<float> RGB2XYZ(float R, float G, float B);
+
+    std::vector<float> XYZ2RGB(float X, float Y, float Z);
+
+    std::vector<float> XYZ2LUV(float X, float Y, float Z);
+
+    std::vector<float> LUV2XYZ(float L, float U, float V);
     template<class T>
     void init(T *data){
         for (int i = 0; i < height; ++i) {

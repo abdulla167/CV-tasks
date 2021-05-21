@@ -3,14 +3,14 @@
 //
 #include <Image.h>
 #include <vector>
-#include "_Point.h"
+#include "point.h"
 #include "math.h"
 
-float euclideanDistance(_Point p1, _Point p2){
+float euclideanDistance(point p1, point p2){
     return sqrt(pow((p1.x - p2.x), 2) + pow((p1.y - p2.y), 2));
 }
 
-float clustersDistance(std::vector<_Point> * cluster1, std::vector<_Point> * cluster2){
+float clustersDistance(std::vector<point> * cluster1, std::vector<point> * cluster2){
     float cluster1_x = 0;
     float cluster1_y = 0;
     int cluster1_size = cluster1->size();
@@ -33,20 +33,20 @@ float clustersDistance(std::vector<_Point> * cluster1, std::vector<_Point> * clu
         cluster2_x = cluster2_x / cluster2_size;
         cluster2_y = cluster2_y / cluster2_size;
     }
-    return euclideanDistance(_Point(cluster1_x, cluster1_y), _Point(cluster2_x, cluster2_y));
+    return euclideanDistance(point(cluster1_x, cluster1_y), point(cluster2_x, cluster2_y));
 }
 
-void initialClusters(Image& img, std::vector<std::vector<_Point>> & clustersList){
+void initialClusters(Image& img, std::vector<std::vector<point>> & clustersList){
     int clusterIntensityRang = 256 / clustersList.size();
     for (int y = 0; y < img.height; y++){
         for (int x = 0; x < img.width; x++){
             int index = img(y, x) / clusterIntensityRang;
-            clustersList[index].push_back(_Point(x, y));
+            clustersList[index].push_back(point(x, y));
         }
     }
 }
 
-int mergeTwoClusters(std::vector<_Point> & cluster1, std::vector<_Point> & cluster2){
+int mergeTwoClusters(std::vector<point> & cluster1, std::vector<point> & cluster2){
     int cluster1_size = cluster1.size();
     int cluster2_size = cluster2.size();
     if (cluster1_size > cluster2_size){
@@ -63,7 +63,7 @@ int mergeTwoClusters(std::vector<_Point> & cluster1, std::vector<_Point> & clust
 }
 
 Image agglomerativeSeg(Image & img, int numOfClusters, unsigned long initialClustersNum){
-    std::vector<std::vector<_Point>> clustersList{initialClustersNum};
+    std::vector<std::vector<point>> clustersList{initialClustersNum};
     int intensity = 0;
     initialClusters(img, clustersList);
     Image outputImg{img.width, img.height, img.channels};

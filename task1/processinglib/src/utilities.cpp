@@ -6,7 +6,6 @@
 #include "processinglib/histogram.h"
 #include <cmath>
 #include <vector>
-#include <list>
 #include <algorithm>
 
 void gaussianGeneration(float *kernel, char dim, float sigma, float mean) {
@@ -280,41 +279,120 @@ void sauvolaTechnique(Image &inputImg, int x, int y, int filterDim, double &mean
     std = sqrt(std / (N - 1));
 }
 
-int otsuAlgorithm(Image &inputImg, int histSize) {
-    int hist[256];
-    double normalizedHist[256];
-    int pixelsNo = inputImg.width * inputImg.height;
-    int threshold = 0;
-    double globalMean = 0, firstProbabilitySum = 0;
-    double firstClassProbability = 0, secondClassProbability = 0, firstClassMean = 0, secondClassMean = 0;
-    double variance = 0, maxVariance = 0;
-    im_hist(inputImg, hist, 1);
-    getNormalizedHist(hist, normalizedHist, histSize, pixelsNo);
-    for (int i = 0; i < 256; i++) {
-        globalMean += i * normalizedHist[i];
-    }
-    for (int t = 0; t < 256; t++) {
-        firstClassProbability += normalizedHist[t];
-        if (firstClassProbability == 0)
-            continue;
-        secondClassProbability = 1 - firstClassProbability;
-        firstProbabilitySum += t * normalizedHist[t];
-        firstClassMean = (double) firstProbabilitySum / (double) firstClassProbability;
-        secondClassMean = (double) (globalMean - firstProbabilitySum) / (double) secondClassProbability;
-        variance = firstClassProbability * secondClassProbability * pow((firstClassMean - secondClassMean), 2);
-        if (variance > maxVariance) {
-            threshold = t;
-            maxVariance = variance;
+
+void
+getOptimalThresholdsRec(int intThreshold, double normalizedHist[], int histSize, double globalMean, double classMeans[],
+                        double classProb[], int currentNumModes, int numClasses,
+                        std::vector<int> &thresholds, std::vector<int> &optimalThreshold, double &maxBetweenVar) {
+    if (intThreshold < histSize) {
+        // base case
+        if (currentNumModes == 2) {
+            classProb[1] = 0;
+            classMeans[1] = 0;
+            double tempProb, tempMean, betweenVar;
+            for (int i = intThreshold; i < histSize; ++i) {
+                tempProb = 1;
+                tempMean = globalMean;
+                betweenVar = 0;
+                thresholds[thresholds.size() - 1] = i;
+                classProb[1] += normalizedHist[i];
+                classMeans[1] += i * normalizedHist[i];
+                if (classProb[1] != 0) {
+                    for (int j = numClasses - 1; j > 0; --j) {
+                        tempProb -= classProb[j];
+                        tempMean -= classMeans[j];
+                    }
+                    classProb[0] = tempProb;
+                    classMeans[0] = tempMean;
+                    for (int j = 0; j < numClasses; ++j) {
+                        betweenVar += classProb[j] * (classMeans[j] / classProb[j] - globalMean) *
+                                      (classMeans[j] / classProb[j] - globalMean);
+
+                    }
+                    if (betweenVar > maxBetweenVar) {
+                        maxBetweenVar = betweenVar;
+                        for (int j = 0; j < thresholds.size(); ++j) {
+                            optimalThreshold[j] = thresholds[j];
+                        }
+                    }
+                }
+            }
+        } else {
+            double tempClassProb = 0;
+            double tempClassMean = 0;
+            for (int i = intThreshold; i < histSize; ++i) {
+                thresholds[thresholds.size() + 1 - currentNumModes] = i;
+                tempClassProb += normalizedHist[i];
+                tempClassMean += i * normalizedHist[i];
+                classProb[currentNumModes - 1] = tempClassProb;
+                classMeans[currentNumModes - 1] = tempClassMean;
+                if (classProb[currentNumModes - 1] != 0)
+                    getOptimalThresholdsRec(i + 1, normalizedHist, histSize, globalMean, classMeans, classProb,
+                                            currentNumModes - 1, numClasses, thresholds, optimalThreshold,
+                                            maxBetweenVar);
+
+            }
         }
     }
-    return threshold;
 }
 
-Image buildSegmentedImg(Image &inputImg, int threshold) {
+void
+getOptimalThresholds(double normalizedHist[], int histSize, double globalMean, double classMeans[],
+                     double classProb[], int numModes, std::vector<int> &optimalThreshold) {
+    std::vector<int> thresholds(numModes - 1);
+    int intThreshold = 0;
+    double maxBetweenVar = 0;
+    getOptimalThresholdsRec(intThreshold, normalizedHist, histSize, globalMean, classMeans, classProb, numModes,
+                            numModes, thresholds, optimalThreshold, maxBetweenVar);
+}
+
+std::vector<int> otsuAlgorithm(Image &inputImg, int histSize, int numModes) {
+    auto hist = new int[histSize];
+    auto normalizedHist = new double[histSize];
+    int pixelsNo = inputImg.width * inputImg.height;
+    double globalMean = 0;
+    auto classProbabilities = new double[numModes];
+    auto classMeans = new double[numModes];
+    std::vector<int> optimalThreshold(numModes - 1);
+    for (int i = 0; i < numModes; ++i) {
+        classProbabilities[i] = classMeans[i] = 0;
+    }
+    im_hist(inputImg, hist, 1);
+    getNormalizedHist(hist, normalizedHist, histSize, pixelsNo);
+    for (int i = 0; i < histSize; i++) {
+        globalMean += i * normalizedHist[i];
+    }
+    getOptimalThresholds(normalizedHist, histSize, globalMean, classMeans, classProbabilities, numModes,
+                         optimalThreshold);
+    delete[] hist;
+    delete[] normalizedHist;
+    delete[] classProbabilities;
+    delete[] classMeans;
+    return optimalThreshold;
+}
+
+Image buildSegmentedImg(Image &inputImg, std::vector<int> thresholds) {
+    Image segmentedImg{inputImg.width, inputImg.height, inputImg.channels};
+    if (thresholds.size() == 1)
+        return buildSegmentedImg(inputImg, thresholds[0]);
+    int step = 255 / thresholds.size();
+    for (int y = 0; y < inputImg.height - 1; y++) {
+        for (int x = 0; x < inputImg.width - 1; x++) {
+            for (int i = 1; i < thresholds.size(); ++i) {
+                if (inputImg(y, x) >= thresholds[i - 1] && inputImg(y, x) < thresholds[i]) {
+                    segmentedImg(y, x) = (i + 1) * step;
+                }
+            }
+        }
+    }
+    return segmentedImg;
+}
+
+Image buildSegmentedImg(Image &inputImg, int thresholdVal) {
     Image segmentedImg{inputImg.width, inputImg.height, inputImg.channels};
     for (int y = 0; y < inputImg.height - 1; y++) {
         for (int x = 0; x < inputImg.width - 1; x++) {
-            if (inputImg(y, x) > threshold) {
+            if (inputImg(y, x) > thresholdVal) {
                 segmentedImg(y, x) = 255;
             } else {
                 segmentedImg(y, x) = 0;

@@ -11,7 +11,8 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include "qcustomplot.h"
 #include "ui_MainWindow.h"
-
+#include "vector"
+#include "processinglib/point.h"
 using namespace cv;
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -39,20 +40,25 @@ Q_OBJECT
 
     Image *snakeImage = nullptr;
 
-    Image* imageMatch_1 = nullptr;
-    Image* imageMatch_2 = nullptr;
+    Image * imageMatch_1 = nullptr;
+    Image * imageMatch_2 = nullptr;
+    Image * segmentationImage = nullptr;
+    Image * segmentationOutputImage = nullptr;
 
     QCPItemPixmap *ImageDisplay;
     QCPGraph *points;
     QCPGraph *imageMatchPoints1;
     QCPGraph *imageMatchPoints2;
+    QCPGraph *regionGrowing;
     QVector<double> *xData = new QVector<double>();
     QVector<double> *yData = new QVector<double>();
+
+    std::vector<point> DataRG;
+
     QVector<double> *xDataMatching_1 = new QVector<double>();
     QVector<double> *yDataMatching_1 = new QVector<double>();
     QVector<double> *xDataMatching_2 = new QVector<double>();
     QVector<double> *yDataMatching_2 = new QVector<double>();
-//    QCPItemLine** lines;
     QVector<QCPItemLine*> *lines = new QVector<QCPItemLine*>();
     int arrayOfPointsX [pointsCount] ;
     int arrayOfPointsY [pointsCount] ;
@@ -70,6 +76,8 @@ private slots:
     void on_LoadImageBtn_1_clicked();
 
     void on_filterSelect_currentIndexChanged(QString);
+
+    void on_filterSelect_2_currentIndexChanged(QString);
 
     void on_imageSelect_currentIndexChanged(QString);
 
@@ -103,12 +111,20 @@ private slots:
 
     void on_thLowCannySlider_valueChanged(int);
 
+    void on_segmentImgBtn_clicked();
+
+    void startSegmentation();
+
+
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
 
 private:
     Ui::MainWindow *ui;
+
+    void initializeCustomPlot(QCustomPlot * plot);
+
     void loadImage(std::string filepath, Image *&image);
 
     void displayRGBImage(Image *image, QLabel *label);

@@ -23,7 +23,7 @@ Parameters:
 * Threshold(0 -> 1) which passed to `cornerHarris`
 
 Returns: 
-vector of pair, each pair if 128-length vector and its associated point
+vector of pair, each pair if 128-length vector and its associated _Point
 
 Steps:
 * get main orientation of pixel `std::vector<double>
@@ -50,9 +50,9 @@ Steps:
 * get FIST descriptor of both images
 * loop over the descriptor of the first image and  inside this loop 
   , loop over the descriptor of the second image
-* calculate the SSD between the key point of the first image and all the key points 
+* calculate the SSD between the key _Point of the first image and all the key points 
   of the second image
-* get the 2 least SSD points and make sure that the least point is less than 0.8 * the second least point 
+* get the 2 least SSD points and make sure that the least _Point is less than 0.8 * the second least _Point 
 * put the points in the vector
 * return the vector holding the points
 
@@ -71,10 +71,10 @@ vector of points that match
 
 Steps:
 * get FIST descriptor of the 2 images
-* loop over the FIST descriptor of the 2 images and get the average of the vector of each key point 128 vector and store it
+* loop over the FIST descriptor of the 2 images and get the average of the vector of each key _Point 128 vector and store it
 * loop over the descriptor of the first image and  inside this loop
   , loop over the descriptor of the second image
-* calculate the Normalized Correlation between the key point of the first image and all the key points
+* calculate the Normalized Correlation between the key _Point of the first image and all the key points
   of the second image
 * put the points in the vector
 * return the vector holding the points

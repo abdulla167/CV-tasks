@@ -174,7 +174,7 @@ std::vector<std::pair<std::vector<double>, _Point>> getSIFTDescriptor(Image &inp
                 }
             }
             for (auto &mainOrientation: mainOrientations) {
-                printf("mainOrientation: %f, point(%i, %i)\n", mainOrientation, point.x, point.y);
+                printf("mainOrientation: %f, _Point(%i, %i)\n", mainOrientation, point.x, point.y);
                 features.emplace_back(std::vector<double>(), point);
                 // multiply by Gaussian
                 for (int i = -8; i < 8; i++) {

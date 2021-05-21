@@ -46,6 +46,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->resultMatch->yAxis->setRange(0.0, 5.0);
     ui->resultMatch->setAutoFillBackground(true);
     ui->resultMatch->replot();
+
+    regionGrowing = ui->segmentImg->addGraph();
+    ui->segmentImg->xAxis->setVisible(false);
+    ui->segmentImg->yAxis->setVisible(false);
+    ui->segmentImg->xAxis->setRange(0.0, 5.0);
+    ui->segmentImg->yAxis->setRange(0.0, 5.0);
+    ui->segmentImg->setAutoFillBackground(true);
+    ui->segmentImg->replot();
+    ui->segmentImg->installEventFilter(this);
 }
 
 
@@ -125,14 +134,31 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event) {
                 points->setLineStyle((QCPGraph::LineStyle) QCPGraph::lsNone);
                 points->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssDisc, 3));
                 points->setPen(QPen(QColor(0, 0, 255), 2));
-//                points->setLayer("points");
-//                ui->snake->moveLayer(points->layer(), ImageDisplay->layer(), QCustomPlot::limAbove);
+
                 ui->snake->replot();
             }
             return QObject::eventFilter(obj, event);
         }
+    }else if( obj == ui->segmentImg && this->segmentationImage != nullptr) {
+        if (event->type() == QEvent::MouseButtonPress) {
+            qDebug()<< "here";
+            QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
+            int x = ceil(((double) mouseEvent->x() / ui->segmentImg->background().rect().width()) * segmentationImage->width);
+            int y = ceil(((double) mouseEvent->y() / ui->segmentImg->background().rect().height()) *
+                         segmentationImage->height);
+            point xy{x, y};
+            DataRG.push_back(xy);
+            double xCoordinate = ui->segmentImg->xAxis->pixelToCoord(mouseEvent->x());
+            double yCoordinate = ui->segmentImg->yAxis->pixelToCoord(mouseEvent->y());
+            regionGrowing->addData(xCoordinate, yCoordinate);
+            regionGrowing->setLineStyle((QCPGraph::LineStyle) QCPGraph::lsNone);
+            regionGrowing->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssDisc, 3));
+            regionGrowing->setPen(QPen(QColor(0, 0, 255), 2));
+            ui->segmentImg->replot();
+            return QObject::eventFilter(obj, event);
+        }
     }
-    return QObject::eventFilter(obj, event);
+
 }
 
 MainWindow::~MainWindow() {
@@ -158,4 +184,7 @@ MainWindow::~MainWindow() {
     delete yDataMatching_2;
     delete imageMatchPoints1;
     delete imageMatchPoints2;
+    delete segmentationImage;
+    delete segmentationOutputImage;
+    delete regionGrowing;
 }

@@ -4,13 +4,13 @@
 
 #ifndef CV_AGGLOMERATIVE_CLUSTER_SEGMENTATION_H
 #define CV_AGGLOMERATIVE_CLUSTER_SEGMENTATION_H
-float euclideanDistance(_Point p1, _Point p2);
+float euclideanDistance(point p1,point p2);
 
-float clustersDistance(std::vector<_Point> * cluster1, std::vector<_Point> * cluster2);
+float clustersDistance(std::vector<point> * cluster1, std::vector<point> * cluster2);
 
-void initialClusters(Image& img, std::vector<std::vector<_Point>> & clustersList);
+void initialClusters(Image& img, std::vector<std::vector<point>> & clustersList);
 
-int mergeTwoClusters(std::vector<_Point> & cluster1, std::vector<_Point> & cluster2);
+int mergeTwoClusters(std::vector<point> & cluster1, std::vector<point> & cluster2);
 
 Image agglomerativeSeg(Image & img, int numOfClusters, unsigned long initialClustersNum);
 

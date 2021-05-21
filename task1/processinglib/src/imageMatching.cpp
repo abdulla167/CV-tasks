@@ -16,8 +16,8 @@ vector<double> SSDMatching(Image& image_1, Image& image_2){
 
 
 
-    vector<pair<vector<double>, _Point>> imageDescriptor_1 = getSIFTDescriptor(gray_1,0.2);
-    vector<pair<vector<double>, _Point>> imageDescriptor_2 = getSIFTDescriptor(gray_2,0.2);
+    vector<pair<vector<double>, _Point>> imageDescriptor_1 = getSIFTDescriptor(gray_1, 0.2);
+    vector<pair<vector<double>, _Point>> imageDescriptor_2 = getSIFTDescriptor(gray_2, 0.2);
 
 
 
@@ -84,8 +84,8 @@ vector<double> normalizedCorrelation(Image& image_1, Image& image_2){
     Image gray_1 = image_1.toGrayscale();
     Image gray_2 = image_2.toGrayscale();
 
-    vector<pair<vector<double>, _Point>> imageDescriptor_1 = getSIFTDescriptor(gray_1,0.01);
-    vector<pair<vector<double>, _Point>> imageDescriptor_2 = getSIFTDescriptor(gray_2,0.01);
+    vector<pair<vector<double>, _Point>> imageDescriptor_1 = getSIFTDescriptor(gray_1, 0.01);
+    vector<pair<vector<double>, _Point>> imageDescriptor_2 = getSIFTDescriptor(gray_2, 0.01);
 
     vector<double> descriptorAverage_1 =vector<double>(imageDescriptor_1.size());
     for(int imageDescriptorLoop_1 = 0; imageDescriptorLoop_1 < imageDescriptor_1.size(); imageDescriptorLoop_1++){

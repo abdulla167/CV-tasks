@@ -313,7 +313,7 @@ enum SelectionRectMode { srmNone    ///< The selection rect is disabled, and all
 */
 enum SelectionType { stNone                ///< The plottable is not selectable
                      ,stWhole              ///< Selection behaves like \ref stMultipleDataRanges, but if there are any data points selected, the entire plottable is drawn as selected.
-                     ,stSingleData         ///< One individual data point can be selected at a time
+                     ,stSingleData         ///< One individual data _Point can be selected at a time
                      ,stDataRange          ///< Multiple contiguous data points (a data range) can be selected
                      ,stMultipleDataRanges ///< Any combination of data points/ranges can be selected
                     };
@@ -1949,7 +1949,7 @@ public:
     
     \see setFractionStyle
   */
-  enum FractionStyle { fsFloatingPoint     ///< Fractions are displayed as regular decimal floating point numbers, e.g. "0.25" or "0.125".
+  enum FractionStyle { fsFloatingPoint     ///< Fractions are displayed as regular decimal floating _Point numbers, e.g. "0.25" or "0.125".
                        ,fsAsciiFractions   ///< Fractions are written as rationals using ASCII characters only, e.g. "1/4" or "1/8"
                        ,fsUnicodeFractions ///< Fractions are written using sub- and superscript UTF-8 digits and the fraction symbol.
                      };
@@ -2505,7 +2505,7 @@ public:
                       ,ssCrossCircle      ///< \enumimage{ssCrossCircle.png} a circle with a cross inside
                       ,ssPlusCircle       ///< \enumimage{ssPlusCircle.png} a circle with a plus inside
                       ,ssPeace     ///< \enumimage{ssPeace.png} a circle, with one vertical and two downward diagonal lines
-                      ,ssPixmap    ///< a custom pixmap specified by \ref setPixmap, centered on the data point coordinates
+                      ,ssPixmap    ///< a custom pixmap specified by \ref setPixmap, centered on the data _Point coordinates
                       ,ssCustom    ///< custom painter operations are performed per scatter (As QPainterPath, see \ref setCustomPath)
                     };
   Q_ENUMS(ScatterShape)
@@ -2676,7 +2676,7 @@ protected:
   The template parameter <tt>DataType</tt> is the type of the stored data points. It must be
   trivially copyable and have the following public methods, preferably inline:
 
-  \li <tt>double sortKey() const</tt>\n Returns the member variable of this data point that is the
+  \li <tt>double sortKey() const</tt>\n Returns the member variable of this data _Point that is the
   sort key, defining the ordering in the container. Often this variable is simply called \a key.
 
   \li <tt>static DataType fromSortKey(double sortKey)</tt>\n Returns a new instance of the data
@@ -2687,18 +2687,18 @@ protected:
   example for \ref QCPCurve, which uses \a t as sort key and \a key as main key. This is the reason
   why QCPCurve unlike QCPGraph can display parametric curves with loops.
 
-  \li <tt>double mainKey() const</tt>\n Returns the variable of this data point considered the main
-  key. This is commonly the variable that is used as the coordinate of this data point on the key
+  \li <tt>double mainKey() const</tt>\n Returns the variable of this data _Point considered the main
+  key. This is commonly the variable that is used as the coordinate of this data _Point on the key
   axis of the plottable. This method is used for example when determining the automatic axis
   rescaling of key axes (\ref QCPAxis::rescale).
 
-  \li <tt>double mainValue() const</tt>\n Returns the variable of this data point considered the
-  main value. This is commonly the variable that is used as the coordinate of this data point on
+  \li <tt>double mainValue() const</tt>\n Returns the variable of this data _Point considered the
+  main value. This is commonly the variable that is used as the coordinate of this data _Point on
   the value axis of the plottable.
 
-  \li <tt>QCPRange valueRange() const</tt>\n Returns the range this data point spans in the value
+  \li <tt>QCPRange valueRange() const</tt>\n Returns the range this data _Point spans in the value
   axis coordinate. If the data is single-valued (e.g. QCPGraphData), this is simply a range with
-  both lower and upper set to the main data point value. However if the data points can represent
+  both lower and upper set to the main data _Point value. However if the data points can represent
   multiple values at once (e.g QCPFinancialData with its \a high, \a low, \a open and \a close
   values at each \a key) this method should return the range those values span. This method is used
   for example when determining the automatic axis rescaling of value axes (\ref
@@ -2719,29 +2719,29 @@ protected:
 
 /*! \fn QCPDataContainer::const_iterator QCPDataContainer<DataType>::constBegin() const
   
-  Returns a const iterator to the first data point in this container.
+  Returns a const iterator to the first data _Point in this container.
 */
 
 /*! \fn QCPDataContainer::const_iterator QCPDataContainer<DataType>::constEnd() const
   
-  Returns a const iterator to the element past the last data point in this container.
+  Returns a const iterator to the element past the last data _Point in this container.
 */
 
 /*! \fn QCPDataContainer::iterator QCPDataContainer<DataType>::begin() const
   
-  Returns a non-const iterator to the first data point in this container.
+  Returns a non-const iterator to the first data _Point in this container.
 
   You can manipulate the data points in-place through the non-const iterators, but great care must
-  be taken when manipulating the sort key of a data point, see \ref sort, or the detailed
+  be taken when manipulating the sort key of a data _Point, see \ref sort, or the detailed
   description of this class.
 */
 
 /*! \fn QCPDataContainer::iterator QCPDataContainer<DataType>::end() const
   
-  Returns a non-const iterator to the element past the last data point in this container.
+  Returns a non-const iterator to the element past the last data _Point in this container.
   
   You can manipulate the data points in-place through the non-const iterators, but great care must
-  be taken when manipulating the sort key of a data point, see \ref sort, or the detailed
+  be taken when manipulating the sort key of a data _Point, see \ref sort, or the detailed
   description of this class.
 */
 
@@ -2897,7 +2897,7 @@ void QCPDataContainer<DataType>::add(const QVector<DataType> &data, bool already
 
 /*! \overload
   
-  Adds the provided single data point to the current data.
+  Adds the provided single data _Point to the current data.
   
   \see remove
 */
@@ -2953,7 +2953,7 @@ void QCPDataContainer<DataType>::removeAfter(double sortKey)
 /*!
   Removes all data points with (sort-)keys between \a sortKeyFrom and \a sortKeyTo. if \a
   sortKeyFrom is greater or equal to \a sortKeyTo, the function does nothing. To remove a single
-  data point with known (sort-)key, use \ref remove(double sortKey).
+  data _Point with known (sort-)key, use \ref remove(double sortKey).
   
   \see removeBefore, removeAfter, clear
 */
@@ -2972,7 +2972,7 @@ void QCPDataContainer<DataType>::remove(double sortKeyFrom, double sortKeyTo)
 
 /*! \overload
   
-  Removes a single data point at \a sortKey. If the position is not known with absolute (binary)
+  Removes a single data _Point at \a sortKey. If the position is not known with absolute (binary)
   precision, consider using \ref remove(double sortKeyFrom, double sortKeyTo) with a small
   fuzziness interval around the suspected position, depeding on the precision with which the
   (sort-)key is known.
@@ -3052,8 +3052,8 @@ void QCPDataContainer<DataType>::squeeze(bool preAllocation, bool postAllocation
 }
 
 /*!
-  Returns an iterator to the data point with a (sort-)key that is equal to, just below, or just
-  above \a sortKey. If \a expandedRange is true, the data point just below \a sortKey will be
+  Returns an iterator to the data _Point with a (sort-)key that is equal to, just below, or just
+  above \a sortKey. If \a expandedRange is true, the data _Point just below \a sortKey will be
   considered, otherwise the one just above.
 
   This can be used in conjunction with \ref findEnd to iterate over data points within a given key
@@ -3079,8 +3079,8 @@ typename QCPDataContainer<DataType>::const_iterator QCPDataContainer<DataType>::
 }
 
 /*!
-  Returns an iterator to the element after the data point with a (sort-)key that is equal to, just
-  above or just below \a sortKey. If \a expandedRange is true, the data point just above \a sortKey
+  Returns an iterator to the element after the data _Point with a (sort-)key that is equal to, just
+  above or just below \a sortKey. If \a expandedRange is true, the data _Point just above \a sortKey
   will be considered, otherwise the one just below.
 
   This can be used in conjunction with \ref findBegin to iterate over data points within a given
@@ -4035,7 +4035,7 @@ Q_DECLARE_METATYPE(QCustomPlot::RefreshPriority)
   If \a onlySelectable is true, only plottables that are selectable
   (QCPAbstractPlottable::setSelectable) are considered.
   
-  if \a dataIndex is non-null, it is set to the index of the plottable's data point that is closest
+  if \a dataIndex is non-null, it is set to the index of the plottable's data _Point that is closest
   to \a pos.
 
   If there is no plottable of the specified type at \a pos, returns \c nullptr.
@@ -4204,7 +4204,7 @@ private:
   If you have a \ref QCPAbstractPlottable pointer, you can check whether it implements this
   interface by calling \ref QCPAbstractPlottable::interface1D and testing it for a non-zero return
   value. If it indeed implements this interface, you may use it to access the plottable's data
-  without needing to know the exact type of the plottable or its data point type.
+  without needing to know the exact type of the plottable or its data _Point type.
 */
 
 /* start documentation of pure virtual functions */
@@ -4230,7 +4230,7 @@ private:
 
 /*! \fn virtual double QCPPlottableInterface1D::dataMainKey(int index) const = 0
   
-  Returns the main key of the data point at the given \a index.
+  Returns the main key of the data _Point at the given \a index.
   
   What the main key is, is defined by the plottable's data type. See the \ref
   qcpdatacontainer-datatype "QCPDataContainer DataType" documentation for details about this naming
@@ -4239,7 +4239,7 @@ private:
 
 /*! \fn virtual double QCPPlottableInterface1D::dataSortKey(int index) const = 0
   
-  Returns the sort key of the data point at the given \a index.
+  Returns the sort key of the data _Point at the given \a index.
   
   What the sort key is, is defined by the plottable's data type. See the \ref
   qcpdatacontainer-datatype "QCPDataContainer DataType" documentation for details about this naming
@@ -4248,7 +4248,7 @@ private:
 
 /*! \fn virtual double QCPPlottableInterface1D::dataMainValue(int index) const = 0
   
-  Returns the main value of the data point at the given \a index.
+  Returns the main value of the data _Point at the given \a index.
   
   What the main value is, is defined by the plottable's data type. See the \ref
   qcpdatacontainer-datatype "QCPDataContainer DataType" documentation for details about this naming
@@ -4257,7 +4257,7 @@ private:
 
 /*! \fn virtual QCPRange QCPPlottableInterface1D::dataValueRange(int index) const = 0
   
-  Returns the value range of the data point at the given \a index.
+  Returns the value range of the data _Point at the given \a index.
   
   What the value range is, is defined by the plottable's data type. See the \ref
   qcpdatacontainer-datatype "QCPDataContainer DataType" documentation for details about this naming
@@ -4266,10 +4266,10 @@ private:
 
 /*! \fn virtual QPointF QCPPlottableInterface1D::dataPixelPosition(int index) const = 0
 
-  Returns the pixel position on the widget surface at which the data point at the given \a index
+  Returns the pixel position on the widget surface at which the data _Point at the given \a index
   appears.
 
-  Usually this corresponds to the point of \ref dataMainKey/\ref dataMainValue, in pixel
+  Usually this corresponds to the _Point of \ref dataMainKey/\ref dataMainValue, in pixel
   coordinates. However, depending on the plottable, this might be a different apparent position
   than just a coord-to-pixel transform of those values. For example, \ref QCPBars apparent data
   values can be shifted depending on their stacking, bar grouping or configured base value.
@@ -4286,8 +4286,8 @@ private:
 
 /*! \fn virtual int QCPPlottableInterface1D::findBegin(double sortKey, bool expandedRange) const = 0
 
-  Returns the index of the data point with a (sort-)key that is equal to, just below, or just above
-  \a sortKey. If \a expandedRange is true, the data point just below \a sortKey will be considered,
+  Returns the index of the data _Point with a (sort-)key that is equal to, just below, or just above
+  \a sortKey. If \a expandedRange is true, the data _Point just below \a sortKey will be considered,
   otherwise the one just above.
 
   This can be used in conjunction with \ref findEnd to iterate over data points within a given key
@@ -4303,15 +4303,15 @@ private:
 
 /*! \fn virtual int QCPPlottableInterface1D::findEnd(double sortKey, bool expandedRange) const = 0
 
-  Returns the index one after the data point with a (sort-)key that is equal to, just above, or
-  just below \a sortKey. If \a expandedRange is true, the data point just above \a sortKey will be
+  Returns the index one after the data _Point with a (sort-)key that is equal to, just above, or
+  just below \a sortKey. If \a expandedRange is true, the data _Point just above \a sortKey will be
   considered, otherwise the one just below.
 
   This can be used in conjunction with \ref findBegin to iterate over data points within a given
   key range, including the bounding data points that are just below and above the specified range.
 
   If \a expandedRange is true but there are no data points above \a sortKey, the index just above the
-  highest data point is returned.
+  highest data _Point is returned.
 
   If the container is empty, returns 0.
 
@@ -4344,7 +4344,7 @@ private:
   QCPSelectionDecorator).
 
   This class implements basic functionality of \ref QCPAbstractPlottable::selectTest and \ref
-  QCPPlottableInterface1D::selectTestRect, assuming point-like data points, based on the 1D data
+  QCPPlottableInterface1D::selectTestRect, assuming _Point-like data points, based on the 1D data
   interface. In spite of that, most plottable subclasses will want to reimplement those methods
   again, to provide a more accurate hit test based on their specific data visualization geometry.
 */
@@ -4478,7 +4478,7 @@ bool QCPAbstractPlottable1D<DataType>::sortKeyIsMainKey() const
 
 /*!
   Implements a rect-selection algorithm assuming the data (accessed via the 1D data interface) is
-  point-like. Most subclasses will want to reimplement this method again, to provide a more
+  _Point-like. Most subclasses will want to reimplement this method again, to provide a more
   accurate hit test based on the true data visualization geometry.
 
   \seebaseclassmethod
@@ -4548,11 +4548,11 @@ int QCPAbstractPlottable1D<DataType>::findEnd(double sortKey, bool expandedRange
 }
 
 /*!
-  Implements a point-selection algorithm assuming the data (accessed via the 1D data interface) is
-  point-like. Most subclasses will want to reimplement this method again, to provide a more
+  Implements a _Point-selection algorithm assuming the data (accessed via the 1D data interface) is
+  _Point-like. Most subclasses will want to reimplement this method again, to provide a more
   accurate hit test based on the true data visualization geometry.
 
-  If \a details is not 0, it will be set to a \ref QCPDataSelection, describing the closest data point
+  If \a details is not 0, it will be set to a \ref QCPDataSelection, describing the closest data _Point
   to \a pos.
   
   \seebaseclassmethod
@@ -4590,7 +4590,7 @@ double QCPAbstractPlottable1D<DataType>::selectTest(const QPointF &pos, bool onl
   {
     const double mainKey = it->mainKey();
     const double mainValue = it->mainValue();
-    if (keyRange.contains(mainKey) && valueRange.contains(mainValue)) // make sure data point is inside visible range, for speedup in cases where sort key isn't main key and we iterate over all points
+    if (keyRange.contains(mainKey) && valueRange.contains(mainValue)) // make sure data _Point is inside visible range, for speedup in cases where sort key isn't main key and we iterate over all points
     {
       const double currentDistSqr = QCPVector2D(coordsToPixels(mainKey, mainValue)-pos).lengthSquared();
       if (currentDistSqr < minDistSqr)
@@ -4673,9 +4673,9 @@ void QCPAbstractPlottable1D<DataType>::drawPolyline(QCPPainter *painter, const Q
     int i = 0;
     bool lastIsNan = false;
     const int lineDataSize = lineData.size();
-    while (i < lineDataSize && (qIsNaN(lineData.at(i).y()) || qIsNaN(lineData.at(i).x()))) // make sure first point is not NaN
+    while (i < lineDataSize && (qIsNaN(lineData.at(i).y()) || qIsNaN(lineData.at(i).x()))) // make sure first _Point is not NaN
       ++i;
-    ++i; // because drawing works in 1 point retrospect
+    ++i; // because drawing works in 1 _Point retrospect
     while (i < lineDataSize)
     {
       if (!qIsNaN(lineData.at(i).y()) && !qIsNaN(lineData.at(i).x())) // NaNs create a gap in the line
@@ -4697,7 +4697,7 @@ void QCPAbstractPlottable1D<DataType>::drawPolyline(QCPPainter *painter, const Q
     {
       if (qIsNaN(lineData.at(i).y()) || qIsNaN(lineData.at(i).x()) || qIsInf(lineData.at(i).y())) // NaNs create a gap in the line. Also filter Infs which make drawPolyline block
       {
-        painter->drawPolyline(lineData.constData()+segmentStart, i-segmentStart); // i, because we don't want to include the current NaN point
+        painter->drawPolyline(lineData.constData()+segmentStart, i-segmentStart); // i, because we don't want to include the current NaN _Point
         segmentStart = i+1;
       }
       ++i;
@@ -5475,10 +5475,10 @@ public:
   enum LineStyle { lsNone        ///< data points are not connected with any lines (e.g. data only represented
                                  ///< with symbols according to the scatter style, see \ref setScatterStyle)
                    ,lsLine       ///< data points are connected by a straight line
-                   ,lsStepLeft   ///< line is drawn as steps where the step height is the value of the left data point
-                   ,lsStepRight  ///< line is drawn as steps where the step height is the value of the right data point
+                   ,lsStepLeft   ///< line is drawn as steps where the step height is the value of the left data _Point
+                   ,lsStepRight  ///< line is drawn as steps where the step height is the value of the right data _Point
                    ,lsStepCenter ///< line is drawn as steps where the step is in between two data points
-                   ,lsImpulse    ///< each data point is represented by a line parallel to the value axis, which reaches from the data point to the zero-value-line
+                   ,lsImpulse    ///< each data _Point is represented by a line parallel to the value axis, which reaches from the data _Point to the zero-value-line
                  };
   Q_ENUMS(LineStyle)
   
