@@ -10,6 +10,7 @@
 #include "processinglib/hough.h"
 #include <iostream>
 #include "processinglib/harris_corner_detector.h"
+#include "processinglib/thresholding.h"
 
 void MainWindow::on_loadImageBtn_clicked() {
     QString filePath = QFileDialog::getOpenFileName(this, "load image", "../");
@@ -124,12 +125,12 @@ void MainWindow::on_filterSelect_currentIndexChanged(QString filterName) {
         auto image = drawCircles(circles, input, cannyImage);
         displayRGBImage(&image, ui->outputImageLabel);
 //        delete houghImages;
-    }else if(filterName == "Harris Corner"){
+    } else if (filterName == "Harris Corner") {
         auto grayImage = inputImage->toGrayscale();
         Image colorImg{grayImage.width, grayImage.height, 3};
-        for (int y =0 ; y < grayImage.height; y++){
-            for (int x=0; x < grayImage.width; x++){
-                for (int z=0; z < 3; z++){
+        for (int y = 0; y < grayImage.height; y++) {
+            for (int x = 0; x < grayImage.width; x++) {
+                for (int z = 0; z < 3; z++) {
                     colorImg(y, x, z) = grayImage(y, x);
                 }
             }
@@ -137,7 +138,7 @@ void MainWindow::on_filterSelect_currentIndexChanged(QString filterName) {
         std::vector<_Point> corners = cornerHarris(grayImage, 0.01, 3);
         auto des = getSIFTDescriptor(grayImage, 0.01);
         std::vector<_Point> ps;
-        for (auto & vec_point: des) {
+        for (auto &vec_point: des) {
             ps.push_back(vec_point.second);
         }
         drawCornerPoints(colorImg, ps);
@@ -148,6 +149,28 @@ void MainWindow::on_filterSelect_currentIndexChanged(QString filterName) {
 //            }
 //            std::cout << std::endl;
 //        }
+    } else if (filterName == "GlobalAtsu") {
+        auto grayImage = inputImage->toGrayscale();
+        displayGrayscaleImage(&grayImage, ui->inputImageLabel);
+        auto thresolds = globalAtsu(grayImage, 256, 3);
+        auto im = buildSegmentedImg(grayImage, thresolds);
+        displayGrayscaleImage(&im, ui->outputImageLabel);
+    } else if (filterName == "LocalAtsu") {
+        auto grayImage = inputImage->toGrayscale();
+        displayGrayscaleImage(&grayImage, ui->inputImageLabel);
+        auto im = localAtsu(grayImage, 5, 256, 3);
+        displayGrayscaleImage(&im, ui->outputImageLabel);
+    } else if (filterName == "GlobalOptimalIterative") {
+        auto grayImage = inputImage->toGrayscale();
+        displayGrayscaleImage(&grayImage, ui->inputImageLabel);
+        auto thresolds = globalOptimalIterativeThresholding(grayImage);
+        auto im = buildSegmentedImg(grayImage, thresolds);
+        displayGrayscaleImage(&im, ui->outputImageLabel);
+    } else if (filterName == "LocalOptimalIterative") {
+        auto grayImage = inputImage->toGrayscale();
+        displayGrayscaleImage(&grayImage, ui->inputImageLabel);
+        auto im = localOptimalIterativeThresholding(grayImage, 7);
+        displayGrayscaleImage(&im, ui->outputImageLabel);
     }
 }
 

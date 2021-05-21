@@ -10,18 +10,44 @@ using namespace std;
 
 #include <cmath>
 
-void im_hist(Image &image, int histogram[], int channel) {
+void im_hist(Image &image, int histogram[], int channel, int initIndex,int histSize) {
 
     // initialize all intensity values to 0
-    for (int i = 0; i < 256; i++) {
+    for (int i = initIndex; i < histSize + initIndex; i++) {
         histogram[i] = 0;
     }
 
     // calculate the histgram
     for (int y = 0; y < image.height; y++) {
         for (int x = 0; x < image.width; x++) {
-            histogram[(int) image(y, x, channel - 1)]++;
+            histogram[(int) image(y, x, channel - 1) + initIndex]++;
         }
+    }
+}
+
+void im_hist(Image &image, std::pair<int, int> yRange, std::pair<int, int> xRange,int histogram[], int channel, int initIndex,int histSize) {
+
+    // initialize all intensity values to 0
+    for (int i = initIndex; i < histSize + initIndex; i++) {
+        histogram[i] = 0;
+    }
+
+    // calculate the histgram
+    for (int y = yRange.first; y < yRange.second; y++) {
+        for (int x = xRange.first; x < xRange.second; x++) {
+            histogram[(int) image(y, x, channel - 1) + initIndex]++;
+        }
+    }
+}
+
+void smooth_hist(Image &image, int histogram[],double smoothedHist[],int windowSmooth, int initIndex,int smoothedHistSize) {
+    double sum;
+    for (int i = initIndex; i < smoothedHistSize + initIndex; ++i) {
+        sum = 0;
+        for (int j = -windowSmooth; j < windowSmooth; ++j) {
+            sum += histogram[j + windowSmooth + i];
+        }
+        smoothedHist[i] = sum / (2 * windowSmooth + 1);
     }
 }
 

@@ -41,6 +41,7 @@ Q_OBJECT
 
     Image * imageMatch_1 = nullptr;
     Image * imageMatch_2 = nullptr;
+    Image * thresholdingImage = nullptr;
     Image * segmentationImage = nullptr;
     Image * segmentationOutputImage = nullptr;
 

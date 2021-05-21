@@ -1,90 +1,67 @@
-# Task 3
-### Haris Operator
+# Task 4
+### Thresholding
+##### Global Atsu
 ```c++
-std::vector<_Point> cornerHarris(Image& grayImg, double threshold, int patchDim = 3)
+std::vector<int> globalAtsu(Image &inputImg, int histSize = 256, int numModes = 2);
 ```
-Parameters:
-* Grayscale image
-* Threshold(0 -> 1) which is percentage of max of haris operator
-* Patch dimension to construct hessian matrix at each pixel<br>
-it uses internally ```void getHarrisCorner(Image &pointsStrength, std::vector<_Point> &cornerPoints, double threshold) ```
-which get the points that greater than threshold
-<br>
-Complexity: O(imgWidth x imgHeight)
+function parameters:
+  * inputImg: reference to gray Image
+  * histSize: histogram size depending on the number of bits that represent each pixel in the image
+  * numModes: number of modes
+
+function return: return array of thresholds depending on number of modes
+
+**Results**:<br>
+* global atsu 2 modes
+![](images/atsu-global-2-modes.png)
   
-![](images/image1.png)
+* global atsu 3 modes
+![](images/atsu-global-3-modes.png)
 
-### SIFT Descriptor
+##### Local Atsu
 ```c++
-std::vector<std::pair<std::vector<double>, _Point>> getSIFTDescriptor(Image &inputImg, float threshold = 0.01)
+Image localAtsu(Image &inputImg, int blockDim, int histSize = 256, int numModes = 2);
 ```
-Parameters: 
-* Grayscale image
-* Threshold(0 -> 1) which passed to `cornerHarris`
+function parameters:
+* inputImg: reference to gray Image
+* blockDim: block dimension (eg, 5 means 5 x 5)
+* histSize: histogram size depending on the number of bits that represent each pixel in the image
+* numModes: number of modes
 
-Returns: 
-vector of pair, each pair if 128-length vector and its associated point
+function return: return the thresholded image
 
-Steps:
-* get main orientation of pixel `std::vector<double>
-  getMainOrientation(Image &dir, Image &magnitude, std::pair<int, int> iRange, std::pair<int, int> jRange)` 
-  construct histogram of 36 bin in neighborhood of the pixel and take all orientations that greater than 0.8 * (max orientation)
-* for each main orientation construct 16 x 16 neighborhood for each 4 x 4 region make histogram of 8 bin (of relative orientations) and store this histogram in the feature vector
- `void featureHistogram(Image &dir, Image &magnitude, double mainOrientation, std::pair<int, int> iRange, std::pair<int, int> jRange, std::vector<double> &v)`
-* normalize the feature vector
+**Results**:<br>
+* local atsu 2 modes, blockDim: 5
+![](images/atsu-local-2-modes.png)
 
-Complexity: O(n^2)
+* local atsu 3 modes, blockDim: 5
+![](images/atsu-local-3-modes.png)
+##### Global Optimal Iterative Thresholding
 
-### SSD Matching
 ```c++
-std::vector<double> SSDMatching(Image& inputImage_1, Image& inputImage_2);
+int globalOptimalIterativeThresholding(Image &inputImg);
 ```
-Parameters:
-* Grayscale image (first image)
-* Grayscale image (second image)
+function parameters:
+   * inputImg: reference to gray Image 
 
-Returns:
-vector of points that match
+function return: return threshold
 
-Steps:
-* get FIST descriptor of both images
-* loop over the descriptor of the first image and  inside this loop 
-  , loop over the descriptor of the second image
-* calculate the SSD between the key point of the first image and all the key points 
-  of the second image
-* get the 2 least SSD points and make sure that the least point is less than 0.8 * the second least point 
-* put the points in the vector
-* return the vector holding the points
+ **Results**:<br>
+![](images/global-optimal.png)
 
-Complexity: O(n^2)
-
-### Normalized Correlation Matching
+##### Local Optimal Iterative Thresholding
 ```c++
-std::vector<double> normalizedCorrelation(Image& inputImage_1, Image&inputImage_2);
+Image localOptimalIterativeThresholding(Image &inputImg, int blockDim);
 ```
-Parameters:
-* Grayscale image (first image)
-* Grayscale image (second image)
+function parameters:
+* inputImg: reference to gray Image
+* blockDim: block dimension (eg, 5 means 5 x 5)
 
-Returns:
-vector of points that match
+function return: return threshold
 
-Steps:
-* get FIST descriptor of the 2 images
-* loop over the FIST descriptor of the 2 images and get the average of the vector of each key point 128 vector and store it
-* loop over the descriptor of the first image and  inside this loop
-  , loop over the descriptor of the second image
-* calculate the Normalized Correlation between the key point of the first image and all the key points
-  of the second image
-* put the points in the vector
-* return the vector holding the points
-
-Complexity: O(n^2)
-
-## Result
-![](images/image2.png)
-![](images/image3.png)
-![](images/image4.png)
+**Results**:<br>
+blockDim: 7
+![](images/local-optimal.png)
 ## Requirement packages git
 * fftw3
 * qt5

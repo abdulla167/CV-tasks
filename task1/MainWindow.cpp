@@ -160,4 +160,5 @@ MainWindow::~MainWindow() {
     delete imageMatchPoints2;
     delete segmentationImage;
     delete segmentationOutputImage;
+    delete thresholdingImage;
 }
