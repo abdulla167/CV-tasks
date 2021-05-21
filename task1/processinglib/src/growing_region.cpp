@@ -5,7 +5,8 @@
 #include "stack"
 #include "point.h"
 
-Image RGSegmentation(Image & inputImg, std::vector<point> seedPoint){
+Image RGSegmentation(Image & img, std::vector<point> seedPoint){
+    Image inputImg = img.toGrayscale();
     point pointArray[8] =
             {
                     point(1, -1),
@@ -18,13 +19,14 @@ Image RGSegmentation(Image & inputImg, std::vector<point> seedPoint){
                     point(1, 1)
 
             };
-    Image outputImg(inputImg.width, inputImg.height, inputImg.channels);
+    Image outputImg(img.width, img.height, img.channels);
     for (int i = 0; i < seedPoint.size(); ++i) {
         std::stack<point> seedPoints;
         seedPoints.push(seedPoint[i]);
-        int  growLable = 0;//Mark whether it has grown
+        int  growLableCh1 = 0;//Mark whether it has grown
+        int  growLableCh2 = 0;//Mark whether it has grown
+        int  growLableCh3 = 0;//Mark whether it has grown
         int  inputValue = 0;//The gray value of the _Point to be grown
-        int  outputValue = 0;//Mark the gray value of the growing _Point that meets the conditions in the Image of OutputData
         int initialValue = inputImg(seedPoint[i].y, seedPoint[i].x);
         while(!seedPoints.empty()){
             point  topPoint = seedPoints.top();
@@ -40,15 +42,19 @@ Image RGSegmentation(Image & inputImg, std::vector<point> seedPoint){
                 {
                     continue;
                 }
-                growLable = outputImg(y, x);
+                growLableCh1 = outputImg(y, x, 0);
+                growLableCh2 = outputImg(y, x, 1);
+                growLableCh3 = outputImg(y, x, 2);
                 inputValue = inputImg(y, x);
                 /*The second _Point is not growing and the absolute value of the gray difference between
                  * the _Point to be grown and the first seed _Point is less than 10, then grow
                  */
-                if (growLable == 0 && abs(inputValue - initialValue) < 20)
+                if (growLableCh1 == 0 && growLableCh2 == 0 && growLableCh3 == 0 && abs(inputValue - initialValue) < 20)
                 {
                     //Use gray to indicate growth
-                    outputImg(y, x) = initialValue;
+                    outputImg(y, x, 0) = img(y, x, 0);
+                    outputImg(y, x, 1) = img(y, x, 1);
+                    outputImg(y, x, 2) = img(y, x, 2);
                     //Put this _Point on the stack
                     seedPoints.push(tempPoint);
                 }

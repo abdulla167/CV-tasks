@@ -6,6 +6,6 @@
 #define CV_GROWING_REGION_H
 #include "point.h"
 
-Image RGSegmentation(Image & inputImg, std::vector<point> seedPoint);
+Image RGSegmentation(Image & img, std::vector<point> seedPoint);
 
 #endif //CV_GROWING_REGION_H

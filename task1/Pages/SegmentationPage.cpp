@@ -53,9 +53,8 @@ void MainWindow::startSegmentation() {
         Image image = meanShift.run();
         displayRGBImage(&image, ui->segmentOutput);
     }  else if (ui->filterSelect_2->currentIndex() == 3) {
-        auto grayImage = segmentationImage->toGrayscale();
-        auto outputImg = RGSegmentation(grayImage, DataRG);
-        displayGrayscaleImage(&outputImg, ui->segmentOutput);
+        auto outputImg = RGSegmentation((*segmentationImage), DataRG);
+        displayRGBImage(&outputImg, ui->segmentOutput);
     }  else if (ui->filterSelect_2->currentIndex() == 4) {
         auto grayImage = segmentationImage->toGrayscale();
         auto outputImg = agglomerativeSeg(grayImage, 8, 25);
