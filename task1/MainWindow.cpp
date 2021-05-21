@@ -152,7 +152,7 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event) {
             double yCoordinate = ui->segmentImg->yAxis->pixelToCoord(mouseEvent->y());
             regionGrowing->addData(xCoordinate, yCoordinate);
             regionGrowing->setLineStyle((QCPGraph::LineStyle) QCPGraph::lsNone);
-            regionGrowing->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssDisc, 5));
+            regionGrowing->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssDisc, 10));
             regionGrowing->setPen(QPen(QColor(0, 0, 255), 2));
             ui->segmentImg->replot();
             return QObject::eventFilter(obj, event);
