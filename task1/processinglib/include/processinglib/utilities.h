@@ -40,5 +40,4 @@ void sauvolaTechnique(Image& inputImg, int x, int y, int filterDim, double & mea
 
 std::vector<std::vector<float>> covarMatrix(const std::vector<std::vector<float>> &mat);
 
-
-#endif //CV_UTILITIES_H
+#endif
