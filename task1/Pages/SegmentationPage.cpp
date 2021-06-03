@@ -4,13 +4,11 @@
 #include "../MainWindow.h"
 #include "../ui_MainWindow.h"
 #include <QFileDialog>
+#include "processinglib/utilities.h"
 #include "processinglib/k_mean_segmentation.h"
 #include "processinglib/mean_shift.h"
-#include "iostream"
 #include "processinglib/growing_region.h"
 #include "processinglib/agglomerative_cluster_segmentation.h"
-
-
 
 void MainWindow::on_segmentImgBtn_clicked() {
     bool  first = false;
@@ -35,7 +33,21 @@ void MainWindow::on_segmentImgBtn_clicked() {
     ui->segmentImg->setBackground(QPixmap::fromImage(qImage).scaled(width, height,Qt::IgnoreAspectRatio, Qt::FastTransformation));
     ui->segmentImg->setAutoFillBackground(true);
     ui->segmentImg->replot();
+    std::vector<std::vector<float>> mat {
+            { 1.2f, 2.5f, 5.6f, -2.5f },
+            { -3.6f, 9.2f, 0.5f, 7.2f },
+            { 4.3f, 1.3f, 9.4f, -3.4f } };
 
+
+    std::vector<std::vector<float>> result;
+
+    result = covarMatrix(mat);
+
+    for(int i = 0; i < 3; i++){
+
+           qDebug()<<  result[i][0]<< " " << result[i][1]  << " " << result[i][2];
+
+    }
 }
 
 void MainWindow::startSegmentation() {

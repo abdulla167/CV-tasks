@@ -38,4 +38,7 @@ Image getDirection(Image& imgX, Image& imgY, bool approximateFour = true);
 
 void sauvolaTechnique(Image& inputImg, int x, int y, int filterDim, double & mean, double & std);
 
+std::vector<std::vector<float>> covarMatrix(const std::vector<std::vector<float>> &mat);
+
+
 #endif //CV_UTILITIES_H
