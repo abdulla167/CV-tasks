@@ -13,10 +13,10 @@ function return: return array of thresholds depending on number of modes
 
 **Results**:<br>
 * global atsu 2 modes
-![](images/atsu-global-2-modes.png)
+![](Resources/images/atsu-global-2-modes.png)
   
 * global atsu 3 modes
-![](images/atsu-global-3-modes.png)
+![](Resources/images/atsu-global-3-modes.png)
 
 ##### Local Atsu
 ```c++
@@ -32,10 +32,10 @@ function return: return the thresholded image
 
 **Results**:<br>
 * local atsu 2 modes, blockDim: 5
-![](images/atsu-local-2-modes.png)
+![](Resources/images/atsu-local-2-modes.png)
 
 * local atsu 3 modes, blockDim: 5
-![](images/atsu-local-3-modes.png)
+![](Resources/images/atsu-local-3-modes.png)
 ##### Global Optimal Iterative Thresholding
 
 ```c++
@@ -47,7 +47,7 @@ function parameters:
 function return: return threshold
 
  **Results**:<br>
-![](images/global-optimal.png)
+![](Resources/images/global-optimal.png)
 
 ##### Local Optimal Iterative Thresholding
 ```c++
@@ -61,7 +61,7 @@ function return: return threshold
 
 **Results**:<br>
 blockDim: 7
-![](images/local-optimal.png)
+![](Resources/images/local-optimal.png)
 
 ##### Means-Shift
 ```c++
@@ -75,7 +75,7 @@ class functions:
 
 **Results**:<br>
 blockDim: 7
-![](images/Mean-Sift.jpg)
+![](Resources/images/Mean-Sift.jpg)
 
 ##### K-Mean
 ```c++
@@ -94,26 +94,32 @@ class functions:
 ##### Region Growing
 ```c++
 Image RGSegmentation(Image & inputImg, std::vector<point> seedPoint)
-```
-function parameters:
-* parameter
 
-function return: return threshold
+```
+--> You should select seed points from image in gui to segment the regions of these seed points
+
+function parameters:
+* inputImg: reference to color image
+* seedPoint: Points which are used as seeds for segmentation regions
+
+function return: return segmented output image
 **Results**:<br>
 blockDim: 7
-![](images/Region-GRowing.jpg)
+![](Resources/images/Region-GRowing.jpg)
 
 ##### Agglomerative
 ```c++
 Image agglomerativeSeg(Image & img, int numOfClusters, unsigned long initialClustersNum)
 ```
 function parameters:
-* parameter
+* img: reference to gray image
+* numOfClusters : the number of clusters needed in the output image
+* initialClustersNum : The initial numbers of clusters which is merged until reach to the the numOfClusters
 
 function return: return threshold
 **Results**:<br>
 blockDim: 7
-![](images/Agglomerative.jpg)
+![](Resources/images/Agglomerative.jpg)
 
 ## Requirement packages git
 * fftw3
