@@ -48,7 +48,12 @@ void MainWindow::on_segmentImgBtn_clicked() {
            qDebug()<<  result[i][0]<< " " << result[i][1]  << " " << result[i][2];
 
     }
-}
+    std::vector<std::pair<std::vector<float>, float>> temp = egienVectosValues(result);
+    for(std::pair<std::vector<float>, float> p: temp) {
+        qDebug() << p.second;
+        qDebug()<<  p.first[0]<< " " << p.first[1]  << " " << p.first[2];
+    }
+    }
 
 void MainWindow::startSegmentation() {
     if (ui->filterSelect_2->currentIndex() == 1){
