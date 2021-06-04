@@ -331,26 +331,19 @@ std::vector<std::pair<std::vector<float>, float>> egienVectosValues(const std::v
     Eigen::MatrixXf eigen_vectors = eigensolver.eigenvectors().real();
     std::vector<std::tuple<float, Eigen::VectorXf>> eigen_vectors_and_values;
 
-    for(int i=0; i<eigen_values.size(); i++){
-        std::tuple<float, Eigen::VectorXf> vec_and_val(eigen_values[i], eigen_vectors.col(i));
-        eigen_vectors_and_values.push_back(vec_and_val);
-    }
-
-    int index = 0;
     std::vector<std::pair<std::vector<float>, float>> result;
-    for(auto const vect : eigen_vectors_and_values){
+    for(int i=0; i<eigen_values.size(); i++){
         std::pair<std::vector<float>, float> tempPair;
         std::vector<float> tempVector;
-        eigen_values(index) = std::get<0>(vect);
-        tempPair.second = eigen_values(index);
-        eigen_vectors.row(index) = std::get<1>(vect);
-        for(float element : eigen_vectors.row(index)){
+        for(float element : eigen_vectors.col(i)){
             tempVector.push_back(element);
         }
         tempPair.first = tempVector;
         result.push_back(tempPair);
-        index++;
+        std::tuple<float, Eigen::VectorXf> vec_and_val(eigen_values[i], eigen_vectors.col(i));
+        eigen_vectors_and_values.push_back(vec_and_val);
     }
+
 
     return result;
 }

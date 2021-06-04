@@ -33,26 +33,6 @@ void MainWindow::on_segmentImgBtn_clicked() {
     ui->segmentImg->setBackground(QPixmap::fromImage(qImage).scaled(width, height,Qt::IgnoreAspectRatio, Qt::FastTransformation));
     ui->segmentImg->setAutoFillBackground(true);
     ui->segmentImg->replot();
-    std::vector<std::vector<float>> mat {
-            { 1.2f, 2.5f, 5.6f, -2.5f },
-            { -3.6f, 9.2f, 0.5f, 7.2f },
-            { 4.3f, 1.3f, 9.4f, -3.4f } };
-
-
-    std::vector<std::vector<float>> result;
-
-    result = covarMatrix(mat);
-
-    for(int i = 0; i < 3; i++){
-
-           qDebug()<<  result[i][0]<< " " << result[i][1]  << " " << result[i][2];
-
-    }
-    std::vector<std::pair<std::vector<float>, float>> temp = egienVectosValues(result);
-    for(std::pair<std::vector<float>, float> p: temp) {
-        qDebug() << p.second;
-        qDebug()<<  p.first[0]<< " " << p.first[1]  << " " << p.first[2];
-    }
     }
 
 void MainWindow::startSegmentation() {
