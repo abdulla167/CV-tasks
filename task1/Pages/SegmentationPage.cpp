@@ -19,7 +19,7 @@ void MainWindow::on_segmentImgBtn_clicked() {
     std::string filepathStd = filePath.toStdString();
     auto filename = filepathStd.substr(filepathStd.find_last_of("/") + 1);
     segmentationImage = new Image(filepathStd,3);
-    
+
     QImage qImage(segmentationImage->width, segmentationImage->height, QImage::Format_RGB16);
     QRgb rgb;
     for (int j = 0; j < segmentationImage->width; ++j) {
@@ -33,7 +33,17 @@ void MainWindow::on_segmentImgBtn_clicked() {
     ui->segmentImg->setBackground(QPixmap::fromImage(qImage).scaled(width, height,Qt::IgnoreAspectRatio, Qt::FastTransformation));
     ui->segmentImg->setAutoFillBackground(true);
     ui->segmentImg->replot();
+    std::vector<std::vector<float>> m {
+            {13.5, 10.25, 9.75},
+            {10.25, 8.25, 8},
+            {9.75, 8, 8.25},
+    };
+    std::vector<pair<std::vector<float>, float>> r = egienVectosValues(m);
+    for(std::pair<std::vector<float>, float> el:r){
+        qDebug()<< el.second << " : " << el.first[0] << ", "<< el.first[1]<< ", "<<el.first[2];
     }
+    }
+
 
 void MainWindow::startSegmentation() {
     if (ui->filterSelect_2->currentIndex() == 1){
