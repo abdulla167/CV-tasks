@@ -5,7 +5,6 @@
 #include "processinglib/utilities.h"
 #include "processinglib/histogram.h"
 #include <cmath>
-#include <vector>
 #include <algorithm>
 
 void gaussianGeneration(float *kernel, char dim, float sigma, float mean) {
@@ -279,3 +278,41 @@ void sauvolaTechnique(Image &inputImg, int x, int y, int filterDim, double &mean
     std = sqrt(std / (N - 1));
 }
 
+std::vector<std::vector<float>> covarMatrix(const std::vector<std::vector<float>> & mat)
+{
+    const int rows = mat.size();
+    const int cols = mat[0].size();
+    const int nsamples = cols;
+    std::vector<float> mean = std::vector<float>(rows, (float)0);
+    std::vector<std::vector<float>> covar = std::vector<std::vector<float>>(rows);
+
+    for (int i = 0; i < cols; ++i)
+        covar[i].resize(rows, (float)0);
+
+
+    for (int h = 0; h < rows; ++h) {
+        for (int w = 0; w < cols; ++w) {
+            mean[h] += mat[h][w];
+        }
+    }
+
+    for (auto& value : mean) {
+        value = (1. / cols)* value;
+    }
+
+    for (int i = 0; i < rows; ++i) {
+        std::vector<float> row_buf(cols, (float)0);
+        for (int k = 0; k < cols; ++k)
+            row_buf[k] = mat[i][k] - mean[i];
+
+        for (int j = 0; j < rows; ++j) {
+            double s0 = 0;
+            for (int k = 0; k < cols; ++k) {
+                s0 += (row_buf[k] * (mat[j][k] - mean[j]));
+            }
+            covar[i][j] = (float)s0/ (nsamples - 1) ;
+        }
+    }
+
+    return covar;
+}
