@@ -12,10 +12,15 @@
 
 using std::filesystem::recursive_directory_iterator;
 
+//using std::experimental::filesystem::recursive_directory_iterator;
+
 void loadImgsDataset(std::string DirPath, std::vector<std::vector<float>>& TrainingDataset, int numImgs){
+    std::vector<float> v;
+    auto im = Image(v, 9, 9, 3);
     int count = 0;
     for (const auto & file : recursive_directory_iterator(DirPath)){
-        TrainingDataset.push_back(Image(file.path(), 3).ImageAsVector());
+//        TrainingDataset.push_back(Image(file.path(), 3).ImageAsVector());
+        TrainingDataset.push_back(Image(file.path().string(), 3).ImageAsVector());
         count++;
         if (count > numImgs)
             break;

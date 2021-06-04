@@ -20,7 +20,7 @@
 
 #else
 
-#include "processinglib/Eigen/src/StlSupport/StdDeque.h"
+#include "src/StlSupport/StdDeque.h"
 
 #endif
 

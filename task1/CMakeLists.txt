@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.17)
 project(cv)
 
-
+set(CMAKE_CXX_COMPILER /usr/bin/g++-9)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_PREFIX_PATH "/usr/lib/x86_64-linux-gnu/cmake/Qt5")
 set(CMAKE_AUTOMOC ON)
@@ -19,7 +19,6 @@ if (NOT CMAKE_PREFIX_PATH)
 endif ()
 find_package(Qt${QT_VERSION} COMPONENTS ${REQUIRED_LIBS} REQUIRED)
 add_subdirectory(processinglib)
-
 add_subdirectory(plotlib)
-target_link_libraries(${PROJECT_NAME} processinglib plotlib)
+target_link_libraries(${PROJECT_NAME}  processinglib  plotlib)
 target_link_libraries(${PROJECT_NAME}  ${REQUIRED_LIBS_QUALIFIED})

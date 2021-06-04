@@ -10,7 +10,7 @@
 
 #include "SparseCore"
 
-#include "processinglib/Eigen/src/Core/util/DisableStupidWarnings.h"
+#include "src/Core/util/DisableStupidWarnings.h"
 
 /** 
   * \defgroup OrderingMethods_Module OrderingMethods module
@@ -63,8 +63,8 @@
   * \endcode
   */
 
-#include "processinglib/Eigen/src/OrderingMethods/Amd.h"
-#include "processinglib/Eigen/src/OrderingMethods/Ordering.h"
-#include "processinglib/Eigen/src/Core/util/ReenableStupidWarnings.h"
+#include "src/OrderingMethods/Amd.h"
+#include "src/OrderingMethods/Ordering.h"
+#include "src/Core/util/ReenableStupidWarnings.h"
 
 #endif // EIGEN_ORDERINGMETHODS_MODULE_H

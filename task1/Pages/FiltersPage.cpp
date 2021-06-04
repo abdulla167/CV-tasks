@@ -181,7 +181,7 @@ void MainWindow::on_filterSelect_currentIndexChanged(QString filterName) {
 //        auto im = localOptimalIterativeThresholding(grayImage, 7);
 //        displayGrayscaleImage(&im, ui->outputImageLabel);
         std::vector<std::vector<float>> TrainingDataset;
-        loadImgsDataset("/home/abdulla167/computer vision/DetectedFaceDataset/train",TrainingDataset,30);
+        loadImgsDataset("../DetectedFaceDataset/train",TrainingDataset,400);
         std::vector<std::vector<float>> CenteredImgs = GetCenteredImgs(TrainingDataset);
         vector<vector<float>> EigenFaces = GetEigenFaces(CenteredImgs);
         vector<vector<float>> CoffMat = getProjectedImgs(TrainingDataset, EigenFaces);

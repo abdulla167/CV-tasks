@@ -34,7 +34,7 @@ extern "C" {
   *
   */
 
-#include "processinglib/Eigen/src/KLUSupport/KLUSupport.h"
+#include "src/KLUSupport/KLUSupport.h"
 
 #include <Eigen/src/Core/util/ReenableStupidWarnings.h>
 

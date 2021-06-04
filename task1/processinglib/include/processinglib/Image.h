@@ -7,28 +7,40 @@
 
 #include "string"
 #include "vector"
+
 class Image {
     float *data;
 
 public:
     int width, height, channels;
 
-    Image(int width, int height, int channel);
-
-    Image(const Image* image);
-
     Image();
+
+    Image(int width, int height, int channel);
 
     Image(std::string filename, int num_channels = 1);
 
+    Image(const Image *image);
+
     Image(const Image &image);
+
+    template<class T>
+    Image(std::vector<T> v, int width, int height, int channels): Image{width, height, channels}{
+        for (int i = 0; i < height; ++i) {
+            for (int j = 0; j < width; ++j) {
+                for (int k = 0; k < channels; ++k) {
+                    (*this)(i, j, k) = v[i* width + j + k * height*width];
+                }
+            }
+        }
+    }
 
     Image toGrayscale();
 
     int size();
 
     template<class T>
-    T *copyData(){
+    T *copyData() {
         T *data = new T[channels * width * height];
         for (int i = 0; i < height; ++i) {
             for (int j = 0; j < width; ++j) {
@@ -69,8 +81,9 @@ private:
     std::vector<float> XYZ2LUV(float X, float Y, float Z);
 
     std::vector<float> LUV2XYZ(float L, float U, float V);
+
     template<class T>
-    void init(T *data){
+    void init(T *data) {
         for (int i = 0; i < height; ++i) {
             for (int j = 0; j < width; ++j) {
                 for (int k = 0; k < channels; ++k) {
