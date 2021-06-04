@@ -58,6 +58,8 @@ public:
 
     void init(float value);
 
+    std::vector<float> ImageAsVector(void);
+
 
 private:
     std::vector<float> RGB2XYZ(float R, float G, float B);

@@ -18,6 +18,7 @@ add_library(${LIB_NAME}
         src/point.cpp
         src/agglomerative_cluster_segmentation.cpp
         src/face_detection_opencv.cpp
+        src/face_recognition.cpp
         )
 
 find_package(OpenCV)

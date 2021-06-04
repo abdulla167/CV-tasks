@@ -12,6 +12,8 @@
 #include "processinglib/harris_corner_detector.h"
 #include "processinglib/thresholding.h"
 #include "processinglib/face_detection_opencv.h"
+#include "processinglib/face_recognition.h"
+
 
 void MainWindow::on_loadImageBtn_clicked() {
     QString filePath = QFileDialog::getOpenFileName(this, "load image", "../");
@@ -174,10 +176,27 @@ void MainWindow::on_filterSelect_currentIndexChanged(QString filterName) {
         auto im = buildSegmentedImg(grayImage, thresolds);
         displayGrayscaleImage(&im, ui->outputImageLabel);
     } else if (filterName == "LocalOptimalIterative") {
-        auto grayImage = inputImage->toGrayscale();
-        displayGrayscaleImage(&grayImage, ui->inputImageLabel);
-        auto im = localOptimalIterativeThresholding(grayImage, 7);
-        displayGrayscaleImage(&im, ui->outputImageLabel);
+//        auto grayImage = inputImage->toGrayscale();
+//        displayGrayscaleImage(&grayImage, ui->inputImageLabel);
+//        auto im = localOptimalIterativeThresholding(grayImage, 7);
+//        displayGrayscaleImage(&im, ui->outputImageLabel);
+        std::vector<std::vector<float>> TrainingDataset;
+        loadImgsDataset("/home/abdulla167/computer vision/DetectedFaceDataset/train",TrainingDataset,30);
+        std::vector<std::vector<float>> CenteredImgs = GetCenteredImgs(TrainingDataset);
+        vector<vector<float>> EigenFaces = GetEigenFaces(CenteredImgs);
+        vector<vector<float>> CoffMat = getProjectedImgs(TrainingDataset, EigenFaces);
+        std::pair<int, float> result = TestImg(TrainingDataset[5], EigenFaces, CoffMat);
+
+        std::cout<< "------------------------ coff ---------------------"<< std::endl;
+        for (int i = 0; i < CoffMat[0].size(); ++i) {
+            std::cout << "coff of img " << i << ": ";
+            for (int j = 0; j < CoffMat.size(); ++j) {
+                std::cout << CoffMat[i][j] << ",";
+            }
+        }
+        std::cout<< std::endl;
+        std::cout<< "------------------------ image index ---------------------"<< std::endl;
+        qDebug()<< result.first;
     }
 }
 

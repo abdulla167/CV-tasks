@@ -42,6 +42,6 @@ void sauvolaTechnique(Image& inputImg, int x, int y, int filterDim, double & mea
 
 std::vector<std::vector<float>> covarMatrix(const std::vector<std::vector<float>> &mat);
 
-std::vector<std::pair<std::vector<float>, float>> egienVectosValues(const std::vector<std::vector<float>> &CovarMatrix);
+std::vector<std::pair<std::vector<float>, float>> egienVectorsValues(const std::vector<std::vector<float>> &CovarMatrix);
 
 #endif

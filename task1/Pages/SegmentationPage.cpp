@@ -38,7 +38,7 @@ void MainWindow::on_segmentImgBtn_clicked() {
             {10.25, 8.25, 8},
             {9.75, 8, 8.25},
     };
-    std::vector<pair<std::vector<float>, float>> r = egienVectosValues(m);
+    std::vector<pair<std::vector<float>, float>> r = egienVectorsValues(m);
     for(std::pair<std::vector<float>, float> el:r){
         qDebug()<< el.second << " : " << el.first[0] << ", "<< el.first[1]<< ", "<<el.first[2];
     }
