@@ -11,15 +11,16 @@
 #include <iostream>
 #include "processinglib/harris_corner_detector.h"
 #include "processinglib/thresholding.h"
+#include "processinglib/face_detection_opencv.h"
 
 void MainWindow::on_loadImageBtn_clicked() {
     QString filePath = QFileDialog::getOpenFileName(this, "load image", "../");
     std::string filepathStd = filePath.toStdString();
     auto filename = filepathStd.substr(filepathStd.find_last_of("/") + 1);
     ui->imageName->setText(QString(filename.c_str()));
-    loadImage(filepathStd, inputImage);
-    auto grayImage = Image(inputImage);
-    displayGrayscaleImage(&grayImage, ui->inputImageLabel);
+    loadImage(filepathStd, inputImage, 3);
+    displayRGBImage(inputImage, ui->inputImageLabel);
+//    displayGrayscaleImage(inputImage, ui->inputImageLabel);
     std::string imageSize = std::to_string(inputImage->size());
     ui->imageSize->setText(QString(imageSize.c_str()));
 }
@@ -76,10 +77,16 @@ void MainWindow::on_filterSelect_currentIndexChanged(QString filterName) {
 //        im.saveJPG("out_salt and pepper");
     } else if (filterName == "Normalize") {
         auto grayImage = inputImage->toGrayscale();
-        displayGrayscaleImage(&grayImage, ui->inputImageLabel);
-        auto im = minMaxNormalize(grayImage).toScale();
-        displayGrayscaleImage(&im, ui->outputImageLabel);
+//        displayGrayscaleImage(&grayImage, ui->inputImageLabel);
+//        auto im = minMaxNormalize(grayImage).toScale();
+//        displayGrayscaleImage(&im, ui->outputImageLabel);
+//        displayRGBImage(&im, ui->outputImageLabel);
 //        im.saveJPG("out_normalize");
+
+//        auto im2 = detectFace(grayImage);
+//        displayGrayscaleImage(&im2, ui->outputImageLabel);
+        auto im2 = detectFace(*inputImage);
+        displayRGBImage(&im2, ui->outputImageLabel);
     } else if (filterName == "Global Thresholding") {
         auto grayImage = inputImage->toGrayscale();
         displayGrayscaleImage(&grayImage, ui->inputImageLabel);
@@ -198,5 +205,3 @@ void MainWindow::on_sigmaCannySlider_valueChanged(int val) {
                                 ui->thLowCannySlider->value() / 255.);
     displayGrayscaleImage(&im, ui->outputImageLabel);
 }
-
-

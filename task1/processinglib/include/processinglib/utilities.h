@@ -7,7 +7,7 @@
 
 #include "Image.h"
 #include <vector>
-#include <../../Eigen/Dense>
+#include "Eigen/Dense"
 
 using Eigen::MatrixXd;
 void averageGeneration(float *kernel, char dim = 3);

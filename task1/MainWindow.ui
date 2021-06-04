@@ -21,7 +21,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>6</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="filters">
        <attribute name="title">
@@ -259,6 +259,26 @@
             <item>
              <property name="text">
               <string>Harris Corner</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GlobalAtsu</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>LocalAtsu</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>GlobalOptimalIterative</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>LocalOptimalIterative</string>
              </property>
             </item>
            </widget>
@@ -1374,7 +1394,7 @@
         </property>
         <property name="styleSheet">
          <string notr="true">font: 15pt &quot;Ubuntu&quot;;
-</string>
+         </string>
         </property>
         <property name="text">
          <string>Image is blured</string>
@@ -1739,32 +1759,6 @@
         </property>
         <property name="text">
          <string>K :</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="clearSegmentBtn">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>200</y>
-          <width>81</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>clear</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="reRunBtn">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>260</y>
-          <width>81</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Rerun</string>
         </property>
        </widget>
       </widget>

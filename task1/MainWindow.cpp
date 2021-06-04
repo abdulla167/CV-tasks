@@ -58,11 +58,11 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 
 
-void MainWindow::loadImage(std::string filepath, Image *&image) {
+void MainWindow::loadImage(std::string filepath, Image *&image, int numChannels) {
     if (image != nullptr) {
         delete image;
     }
-    image = new Image(filepath);
+    image = new Image(filepath, numChannels);
 }
 
 

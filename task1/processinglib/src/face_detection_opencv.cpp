@@ -49,7 +49,7 @@ void showDetectedFaceImage(cv::Mat img, std::vector<cv::Rect> faces) {
             cv::rectangle(img, pt1, pt2, cv::Scalar(0, 0, 255), 2);
         }
     }
-    cv::imshow("im", img);
+    cv::imshow("face detection", img);
 }
 
 Image cropImageToTheDetectedFace(cv::Mat img, cv::Rect face) {

@@ -130,7 +130,7 @@ private:
 
     void initializeCustomPlot(QCustomPlot * plot);
 
-    void loadImage(std::string filepath, Image *&image);
+    void loadImage(std::string filepath, Image *&image, int numChannels = 1);
 
     void displayRGBImage(Image *image, QLabel *label);
 
