@@ -176,13 +176,43 @@ void MainWindow::on_filterSelect_currentIndexChanged(QString filterName) {
         mat.push_back({ 5.0f, 4.0f, 3.0f, 2.0f });
         mat.push_back({ 3.0f, 4.0f, 2.0f, 2.0f });
         mat.push_back({ 2.0f, 4.0f, 3.0f, 2.0f  });
+//        GetCenteredImgs(mat);
         std::vector<std::vector<float>> mat2 = GetCovMatrix(mat);
+        std::vector<std::pair<std::vector<float>, float>> eigenValuesVectors = egienVectorsValues(mat2);
+
+        std::vector<std::vector<float>> eigenFaces = GetEigenFaces(mat);
+        vector<vector<float>> coff = getProjectedImgs(mat);
+        std::cout << "---------------------------cov matrix-------------"<<std::endl;
         for (int i = 0; i < mat2[0].size(); ++i) {
             for (int j = 0; j < mat2.size(); ++j) {
                 std::cout << mat2[j][i] << ",";
             }
             std::cout<<std::endl;
         }
+        std::cout<< "---------------------------eigen values and vectors---------------"<<std::endl;
+        for (int i = 0; i < eigenValuesVectors.size(); ++i) {
+            std::cout << "eigen value = " << eigenValuesVectors[i].second<< " eigen vector : [" ;
+            for (int j = 0; j < eigenValuesVectors[i].first.size(); ++j) {
+                std::cout<< eigenValuesVectors[i].first[j]<< ", ";
+            }
+            std::cout<< std::endl;
+        }
+//        std::cout<< "------------------------ eigen faces ---------------------"<< std::endl;
+//        for (int i = 0; i < mat2[0].size(); ++i) {
+//            std::cout << "eigen face " << i << ": ";
+//            for (int j = 0; j < mat2.size(); ++j) {
+//                std::cout << mat2[i][j] << ",";
+//            }
+//            std::cout<<std::endl;
+//        }
+//        std::cout<< "------------------------ coff ---------------------"<< std::endl;
+//        for (int i = 0; i < mat2[0].size(); ++i) {
+//            std::cout << "coff of img " << i << ": ";
+//            for (int j = 0; j < mat2.size(); ++j) {
+//                std::cout << mat2[i][j] << ",";
+//            }
+//            std::cout<<std::endl;
+//        }
 
 
     }

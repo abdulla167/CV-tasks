@@ -6,6 +6,7 @@
 #include "processinglib/histogram.h"
 #include <cmath>
 #include <algorithm>
+#include <iostream>
 
 
 void gaussianGeneration(float *kernel, char dim, float sigma, float mean) {
@@ -318,20 +319,18 @@ std::vector<std::vector<float>> covarMatrix(const std::vector<std::vector<float>
     return covar;
 }
 
-std::vector<std::pair<std::vector<float>, float>> egienVectosValues(const std::vector<std::vector<float>> &CovarMatrix) {
-    Eigen::EigenSolver<Eigen::MatrixXf> eigensolver;
-    Eigen::MatrixXf covarMatrix(CovarMatrix.size(), CovarMatrix.size())  ;
+std::vector<std::pair<std::vector<float>, float>> egienVectorsValues(const std::vector<std::vector<float>> &CovarMatrix) {
+    Eigen::EigenSolver<Eigen::MatrixXf>  eigensolver; // the instance s(A) includes the eigensystem
+    Eigen::MatrixXf covarMatrix (CovarMatrix.size(), CovarMatrix.size())  ;
     for (int i = 0; i < CovarMatrix.size();i++ ){
         for (int j = 0; j < CovarMatrix.size(); j++){
-            covarMatrix(j,i) = CovarMatrix[i][j];
+            covarMatrix(j, i) = CovarMatrix[j][i];
         }
     }
+    std::vector<std::pair<std::vector<float>, float>> result;
     eigensolver.compute(covarMatrix);
     Eigen::VectorXf eigen_values = eigensolver.eigenvalues().real();
     Eigen::MatrixXf eigen_vectors = eigensolver.eigenvectors().real();
-    std::vector<std::tuple<float, Eigen::VectorXf>> eigen_vectors_and_values;
-
-    std::vector<std::pair<std::vector<float>, float>> result;
     for(int i=0; i<eigen_values.size(); i++){
         std::pair<std::vector<float>, float> tempPair;
         std::vector<float> tempVector;
@@ -341,9 +340,6 @@ std::vector<std::pair<std::vector<float>, float>> egienVectosValues(const std::v
         tempPair.first = tempVector;
         result.push_back(tempPair);
         std::tuple<float, Eigen::VectorXf> vec_and_val(eigen_values[i], eigen_vectors.col(i));
-        eigen_vectors_and_values.push_back(vec_and_val);
     }
-
-
     return result;
 }
