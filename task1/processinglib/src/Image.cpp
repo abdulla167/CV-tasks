@@ -287,6 +287,7 @@ Image::~Image() {
 std::vector<float> Image::ImageAsVector(void){
     std::vector<float> ImgVector;
     for (int i = 0; i < (this->width * this->height * this->channels); ++i) {
-       ImgVector[i] = this->data[i];
+       ImgVector.push_back(this->data[i]);
     }
+    return ImgVector;
 }

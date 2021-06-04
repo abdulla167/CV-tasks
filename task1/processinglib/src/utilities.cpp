@@ -320,26 +320,26 @@ std::vector<std::vector<float>> covarMatrix(const std::vector<std::vector<float>
 }
 
 std::vector<std::pair<std::vector<float>, float>> egienVectorsValues(const std::vector<std::vector<float>> &CovarMatrix) {
-    Eigen::EigenSolver<Eigen::MatrixXf>  eigensolver; // the instance s(A) includes the eigensystem
+    Eigen::EigenSolver<Eigen::MatrixXf>  eigensolver;
     Eigen::MatrixXf covarMatrix (CovarMatrix.size(), CovarMatrix.size())  ;
     for (int i = 0; i < CovarMatrix.size();i++ ){
         for (int j = 0; j < CovarMatrix.size(); j++){
-            covarMatrix(j, i) = CovarMatrix[j][i];
+            covarMatrix(i,j) = CovarMatrix[i][j];
         }
     }
-    std::vector<std::pair<std::vector<float>, float>> result;
     eigensolver.compute(covarMatrix);
     Eigen::VectorXf eigen_values = eigensolver.eigenvalues().real();
     Eigen::MatrixXf eigen_vectors = eigensolver.eigenvectors().real();
+    std::vector<std::pair<std::vector<float>, float>> result;
     for(int i=0; i<eigen_values.size(); i++){
         std::pair<std::vector<float>, float> tempPair;
         std::vector<float> tempVector;
         for(float element : eigen_vectors.col(i)){
             tempVector.push_back(element);
         }
+        tempPair.second = eigen_values(i);
         tempPair.first = tempVector;
         result.push_back(tempPair);
-        std::tuple<float, Eigen::VectorXf> vec_and_val(eigen_values[i], eigen_vectors.col(i));
     }
     return result;
 }
