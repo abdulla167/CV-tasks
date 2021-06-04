@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.17)
 project(cv)
 
-set(CMAKE_CXX_STANDARD 14)
+
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_PREFIX_PATH "/usr/lib/x86_64-linux-gnu/cmake/Qt5")
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)

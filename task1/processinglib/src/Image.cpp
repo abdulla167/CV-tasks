@@ -283,3 +283,10 @@ float &Image::operator()(int i, int j, int k) const {
 Image::~Image() {
     delete[] data;
 }
+
+std::vector<float> Image::ImageAsVector(void){
+    std::vector<float> ImgVector;
+    for (int i = 0; i < (this->width * this->height * this->channels); ++i) {
+       ImgVector[i] = this->data[i];
+    }
+}

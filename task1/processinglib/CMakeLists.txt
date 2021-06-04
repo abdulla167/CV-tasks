@@ -16,7 +16,7 @@ add_library(${LIB_NAME}
         src/thresholding.cpp
         src/growing_region.cpp
         src/point.cpp
-        src/agglomerative_cluster_segmentation.cpp )
+        src/agglomerative_cluster_segmentation.cpp src/face_recognition.cpp include/processinglib/face_recognition.h)
 
 find_package(OpenCV)
 include_directories(${OpenCV_INCLUDE_DIRS})
