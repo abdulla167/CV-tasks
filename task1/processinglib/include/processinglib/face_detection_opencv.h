@@ -9,7 +9,7 @@
 
 Image detectFace(Image& inputImage);
 
-void showDetectedFaceImage(cv::Mat img, std::vector<cv::Rect> faces);
+Image drawFaces(cv::Mat img, std::vector<cv::Rect> faces);
 
 Image cropImageToTheDetectedFace(cv::Mat img, cv::Rect face);
 

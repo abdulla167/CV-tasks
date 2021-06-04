@@ -281,6 +281,11 @@
               <string>LocalOptimalIterative</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>Face Detection</string>
+             </property>
+            </item>
            </widget>
           </item>
          </layout>

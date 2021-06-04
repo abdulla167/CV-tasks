@@ -197,6 +197,9 @@ void MainWindow::on_filterSelect_currentIndexChanged(QString filterName) {
         std::cout<< std::endl;
         std::cout<< "------------------------ image index ---------------------"<< std::endl;
         qDebug()<< result.first;
+    } else if (filterName == "Face Detection"){
+        auto im = detectFace(*inputImage);
+        displayRGBImage(&im, ui->outputImageLabel);
     }
 }
 

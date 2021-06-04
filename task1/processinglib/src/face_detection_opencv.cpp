@@ -25,8 +25,8 @@ Image detectFace(Image &inputImage) {
         }
         std::vector<cv::Rect> faces;
         faceDetection.detectMultiScale(rgbImg, faces);
-        showDetectedFaceImage(rgbImg.clone(), faces);
-        return cropImageToTheDetectedFace(rgbImg, faces[0]);
+        return  drawFaces(rgbImg, faces);
+//        return cropImageToTheDetectedFace(rgbImg, faces[0]);
     } else {
         cv::Mat greyImg = cv::Mat(inputImage.height, inputImage.width, CV_8U);
         for (int i = 0; i < inputImage.height; ++i) {
@@ -36,12 +36,12 @@ Image detectFace(Image &inputImage) {
         }
         std::vector<cv::Rect> faces;
         faceDetection.detectMultiScale(greyImg, faces);
-        showDetectedFaceImage(greyImg.clone(), faces);
-        return cropImageToTheDetectedFace(greyImg, faces[0]);
+        return  drawFaces(greyImg.clone(), faces);
+//        return cropImageToTheDetectedFace(greyImg, faces[0]);
     }
 }
 
-void showDetectedFaceImage(cv::Mat img, std::vector<cv::Rect> faces) {
+Image drawFaces(cv::Mat img, std::vector<cv::Rect> faces) {
     if (!faces.empty()) {
         for (int i = 0; i < faces.size(); ++i) {
             cv::Point pt1(faces[i].x, faces[i].y);
@@ -49,11 +49,28 @@ void showDetectedFaceImage(cv::Mat img, std::vector<cv::Rect> faces) {
             cv::rectangle(img, pt1, pt2, cv::Scalar(0, 0, 255), 2);
         }
     }
-    cv::imshow("face detection", img);
+    Image outImage(img.cols, img.rows, img.channels());
+    if (outImage.channels > 1) {
+        for (int i = 0; i < outImage.height; ++i) {
+            for (int j = 0; j < outImage.width; ++j) {
+                for (int k = 2; k > -1; --k) {
+                    outImage(i, j, 2 - k) = img.data[i * outImage.width * 3 + j * 3 + k];
+                }
+            }
+        }
+    } else {
+        for (int i = 0; i < outImage.height; ++i) {
+            for (int j = 0; j < outImage.height; ++j) {
+                outImage(i, j, 0) = img.data[i * outImage.width + j];
+            }
+        }
+    }
+    //    cv::imshow("face detection", img);
+    return outImage;
 }
 
 Image cropImageToTheDetectedFace(cv::Mat img, cv::Rect face) {
-    int maxHeight = 192, maxWeidth = 192;
+    int maxHeight = 109, maxWeidth = 109;
     int widthDiff = maxWeidth - face.width;
     int heightDiff = maxHeight - face.height;
     int x1 = face.x;
@@ -107,9 +124,6 @@ Image cropImageToTheDetectedFace(cv::Mat img, cv::Rect face) {
     }
     cv::Rect myROI(x1, y1, x2 - x1, y2 - y1);
     cv::Mat croppedImgMat = img(myROI);
-    auto croppedBGR = croppedImgMat.clone();
-    croppedImgMat.convertTo(croppedBGR, CV_8UC3);
-
     Image croppedImage(croppedImgMat.cols, croppedImgMat.rows, croppedImgMat.channels());
     if (croppedImage.channels > 1) {
         auto croppedBGR = croppedImgMat.clone();
@@ -125,7 +139,7 @@ Image cropImageToTheDetectedFace(cv::Mat img, cv::Rect face) {
         }
     } else {
         auto croppedGray = croppedImgMat.clone();
-        croppedImgMat.convertTo(croppedBGR, CV_8UC1);
+        croppedImgMat.convertTo(croppedGray, CV_8UC1);
         for (int i = 0; i < croppedImage.height; ++i) {
             for (int j = 0; j < croppedImage.height; ++j) {
                 croppedImage(i, j, 0) = croppedGray.data[i * croppedImage.width + j];
