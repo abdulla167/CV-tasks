@@ -7,6 +7,7 @@
 #include <cmath>
 #include <algorithm>
 
+
 void gaussianGeneration(float *kernel, char dim, float sigma, float mean) {
     double r, s = 2.0 * sigma * sigma;
     int t = dim / 2;
@@ -315,4 +316,41 @@ std::vector<std::vector<float>> covarMatrix(const std::vector<std::vector<float>
     }
 
     return covar;
+}
+
+std::vector<std::pair<std::vector<float>, float>> egienVectosValues(const std::vector<std::vector<float>> &CovarMatrix) {
+    Eigen::EigenSolver<Eigen::MatrixXf> eigensolver;
+    Eigen::MatrixXf covarMatrix(CovarMatrix.size(), CovarMatrix.size())  ;
+    for (int i = 0; i < CovarMatrix.size();i++ ){
+        for (int j = 0; j < CovarMatrix.size(); j++){
+            covarMatrix(j,i) = CovarMatrix[i][j];
+        }
+    }
+    eigensolver.compute(covarMatrix);
+    Eigen::VectorXf eigen_values = eigensolver.eigenvalues().real();
+    Eigen::MatrixXf eigen_vectors = eigensolver.eigenvectors().real();
+    std::vector<std::tuple<float, Eigen::VectorXf>> eigen_vectors_and_values;
+
+    for(int i=0; i<eigen_values.size(); i++){
+        std::tuple<float, Eigen::VectorXf> vec_and_val(eigen_values[i], eigen_vectors.col(i));
+        eigen_vectors_and_values.push_back(vec_and_val);
+    }
+
+    int index = 0;
+    std::vector<std::pair<std::vector<float>, float>> result;
+    for(auto const vect : eigen_vectors_and_values){
+        std::pair<std::vector<float>, float> tempPair;
+        std::vector<float> tempVector;
+        eigen_values(index) = std::get<0>(vect);
+        tempPair.second = eigen_values(index);
+        eigen_vectors.row(index) = std::get<1>(vect);
+        for(float element : eigen_vectors.row(index)){
+            tempVector.push_back(element);
+        }
+        tempPair.first = tempVector;
+        result.push_back(tempPair);
+        index++;
+    }
+
+    return result;
 }

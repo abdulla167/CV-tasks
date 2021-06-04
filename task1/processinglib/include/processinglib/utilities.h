@@ -7,7 +7,9 @@
 
 #include "Image.h"
 #include <vector>
+#include <../../Eigen/Dense>
 
+using Eigen::MatrixXd;
 void averageGeneration(float *kernel, char dim = 3);
 
 void gaussianGeneration(float *kernel, char dim = 3, float sigma = 1, float mean = 0);
@@ -39,5 +41,7 @@ Image getDirection(Image& imgX, Image& imgY, bool approximateFour = true);
 void sauvolaTechnique(Image& inputImg, int x, int y, int filterDim, double & mean, double & std);
 
 std::vector<std::vector<float>> covarMatrix(const std::vector<std::vector<float>> &mat);
+
+std::vector<std::pair<std::vector<float>, float>> egienVectosValues(const std::vector<std::vector<float>> &CovarMatrix);
 
 #endif
