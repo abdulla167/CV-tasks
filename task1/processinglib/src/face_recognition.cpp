@@ -9,20 +9,19 @@
 #include "utilities.h"
 #include "face_recognition.h"
 #include "math.h"
+#include "algorithm"
 
 using std::filesystem::recursive_directory_iterator;
 
-//using std::experimental::filesystem::recursive_directory_iterator;
-
-void loadImgsDataset(std::string DirPath, std::vector<std::vector<float>>& TrainingDataset, int numImgs){
-    std::vector<float> v;
-    auto im = Image(v, 9, 9, 3);
-    int count = 0;
+void loadImgsDataset(std::string DirPath, std::vector<std::vector<float>>& Dataset, int numImgs){
+    vector<std::string> TempPaths;
     for (const auto & file : recursive_directory_iterator(DirPath)){
-//        TrainingDataset.push_back(Image(file.path(), 3).ImageAsVector());
-        TrainingDataset.push_back(Image(file.path().string(), 3).ImageAsVector());
-        count++;
-        if (count > numImgs)
+        TempPaths.push_back(file.path());
+    }
+    std::sort(TempPaths.begin(), TempPaths.end());
+    for (int i = 0; i < TempPaths.size(); ++i) {
+        Dataset.push_back(Image(TempPaths[i], 3).ImageAsVector());
+        if (i > numImgs)
             break;
     }
 }
@@ -60,7 +59,7 @@ vector<vector<float>> GetCovMatrix(vector<vector<float>>& TrainingDataset){
             for (int k = 0; k < TrainingDataset[0].size(); ++k) {
                 result += TrainingDataset[i][k] * TrainingDataset[j][k];
             }
-            CorrMat[j][i] = result / (M );
+            CorrMat[j][i] = result / (M);
         }
     }
     return CorrMat;
@@ -99,7 +98,6 @@ vector<vector<float>> getProjectedImgs(vector<vector<float>>& TrainingDataset, v
         }
     }
     WriteVectorToFile("../Coefficient_Matrix.txt", CoffMat);
-    std::vector<vector<float>> temp;
     return CoffMat;
 }
 
@@ -170,5 +168,4 @@ void ReadFileToVector(std::string filename, vector<vector<float>>& Mat){
             Mat.push_back(temp);
         }
     }
-    WriteVectorToFile("../trial.txt", Mat);
 }

@@ -176,30 +176,25 @@ void MainWindow::on_filterSelect_currentIndexChanged(QString filterName) {
         auto im = buildSegmentedImg(grayImage, thresolds);
         displayGrayscaleImage(&im, ui->outputImageLabel);
     } else if (filterName == "LocalOptimalIterative") {
-//        auto grayImage = inputImage->toGrayscale();
-//        displayGrayscaleImage(&grayImage, ui->inputImageLabel);
-//        auto im = localOptimalIterativeThresholding(grayImage, 7);
-//        displayGrayscaleImage(&im, ui->outputImageLabel);
-        std::vector<std::vector<float>> TrainingDataset;
-        loadImgsDataset("../DetectedFaceDataset/train",TrainingDataset,400);
-        std::vector<std::vector<float>> CenteredImgs = GetCenteredImgs(TrainingDataset);
-        vector<vector<float>> EigenFaces = GetEigenFaces(CenteredImgs);
-        vector<vector<float>> CoffMat = getProjectedImgs(TrainingDataset, EigenFaces);
-        std::pair<int, float> result = TestImg(TrainingDataset[5], EigenFaces, CoffMat);
-
-        std::cout<< "------------------------ coff ---------------------"<< std::endl;
-        for (int i = 0; i < CoffMat[0].size(); ++i) {
-            std::cout << "coff of img " << i << ": ";
-            for (int j = 0; j < CoffMat.size(); ++j) {
-                std::cout << CoffMat[i][j] << ",";
-            }
-        }
-        std::cout<< std::endl;
-        std::cout<< "------------------------ image index ---------------------"<< std::endl;
-        qDebug()<< result.first;
+        auto grayImage = inputImage->toGrayscale();
+        displayGrayscaleImage(&grayImage, ui->inputImageLabel);
+        auto im = localOptimalIterativeThresholding(grayImage, 7);
+        displayGrayscaleImage(&im, ui->outputImageLabel);
     } else if (filterName == "Face Detection"){
         auto im = detectFace(*inputImage);
         displayRGBImage(&im, ui->outputImageLabel);
+    } else if(filterName == "FaceRecognition"){
+        std::vector<std::vector<float>> TrainingDataset;
+        loadImgsDataset("../Dataset/train",TrainingDataset,168);
+        Image TestIm = Image(inputImage);
+        displayRGBImage(&TestIm, ui->inputImageLabel);
+        vector<vector<float>> CoffMat;
+        vector<vector<float>> EigenFaces;
+        ReadFileToVector("../Coefficient_Matrix.txt", CoffMat);
+        ReadFileToVector("../Eigen_Faces_Matrix.txt", EigenFaces);
+        std::pair<int, float> result = TestImg(TestIm.ImageAsVector(), EigenFaces, CoffMat);
+        Image SameImage{TrainingDataset[result.first],  92, 112, 3};
+        displayRGBImage(&SameImage, ui->outputImageLabel);
     }
 }
 

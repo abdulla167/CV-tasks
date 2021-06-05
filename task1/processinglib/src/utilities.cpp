@@ -318,6 +318,11 @@ std::vector<std::vector<float>> covarMatrix(const std::vector<std::vector<float>
     return covar;
 }
 
+
+bool comparePairs(std::pair<std::vector<float>, float> p1, std::pair<std::vector<float>, float> p2){
+    return (p1.second > p2.second);
+}
+
 std::vector<std::pair<std::vector<float>, float>> egienVectorsValues(const std::vector<std::vector<float>> &CovarMatrix) {
     Eigen::EigenSolver<Eigen::MatrixXf>  eigensolver;
     Eigen::MatrixXf covarMatrix (CovarMatrix.size(), CovarMatrix.size())  ;
@@ -340,5 +345,10 @@ std::vector<std::pair<std::vector<float>, float>> egienVectorsValues(const std::
         tempPair.first = tempVector;
         result.push_back(tempPair);
     }
-    return result;
+    std::sort(result.begin(), result.end(), comparePairs);
+    std::vector<std::pair<std::vector<float>, float>> result2;
+    for (int i = 0; i < 100; ++i) {
+        result2.push_back(result[i]);
+    }
+    return result2;
 }
