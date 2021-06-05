@@ -60,7 +60,7 @@ Image drawFaces(cv::Mat img, std::vector<cv::Rect> faces) {
         }
     } else {
         for (int i = 0; i < outImage.height; ++i) {
-            for (int j = 0; j < outImage.height; ++j) {
+            for (int j = 0; j < outImage.width; ++j) {
                 outImage(i, j, 0) = img.data[i * outImage.width + j];
             }
         }
