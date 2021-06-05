@@ -32,7 +32,7 @@ Image::Image(std::string filename, int channels) {
     } else {
         this->channels = channels;
     }
-    this->data = new float[height * width * channels];
+    this->data = new float[height * width * this->channels];
     init(data);
     free(data);
 }

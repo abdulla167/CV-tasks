@@ -20,7 +20,7 @@ void MainWindow::on_loadImageBtn_clicked() {
     std::string filepathStd = filePath.toStdString();
     auto filename = filepathStd.substr(filepathStd.find_last_of("/") + 1);
     ui->imageName->setText(QString(filename.c_str()));
-    loadImage(filepathStd, inputImage, 1);
+    loadImage(filepathStd, inputImage, 3);
     if (inputImage->channels > 1){
         displayRGBImage(inputImage, ui->inputImageLabel);
     } else {
@@ -201,14 +201,14 @@ void MainWindow::on_filterSelect_currentIndexChanged(QString filterName) {
 //        vector<vector<float>> CoffMat = getImagesCoeff(TrainingDataset, EigenVectorsUpper);
 
         /*testing*/
-        Image TestIm = Image(inputImage);
+        Image TestIm = Image(inputImage).toGrayscale();
         displayGrayscaleImage(&TestIm, ui->inputImageLabel);
         vector<vector<float>> CoffMat;
         vector<vector<float>> EigenVectorsUpper;
         ReadFileToVector("../Coefficient_Matrix.txt", CoffMat);
         ReadFileToVector("../Eigen_Vectors_Matrix.txt", EigenVectorsUpper);
         std::pair<int, float> result = PredictImg(TestIm.ImageAsVector(), EigenVectorsUpper, CoffMat);
-        Image SameImage{TrainingDataset[result.first],  92, 112, 1};
+        Image SameImage {TrainingDataset[result.first],  92, 112, 1};
         QString filenameQ{filenames[result.first].c_str()};
         ui->recognizedFaceLabel->clear();
         ui->recognizedFaceLabel->setText(filenameQ);

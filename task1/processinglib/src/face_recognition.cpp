@@ -21,7 +21,7 @@ std::vector<std::string> loadImgsDataset(std::string DirPath, std::vector<std::v
     }
     std::sort(TempPaths.begin(), TempPaths.end());
     for (int i = 0; i < TempPaths.size(); ++i) {
-        Dataset.push_back(Image(TempPaths[i], 1).ImageAsVector());
+        Dataset.push_back(Image(TempPaths[i], 3).toGrayscale().ImageAsVector());
         filenames.push_back(TempPaths[i].substr(2));
     }
     return filenames;
