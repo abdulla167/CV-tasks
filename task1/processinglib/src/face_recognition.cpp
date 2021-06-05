@@ -13,7 +13,7 @@
 
 using std::filesystem::recursive_directory_iterator;
 
-std::vector<std::string> loadImgsDataset(std::string DirPath, std::vector<std::vector<float>>& Dataset, int numImgs){
+std::vector<std::string> loadImgsDataset(std::string DirPath, std::vector<std::vector<float>> &Dataset) {
     vector<std::string> TempPaths;
     vector<std::string> filenames;
     for (const auto & file : recursive_directory_iterator(DirPath)){
@@ -23,8 +23,6 @@ std::vector<std::string> loadImgsDataset(std::string DirPath, std::vector<std::v
     for (int i = 0; i < TempPaths.size(); ++i) {
         Dataset.push_back(Image(TempPaths[i], 1).ImageAsVector());
         filenames.push_back(TempPaths[i].substr(2));
-//        if (i > numImgs)
-//            break;
     }
     return filenames;
 }
@@ -68,7 +66,7 @@ vector<vector<float>> GetCovMatrix(vector<vector<float>>& TrainingDataset){
     return CorrMat;
 }
 
-vector<vector<float>> GetEigenFaces(vector<vector<float>>& TrainingDataset){
+vector<vector<float>> GetEigenVectorsOfUpperCorr(vector<vector<float>>& TrainingDataset){
     vector<vector<float>> CovMat = GetCovMatrix(TrainingDataset);
     vector<pair<vector<float>, float>> EigenValuesAndVectors = egienVectorsValues(CovMat);
     vector<vector<float>> EigenFaces;
@@ -88,14 +86,14 @@ vector<vector<float>> GetEigenFaces(vector<vector<float>>& TrainingDataset){
     return EigenFaces;
 }
 
-vector<vector<float>> getProjectedImgs(vector<vector<float>>& TrainingDataset, vector<vector<float>> & EigenFaces){
-    vector<vector<float>> CoffMat =  std::vector<vector<float>>(TrainingDataset.size(),vector<float>(EigenFaces.size()));
+vector<vector<float>> getImagesCoeff(vector<vector<float>>& TrainingDataset, vector<vector<float>> & EigenVectors){
+    vector<vector<float>> CoffMat =  std::vector<vector<float>>(TrainingDataset.size(),vector<float>(EigenVectors.size()));
     float tempCoff = 0;
     for (int imgIndex = 0; imgIndex < TrainingDataset.size(); ++imgIndex) {
-        for (int eigenFaceIndex = 0; eigenFaceIndex < EigenFaces.size(); ++eigenFaceIndex) {
+        for (int eigenFaceIndex = 0; eigenFaceIndex < EigenVectors.size(); ++eigenFaceIndex) {
             tempCoff = 0;
             for (int i = 0; i < TrainingDataset[0].size(); ++i) {
-                tempCoff = tempCoff + (EigenFaces[eigenFaceIndex][i] * TrainingDataset[imgIndex][i]);
+                tempCoff = tempCoff + (EigenVectors[eigenFaceIndex][i] * TrainingDataset[imgIndex][i]);
             }
             CoffMat[imgIndex][eigenFaceIndex] = tempCoff;
         }
@@ -105,13 +103,13 @@ vector<vector<float>> getProjectedImgs(vector<vector<float>>& TrainingDataset, v
 }
 
 
-vector<float> GetImgCoff( vector<vector<float>> EigenFaces , vector<float> ImgVector){
+vector<float> GetImgCoff(vector<vector<float>> EigenVectors , vector<float> ImgVector){
     vector<float> ImgCoff;
     float tempCoff = 0;
-    for (int eigenFaceIndex = 0; eigenFaceIndex < EigenFaces.size(); ++eigenFaceIndex) {
+    for (int eigenFaceIndex = 0; eigenFaceIndex < EigenVectors.size(); ++eigenFaceIndex) {
         tempCoff = 0;
         for (int i = 0; i < ImgVector.size(); ++i) {
-            tempCoff = tempCoff + (EigenFaces[eigenFaceIndex][i] * ImgVector[i]);
+            tempCoff = tempCoff + (EigenVectors[eigenFaceIndex][i] * ImgVector[i]);
         }
         ImgCoff.push_back(tempCoff);
     }
@@ -126,12 +124,12 @@ float GetImgError(vector<float> TestImgCoff, vector<float> TrainImgCoff){
     return error;
 }
 
-pair<int, float> GetSimilarImg(vector<vector<float>> CoffMatrix, vector<float> ImgCoff)
+pair<int, float> GetSimilarImg(vector<vector<float>> ImgsCoffMatrix, vector<float> TestImgCoeff)
 {
     pair<int, float> MinError{0,INFINITY};
     float TempError = 0;
-    for (int i = 0; i < CoffMatrix.size(); ++i) {
-        TempError = GetImgError(ImgCoff, CoffMatrix[i]);
+    for (int i = 0; i < ImgsCoffMatrix.size(); ++i) {
+        TempError = GetImgError(TestImgCoeff, ImgsCoffMatrix[i]);
         if (TempError < MinError.second){
             MinError.first = i;
             MinError.second = TempError;
@@ -140,9 +138,9 @@ pair<int, float> GetSimilarImg(vector<vector<float>> CoffMatrix, vector<float> I
     return MinError;
 }
 
-pair<int, float> TestImg(vector<float> testImg, vector<vector<float>> EigenFaces,  vector<vector<float>> CoffMat){
-    vector<float> imgCoff = GetImgCoff(EigenFaces, testImg);
-    pair<int, float> MinError = GetSimilarImg(CoffMat, imgCoff);
+pair<int, float> PredictImg(vector<float> testImg, vector<vector<float>> EigenVectors, vector<vector<float>> ImgsCoffMat){
+    vector<float> testImgCoeff = GetImgCoff(EigenVectors, testImg);
+    pair<int, float> MinError = GetSimilarImg(ImgsCoffMat, testImgCoeff);
     return MinError;
 }
 

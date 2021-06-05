@@ -192,21 +192,22 @@ void MainWindow::on_filterSelect_currentIndexChanged(QString filterName) {
         }
     } else if(filterName == "FaceRecognition"){
         std::vector<std::vector<float>> TrainingDataset;
-        auto filenames = loadImgsDataset("../Dataset/train",TrainingDataset,-1);
+        auto filenames = loadImgsDataset("../Dataset/train", TrainingDataset);
         std::cout << "Done Loading" << std::endl;
         /*training*/
 //        std::vector<std::vector<float>> CenteredImgs = GetCenteredImgs(TrainingDataset);
 //        std::cout << "Done Zero Avg" << std::endl;
-//        vector<vector<float>> EigenFaces = GetEigenFaces(CenteredImgs);
-//        vector<vector<float>> CoffMat = getProjectedImgs(TrainingDataset, EigenFaces);
+//        vector<vector<float>> EigenVectorsUpper = GetEigenVectorsOfUpperCorr(CenteredImgs);
+//        vector<vector<float>> CoffMat = getImagesCoeff(TrainingDataset, EigenVectorsUpper);
 
+        /*testing*/
         Image TestIm = Image(inputImage);
         displayGrayscaleImage(&TestIm, ui->inputImageLabel);
         vector<vector<float>> CoffMat;
-        vector<vector<float>> EigenFaces;
+        vector<vector<float>> EigenVectorsUpper;
         ReadFileToVector("../Coefficient_Matrix.txt", CoffMat);
-        ReadFileToVector("../Eigen_Faces_Matrix.txt", EigenFaces);
-        std::pair<int, float> result = TestImg(TestIm.ImageAsVector(), EigenFaces, CoffMat);
+        ReadFileToVector("../Eigen_Vectors_Matrix.txt", EigenVectorsUpper);
+        std::pair<int, float> result = PredictImg(TestIm.ImageAsVector(), EigenVectorsUpper, CoffMat);
         Image SameImage{TrainingDataset[result.first],  92, 112, 1};
         QString filenameQ{filenames[result.first].c_str()};
         ui->recognizedFaceLabel->clear();

@@ -4,7 +4,6 @@
 #include "face_detection_opencv.h"
 #include <opencv2/objdetect/objdetect.hpp>
 #include <iostream>
-#include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
 
 Image detectFace(Image &inputImage) {

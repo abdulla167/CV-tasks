@@ -1,129 +1,67 @@
-# Task 4
-### Thresholding
-##### Global Atsu
+# Task 5
+### Face Detection and Recognition
+##### Face Detection
 ```c++
-std::vector<int> globalAtsu(Image &inputImg, int histSize = 256, int numModes = 2);
+Image detectFace(Image &inputImage);
 ```
 function parameters:
   * inputImg: reference to gray Image
-  * histSize: histogram size depending on the number of bits that represent each pixel in the image
-  * numModes: number of modes
 
-function return: return array of thresholds depending on number of modes
+function return: return an image with rectangles drawn on the faces in the input image<br/>
 
-**Results**:<br>
-* global atsu 2 modes
-![](Resources/images/atsu-global-2-modes.png)
-  
-* global atsu 3 modes
-![](Resources/images/atsu-global-3-modes.png)
+steps:<br>
+* uses `cv::CascadeClassifier` to load `haarcascade_frontalface_default.xml` model 
+* convert the inputImage to `cv::Mat`
+* uses `cv::CascadeClassifier.detectMultiScale` to get faces in the image
+* then draw the faces on the image with `Image drawFaces(cv::Mat img, std::vector<cv::Rect> faces)`
+<br>
+**Result**:<br>
+![](Resources/images/face-detection.png)
 
-##### Local Atsu
+### Face Recognition
+#### Steps
+##### Training
+* loading the images and convert each image to vector 1d and construct the matrix of all images
 ```c++
-Image localAtsu(Image &inputImg, int blockDim, int histSize = 256, int numModes = 2);
+std::vector<std::string> loadImgsDataset(std::string DirPath, std::vector<std::vector<float>> &Dataset)
 ```
-function parameters:
-* inputImg: reference to gray Image
-* blockDim: block dimension (eg, 5 means 5 x 5)
-* histSize: histogram size depending on the number of bits that represent each pixel in the image
-* numModes: number of modes
-
-function return: return the thresholded image
-
-**Results**:<br>
-* local atsu 2 modes, blockDim: 5
-![](Resources/images/atsu-local-2-modes.png)
-
-* local atsu 3 modes, blockDim: 5
-![](Resources/images/atsu-local-3-modes.png)
-##### Global Optimal Iterative Thresholding
-
+* get zero mean of each feature(by getting avg of each row and subtract this avg from that row)
 ```c++
-int globalOptimalIterativeThresholding(Image &inputImg);
+vector<vector<float>>  GetCenteredImgs(vector<vector<float>> TrainingDataset)
 ```
-function parameters:
-   * inputImg: reference to gray Image 
+* get the vector of coefficients of each image <br/>
+`
+vector<vector<float>> GetEigenVectorsOfUpperCorr(vector<vector<float>>& TrainingDataset){
+`
+  * get covariance matrix in lower scale with size of (num Of imgs x num Of imgs) `vector<vector<float>> GetCovMatrix(vector<vector<float>>& TrainingDataset)`
+  * get eigenvectors and eigenvalues of this covariance matrix `std::vector<std::pair<std::vector<float>, float>> egienVectorsValues(const std::vector<std::vector<float>> &CovarMatrix)`
+  * get the eigenvectors of upper covariance matrix `vector<vector<float>> GetEigenVectorsOfUpperCorr(vector<vector<float>>& TrainingDataset)`
+  * then get the coefficient of each image by multiplying each vector img by the matrix of above eigenvectors
+  `vector<vector<float>> getImagesCoeff(vector<vector<float>>& TrainingDataset, vector<vector<float>> & EigenVectors)`
+    
+we store the eigenvectors and image coefficient to use them in testing phase.
 
-function return: return threshold
+##### Testing
 
- **Results**:<br>
-![](Resources/images/global-optimal.png)
-
-##### Local Optimal Iterative Thresholding
+* loading the coefficient of training images and the eigenvectors
 ```c++
-Image localOptimalIterativeThresholding(Image &inputImg, int blockDim);
+ReadFileToVector("../Coefficient_Matrix.txt", CoffMat);
+ReadFileToVector("../Eigen_Vectors_Matrix.txt", EigenVectorsUpper);
 ```
-function parameters:
-* inputImg: reference to gray Image
-* blockDim: block dimension (eg, 5 means 5 x 5)
+* then predict the image `pair<int, float> PredictImg(vector<float> testImg, vector<vector<float>> EigenVectors, vector<vector<float>> ImgCoffMat)`
+  * get the coeff of test image `vector<float> GetImgCoff(vector<vector<float>> EigenVectors , vector<float> ImgVector)`
+  * get the matched image by minimizing the error between test image coeff and train images coeffs
+  `pair<int, float> GetSimilarImg(vector<vector<float>> ImgsCoffMatrix, vector<float> TestImgCoeff)`
+    
 
-function return: return threshold
-
-**Results**:<br>
-blockDim: 7
-![](Resources/images/local-optimal.png)
-
-##### Means-Shift
-```c++
-MeanShift(Image *image, float hs, float hr)
-```
-class functions:
-* ```c++ float distance(int i1, int j1, int i2, int j2```
-* ```c++ float distance(vector<float> pt1, vector<float> pt2)```
-* ```c++ Image run()```
-
-
-**Results**:<br>
-blockDim: 7
-![](Resources/images/Mean-Sift.jpg)
-
-##### K-Mean
-```c++
-K_mean(Image *image, int k, int maxIteration)
-```
-class functions:
-* ```c++ void clusterPixels()```
-* ```c++ int closestCluster(int i, int j)```
-* ```c++ void getClustersCentroid()```
-* ```c++ bool centroidsChanged(vector<vector<float>> oldCentroids)```
-* ```c++ float distance(int i, int j, vector<float> centroid)```
-* ```c++ void run()```
-* ```c++ K_mean()```
-* ```c++ Image getOutput()```
-
-##### Region Growing
-```c++
-Image RGSegmentation(Image & inputImg, std::vector<point> seedPoint)
-
-```
---> You should select seed points from image in gui to segment the regions of these seed points
-
-function parameters:
-* inputImg: reference to color image
-* seedPoint: Points which are used as seeds for segmentation regions
-
-function return: return segmented output image
-**Results**:<br>
-blockDim: 7
-![](Resources/images/Region-GRowing.jpg)
-
-##### Agglomerative
-```c++
-Image agglomerativeSeg(Image & img, int numOfClusters, unsigned long initialClustersNum)
-```
-function parameters:
-* img: reference to gray image
-* numOfClusters : the number of clusters needed in the output image
-* initialClustersNum : The initial numbers of clusters which is merged until reach to the the numOfClusters
-
-function return: return threshold
-**Results**:<br>
-blockDim: 7
-![](Resources/images/Agglomerative.jpg)
-
+**Results**<br/>
+![](Resources/images/face-recognition1.png)
+![](Resources/images/face-recognition2.png)
+![](Resources/images/face-recognition3.png)
 ## Requirement packages git
 * fftw3
 * qt5
+* opencv
 * cmake
 
 ## How to Run

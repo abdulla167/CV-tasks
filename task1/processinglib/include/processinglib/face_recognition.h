@@ -8,7 +8,7 @@
 
 using std::vector; using std::pair;
 
-std::vector<std::string> loadImgsDataset(std::string DirPath, std::vector<std::vector<float>>& Dataset, int numImgs);
+std::vector<std::string> loadImgsDataset(std::string DirPath, std::vector<std::vector<float>> &Dataset);
 std::vector<float> AvgVector(std::vector<std::vector<float>>& TrainingDataset);
 
 vector<vector<float>>  GetCenteredImgs(vector<vector<float>> TrainingDataset);
@@ -17,11 +17,11 @@ float VectorsDotProduct(std::vector<float> v1, std::vector<float> v2);
 
 std::vector<std::vector<float>> GetCovMatrix(std::vector<std::vector<float>>& TrainingDataset);
 
-vector<vector<float>> GetEigenFaces(vector<vector<float>>& TrainingDataset);
+vector<vector<float>> GetEigenVectorsOfUpperCorr(vector<vector<float>>& TrainingDataset);
 
-vector<vector<float>> getProjectedImgs(vector<vector<float>>& TrainingDataset, vector<vector<float>> & EigenFaces);
+vector<vector<float>> getImagesCoeff(vector<vector<float>>& TrainingDataset, vector<vector<float>> & EigenVectors);
 
-pair<int, float> TestImg(vector<float> testImg, vector<vector<float>> EigenFaces,  vector<vector<float>> CoffMat);
+pair<int, float> PredictImg(vector<float> testImg, vector<vector<float>> EigenVectors, vector<vector<float>> ImgsCoffMat);
 
 void WriteVectorToFile(std::string filename, vector<vector<float>> Mat);
 
