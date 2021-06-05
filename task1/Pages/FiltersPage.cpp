@@ -192,16 +192,23 @@ void MainWindow::on_filterSelect_currentIndexChanged(QString filterName) {
         }
     } else if(filterName == "FaceRecognition"){
         std::vector<std::vector<float>> TrainingDataset;
-        loadImgsDataset("../Dataset/train",TrainingDataset,168);
+        loadImgsDataset("../Dataset/train",TrainingDataset,-1);
+        std::cout << "Done Loading" << std::endl;
+        /*training*/
+//        std::vector<std::vector<float>> CenteredImgs = GetCenteredImgs(TrainingDataset);
+//        std::cout << "Done Zero Avg" << std::endl;
+//        vector<vector<float>> EigenFaces = GetEigenFaces(CenteredImgs);
+//        vector<vector<float>> CoffMat = getProjectedImgs(TrainingDataset, EigenFaces);
+
         Image TestIm = Image(inputImage);
-        displayRGBImage(&TestIm, ui->inputImageLabel);
+        displayGrayscaleImage(&TestIm, ui->inputImageLabel);
         vector<vector<float>> CoffMat;
         vector<vector<float>> EigenFaces;
         ReadFileToVector("../Coefficient_Matrix.txt", CoffMat);
         ReadFileToVector("../Eigen_Faces_Matrix.txt", EigenFaces);
         std::pair<int, float> result = TestImg(TestIm.ImageAsVector(), EigenFaces, CoffMat);
-        Image SameImage{TrainingDataset[result.first],  92, 112, 3};
-        displayRGBImage(&SameImage, ui->outputImageLabel);
+        Image SameImage{TrainingDataset[result.first],  92, 112, 1};
+        displayGrayscaleImage(&SameImage, ui->outputImageLabel);
     }
 }
 

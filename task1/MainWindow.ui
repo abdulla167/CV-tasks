@@ -286,6 +286,11 @@
               <string>Face Detection</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>FaceRecognition</string>
+             </property>
+            </item>
            </widget>
           </item>
          </layout>

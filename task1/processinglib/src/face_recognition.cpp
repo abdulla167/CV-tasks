@@ -20,9 +20,9 @@ void loadImgsDataset(std::string DirPath, std::vector<std::vector<float>>& Datas
     }
     std::sort(TempPaths.begin(), TempPaths.end());
     for (int i = 0; i < TempPaths.size(); ++i) {
-        Dataset.push_back(Image(TempPaths[i], 3).ImageAsVector());
-        if (i > numImgs)
-            break;
+        Dataset.push_back(Image(TempPaths[i], 1).ImageAsVector());
+//        if (i > numImgs)
+//            break;
     }
 }
 
@@ -81,7 +81,7 @@ vector<vector<float>> GetEigenFaces(vector<vector<float>>& TrainingDataset){
         }
         EigenFaces.push_back(vector<float>(tempEigenFace));
     }
-    WriteVectorToFile("../Eigen_Faces_Matrix.txt", EigenFaces);
+    WriteVectorToFile("../Eigen_Faces_Matrix1.txt", EigenFaces);
     return EigenFaces;
 }
 
@@ -97,7 +97,7 @@ vector<vector<float>> getProjectedImgs(vector<vector<float>>& TrainingDataset, v
             CoffMat[imgIndex][eigenFaceIndex] = tempCoff;
         }
     }
-    WriteVectorToFile("../Coefficient_Matrix.txt", CoffMat);
+    WriteVectorToFile("../Coefficient_Matrix1.txt", CoffMat);
     return CoffMat;
 }
 
