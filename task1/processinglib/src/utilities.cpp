@@ -345,10 +345,5 @@ std::vector<std::pair<std::vector<float>, float>> egienVectorsValues(const std::
         tempPair.first = tempVector;
         result.push_back(tempPair);
     }
-    std::sort(result.begin(), result.end(), comparePairs);
-    std::vector<std::pair<std::vector<float>, float>> result2;
-    for (int i = 0; i < 100; ++i) {
-        result2.push_back(result[i]);
-    }
-    return result2;
+    return result;
 }
