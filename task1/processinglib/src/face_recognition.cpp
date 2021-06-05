@@ -13,17 +13,20 @@
 
 using std::filesystem::recursive_directory_iterator;
 
-void loadImgsDataset(std::string DirPath, std::vector<std::vector<float>>& Dataset, int numImgs){
+std::vector<std::string> loadImgsDataset(std::string DirPath, std::vector<std::vector<float>>& Dataset, int numImgs){
     vector<std::string> TempPaths;
+    vector<std::string> filenames;
     for (const auto & file : recursive_directory_iterator(DirPath)){
         TempPaths.push_back(file.path());
     }
     std::sort(TempPaths.begin(), TempPaths.end());
     for (int i = 0; i < TempPaths.size(); ++i) {
         Dataset.push_back(Image(TempPaths[i], 1).ImageAsVector());
+        filenames.push_back(TempPaths[i].substr(2));
 //        if (i > numImgs)
 //            break;
     }
+    return filenames;
 }
 
 std::vector<float> AvgVector(std::vector<std::vector<float>>& TrainingDataset){

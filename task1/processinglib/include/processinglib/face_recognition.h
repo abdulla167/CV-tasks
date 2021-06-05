@@ -8,7 +8,7 @@
 
 using std::vector; using std::pair;
 
-void loadImgsDataset(std::string DirPath, std::vector<std::vector<float>>& TrainingDataset, int numImgs);
+std::vector<std::string> loadImgsDataset(std::string DirPath, std::vector<std::vector<float>>& Dataset, int numImgs);
 std::vector<float> AvgVector(std::vector<std::vector<float>>& TrainingDataset);
 
 vector<vector<float>>  GetCenteredImgs(vector<vector<float>> TrainingDataset);

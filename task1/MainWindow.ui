@@ -554,6 +554,32 @@
          <string/>
         </property>
        </widget>
+       <widget class="QLabel" name="recognizedFaceLabel">
+        <property name="geometry">
+         <rect>
+          <x>890</x>
+          <y>570</y>
+          <width>341</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_33">
+        <property name="geometry">
+         <rect>
+          <x>790</x>
+          <y>570</y>
+          <width>111</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Regconized in:</string>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="histograms">
        <attribute name="title">

@@ -192,7 +192,7 @@ void MainWindow::on_filterSelect_currentIndexChanged(QString filterName) {
         }
     } else if(filterName == "FaceRecognition"){
         std::vector<std::vector<float>> TrainingDataset;
-        loadImgsDataset("../Dataset/train",TrainingDataset,-1);
+        auto filenames = loadImgsDataset("../Dataset/train",TrainingDataset,-1);
         std::cout << "Done Loading" << std::endl;
         /*training*/
 //        std::vector<std::vector<float>> CenteredImgs = GetCenteredImgs(TrainingDataset);
@@ -208,6 +208,9 @@ void MainWindow::on_filterSelect_currentIndexChanged(QString filterName) {
         ReadFileToVector("../Eigen_Faces_Matrix.txt", EigenFaces);
         std::pair<int, float> result = TestImg(TestIm.ImageAsVector(), EigenFaces, CoffMat);
         Image SameImage{TrainingDataset[result.first],  92, 112, 1};
+        QString filenameQ{filenames[result.first].c_str()};
+        ui->recognizedFaceLabel->clear();
+        ui->recognizedFaceLabel->setText(filenameQ);
         displayGrayscaleImage(&SameImage, ui->outputImageLabel);
     }
 }
