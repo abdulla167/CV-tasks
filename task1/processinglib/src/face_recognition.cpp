@@ -81,7 +81,7 @@ vector<vector<float>> GetEigenFaces(vector<vector<float>>& TrainingDataset){
         }
         EigenFaces.push_back(vector<float>(tempEigenFace));
     }
-    WriteVectorToFile("../Eigen_Faces_Matrix1.txt", EigenFaces);
+    WriteVectorToFile("../Eigen_Faces_Matrix.txt", EigenFaces);
     return EigenFaces;
 }
 
@@ -97,7 +97,7 @@ vector<vector<float>> getProjectedImgs(vector<vector<float>>& TrainingDataset, v
             CoffMat[imgIndex][eigenFaceIndex] = tempCoff;
         }
     }
-    WriteVectorToFile("../Coefficient_Matrix1.txt", CoffMat);
+    WriteVectorToFile("../Coefficient_Matrix.txt", CoffMat);
     return CoffMat;
 }
 
