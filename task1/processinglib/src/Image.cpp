@@ -27,11 +27,11 @@ Image::Image(std::string filename, int channels) {
                 filename.c_str(), stbi_failure_reason());
         exit(0);
     }
-//    printf("num of channels: %i", channelsInImage);
-    if (channels == 0)
+    if(channelsInImage < channels){
         this->channels = channelsInImage;
-    else
+    } else {
         this->channels = channels;
+    }
     this->data = new float[height * width * channels];
     init(data);
     free(data);

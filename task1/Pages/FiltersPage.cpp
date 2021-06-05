@@ -20,9 +20,12 @@ void MainWindow::on_loadImageBtn_clicked() {
     std::string filepathStd = filePath.toStdString();
     auto filename = filepathStd.substr(filepathStd.find_last_of("/") + 1);
     ui->imageName->setText(QString(filename.c_str()));
-    loadImage(filepathStd, inputImage, 3);
-    displayRGBImage(inputImage, ui->inputImageLabel);
-//    displayGrayscaleImage(inputImage, ui->inputImageLabel);
+    loadImage(filepathStd, inputImage, 1);
+    if (inputImage->channels > 1){
+        displayRGBImage(inputImage, ui->inputImageLabel);
+    } else {
+        displayGrayscaleImage(inputImage, ui->inputImageLabel);
+    }
     std::string imageSize = std::to_string(inputImage->size());
     ui->imageSize->setText(QString(imageSize.c_str()));
 }
@@ -182,7 +185,11 @@ void MainWindow::on_filterSelect_currentIndexChanged(QString filterName) {
         displayGrayscaleImage(&im, ui->outputImageLabel);
     } else if (filterName == "Face Detection"){
         auto im = detectFace(*inputImage);
-        displayRGBImage(&im, ui->outputImageLabel);
+        if (im.channels > 1){
+            displayRGBImage(&im, ui->outputImageLabel);
+        } else {
+            displayGrayscaleImage(&im, ui->outputImageLabel);
+        }
     } else if(filterName == "FaceRecognition"){
         std::vector<std::vector<float>> TrainingDataset;
         loadImgsDataset("../Dataset/train",TrainingDataset,168);
