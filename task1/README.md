@@ -14,7 +14,8 @@ steps:<br>
 * convert the inputImage to `cv::Mat`
 * uses `cv::CascadeClassifier.detectMultiScale` to get faces in the image
 * then draw the faces on the image with `Image drawFaces(cv::Mat img, std::vector<cv::Rect> faces)`
-<br>
+
+
 **Result**:<br>
 ![](Resources/images/face-detection.png)
 
